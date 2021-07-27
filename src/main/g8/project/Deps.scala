@@ -18,9 +18,27 @@ object Deps {
     private val version = "af8a62a6"
     val core            = dep("com.github.cornerman.outwatch" %%% "outwatch" % version)
   }
+  val colibri = new {
+    private val version = "f118a37"
+    val router          = dep("com.github.cornerman.colibri" %%% "colibri-router" % version)
+  }
+  val portableScala = dep("org.portable-scala" %%% "portable-scala-reflect" % "1.1.1")
+
+  val tapir = new {
+    private val version = "0.18.0-M15"
+    val core      = dep("com.softwaremill.sttp.tapir"   %%% "tapir-core"       % version)
+    val jsonCirce = dep("com.softwaremill.sttp.tapir" %%% "tapir-json-circe" % "0.18.0-M15")
+  }
+  val funstack = new {
+    private val version = "d5306f5" 
+    val web = dep("com.github.cornerman.fun-stack-scala" %%% "fun-stack-web" % version)
+    val lambdaHttp = dep("com.github.cornerman.fun-stack-scala" %%% "fun-stack-lambda-http" % version)
+  }
 }
 
 object NpmDeps {
+  val snabbdom = "snabbdom" -> "git://github.com/outwatch/snabbdom.git#semver:0.7.5"
+
   val tailwindForms      = "@tailwindcss/forms"      -> "^0.2.1"
   val tailwindTypography = "@tailwindcss/typography" -> "^0.4.0"
 

@@ -10,12 +10,12 @@ inThisBuild(
 )
 
 lazy val commonSettings = Seq(
-  addCompilerPlugin(
-    "org.typelevel" % "kind-projector" % "0.13.0" cross CrossVersion.full,
-  ),
+  addCompilerPlugin("org.typelevel" % "kind-projector" % "0.13.0" cross CrossVersion.full),
+
   resolvers ++=
     ("jitpack" at "https://jitpack.io") ::
       Nil,
+
   libraryDependencies ++=
     Deps.scalatest.value % Test ::
       Nil,
@@ -31,8 +31,6 @@ lazy val jsSettings = Seq(
   Compile / npmDevDependencies ++= NpmDeps.Dev,
 )
 
-val funStackVersion = "d5306f5"
-
 lazy val webSettings = Seq(
   scalaJSUseMainModuleInitializer := true,
   Test / requireJsDomEnv := true,
@@ -46,7 +44,7 @@ lazy val webSettings = Seq(
     baseDirectory.value / "webpack.config.prod.js",
   ),
   fastOptJS / webpackBundlingMode := BundlingMode.LibraryOnly(),
-  libraryDependencies += "org.portable-scala" %%% "portable-scala-reflect" % "1.1.1",
+  libraryDependencies += Deps.portableScala.value,
 )
 
 lazy val webClient = project
@@ -60,15 +58,15 @@ lazy val webClient = project
   .settings(commonSettings, jsSettings, webSettings)
   .settings(
     fullOptJS / webpackEmitSourceMaps := false,
-    libraryDependencies ++= Seq(
-      Deps.outwatch.core.value,
-      "com.github.cornerman.fun-stack-scala" %%% "fun-stack-web" % funStackVersion,
-      "com.github.cornerman.colibri" %%% "colibri-router" % "f118a37",
-    ),
+    libraryDependencies ++=
+      Deps.outwatch.core.value ::
+      Deps.funstack.web.value ::
+      Deps.colibri.router.value ::
+      Nil,
     Compile / npmDependencies ++=
       NpmDeps.tailwindForms ::
         NpmDeps.tailwindTypography ::
-        ("snabbdom" -> "git://github.com/outwatch/snabbdom.git#semver:0.7.5") ::
+        NpmDeps.snabbdom ::
         Nil,
     stIgnore ++=
       "@tailwindcss/forms" ::
@@ -83,8 +81,8 @@ lazy val apiHttp = crossProject(JSPlatform, JVMPlatform)
   .settings(commonSettings)
   .settings(
     libraryDependencies ++=
-      "com.softwaremill.sttp.tapir"   %%% "tapir-core"       % "0.18.0-M15" ::
-        "com.softwaremill.sttp.tapir" %%% "tapir-json-circe" % "0.18.0-M15" ::
+      Deps.tapir.core.value ::
+        Deps.tapir.jsonCirce.value ::
         Nil,
   )
 
@@ -102,9 +100,9 @@ lazy val lambdaHttp = project
     webpackConfigFile in fullOptJS := Some(
       baseDirectory.value / "webpack.config.prod.js",
     ),
-    libraryDependencies ++= Seq(
-      "com.github.cornerman.fun-stack-scala" %%% "fun-stack-lambda-http"                % funStackVersion,
-    ),
+    libraryDependencies ++=
+      Deps.funstack.lambdaHttp.value ::
+        Nil,
   )
 
 addCommandAlias("dev", "devInit; devWatchAll; devDestroy") // watch all
