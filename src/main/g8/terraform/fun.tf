@@ -9,12 +9,6 @@ module "$name;format="snake"$" {
     cache_files_regex = ".*-hashed.(js|css)"
   }
 
-  prod_workspace = "default"   # deployment to domain
-  dev_workspaces = ["default"] # enables dev_setup
-  dev_setup = {
-    local_website_url = "http://localhost:12345"
-  }
-
   http = {
     source_dir  = "../lambda-http/target/scala-2.13/scalajs-bundler/main/dist"
     handler     = "main.handler"
@@ -29,6 +23,12 @@ module "$name;format="snake"$" {
   budget = {
     limit_monthly_dollar = "10.0"
     notify_email         = "$email$"
+  }
+
+  prod_workspace = "default"   # deployment to domain
+  dev_workspaces = ["default"] # enables dev_setup
+  dev_setup = {
+    local_website_url = "http://localhost:12345"
   }
 }
 
