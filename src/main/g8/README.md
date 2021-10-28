@@ -1,4 +1,4 @@
-# update.fm
+# $name$
 
 This your whole application. All code in scala. Infrastructure as terraform code (see `terraform` directory).
 
