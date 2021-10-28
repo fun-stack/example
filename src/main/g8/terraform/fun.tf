@@ -1,5 +1,5 @@
 module "$name;format="snake"$" {
-  source = "github.com/cornerman/fun-stack-tf?ref=09420ec"
+  source = "github.com/cornerman/fun-stack-tf?ref=a7dfa82"
 
   domain               = "$domain$"
   catch_all_forward_to = "$email$"
