@@ -11,7 +11,7 @@ aws s3 mb s3://$terraform_state_bucket$
 
 Create a hosted zone in AWS for your custom domain Either just register your domain AWS directly or create a hosted zone in AWS for your domain (then set the Nameservers at your registrar to the values you get from the following command):
 ```
-aws route53 create-hosted-zone --name "$domain$" --caller-reference $(date +%s)
+aws route53 create-hosted-zone --name "$domain$" --caller-reference \$(date +%s)
 ```
 
 These two steps only need to be done once.
