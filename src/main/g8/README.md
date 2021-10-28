@@ -1,13 +1,20 @@
 # update.fm
 
-## Development
+This your whole application. All code in scala. Infrastructure as terraform code (see `terraform` directory).
 
-Deploy the app, then run:
-```sh
-sbt dev
+## Initial steps
+
+Create your s3-bucket for the terraform state:
+```
+aws s3 mb s3://$terraform_state_bucket$
 ```
 
-Go to `http://localhost:12345` in your browser.
+Create a hosted zone in AWS for your custom domain Either just register your domain AWS directly or create a hosted zone in AWS for your domain (then set the Nameservers at your registrar to the values you get from the following command):
+```
+aws route53 create-hosted-zone --name "$domain$" --caller-reference $(date +%s)
+```
+
+These two steps only need to be done once.
 
 ## Deploy
 
@@ -26,6 +33,8 @@ terraform apply
 
 Then the app is available under `https://$domain$`.
 
+### Environments
+
 If you want to try something out without interrupting others, you can make your own terraform workspace and setup your own independent deployment:
 ```sh
 terraform workspace new <my-workspace>
@@ -34,3 +43,14 @@ terraform workspace switch <my-workspace>
 ```
 
 If you are not on the `default` terraform workspace, the app is available under: `https://<my-workspace>.env.$domain$`.
+
+## Development
+
+Deploy the app, then run:
+```sh
+sbt dev
+```
+
+Go to `http://localhost:12345` in your browser.
+
+This will run against the environment according to the terraform workspace of the last deployment.
