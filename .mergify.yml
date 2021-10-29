@@ -1,0 +1,22 @@
+queue_rules:
+  - name: default
+    conditions:
+      # Conditions to get out of the queue (= merged)
+      - check-success=build
+
+pull_request_rules:
+  - name: assign and label scala-steward's PRs
+    conditions:
+      - author=scala-steward
+    actions:
+      label:
+        add: [dependency-update]
+  - name: merge scala-steward's PRs
+    conditions:
+      - base=master
+      - author=scala-steward
+      - check-success=build
+    actions:
+      queue:
+        name: default
+        method: squash
