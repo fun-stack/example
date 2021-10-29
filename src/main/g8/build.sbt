@@ -96,8 +96,8 @@ lazy val lambdaHttp = project
   .dependsOn(apiHttp.js)
   .settings(
     /* scalaJSLinkerConfig ~= { _.withOptimizer(false) }, */
-    webpackEmitSourceMaps in fullOptJS := false,
-    webpackConfigFile in fullOptJS := Some(
+    fullOptJS/webpackEmitSourceMaps := false,
+    fullOptJS/webpackConfigFile := Some(
       baseDirectory.value / "webpack.config.prod.js",
     ),
     libraryDependencies ++=
