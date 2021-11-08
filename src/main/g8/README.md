@@ -2,6 +2,14 @@
 
 This is your whole application. All code in scala. Infrastructure as terraform code (see `terraform` directory).
 
+## Requirements
+
+- aws-cli
+- sbt
+- yarn
+- node (>= 10.13.0)
+- terraform (>= 1.0.0)
+
 ## Initial steps
 
 Create your s3-bucket for the terraform state:
