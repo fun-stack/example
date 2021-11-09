@@ -29,8 +29,8 @@ These two steps only need to be done once.
 If you need to register the nameservers with your own dns service you can list them again with these commands.
 
 ```sh
-HOSTED_ZONE_ID=/$(aws route53 list-hosted-zones-by-name --dns-name "$domain$" | jq -r ".HostedZones[0].Id")
-aws route53 get-hosted-zone --id /$HOSTED_ZONE_ID | jq ".DelegationSet.NameServers"
+HOSTED_ZONE_ID=\$(aws route53 list-hosted-zones-by-name --dns-name "$domain$" | jq -r ".HostedZones[0].Id")
+aws route53 get-hosted-zone --id \$HOSTED_ZONE_ID | jq ".DelegationSet.NameServers"
 ```
 
 ## Deploy
