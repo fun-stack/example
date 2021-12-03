@@ -9,30 +9,30 @@ object Deps {
 
   // core libraries
   val cats = new {
-    val core   = dep("org.typelevel" %%% "cats-core" % "2.1.1")
-    val effect = dep("org.typelevel" %%% "cats-effect" % "2.3.0")
+    val core   = dep("org.typelevel" %%% "cats-core" % "2.7.0")
+    val effect = dep("org.typelevel" %%% "cats-effect" % "2.5.4")
   }
 
   // web app
   val outwatch = new {
-    private val version = "af8a62a6"
-    val core            = dep("com.github.cornerman.outwatch" %%% "outwatch" % version)
+    private val version = "1.0.0-RC4"
+    val core            = dep("io.github.outwatch" %%% "outwatch" % version)
   }
   val colibri = new {
-    private val version = "f118a37"
-    val router          = dep("com.github.cornerman.colibri" %%% "colibri-router" % version)
+    private val version = "0.1.2"
+    val router          = dep("com.github.cornerman" %%% "colibri-router" % version)
   }
   val portableScala = dep("org.portable-scala" %%% "portable-scala-reflect" % "1.1.1")
 
   val tapir = new {
-    private val version = "0.18.0-M15"
-    val core      = dep("com.softwaremill.sttp.tapir"   %%% "tapir-core"       % version)
-    val jsonCirce = dep("com.softwaremill.sttp.tapir" %%% "tapir-json-circe" % "0.18.0-M15")
+    private val version = "0.19.0"
+    val core            = dep("com.softwaremill.sttp.tapir" %%% "tapir-core" % version)
+    val jsonCirce       = dep("com.softwaremill.sttp.tapir" %%% "tapir-json-circe" % version)
   }
   val funstack = new {
-    private val version = "d5306f5" 
-    val web = dep("com.github.cornerman.fun-stack-scala" %%% "fun-stack-web" % version)
-    val lambdaHttp = dep("com.github.cornerman.fun-stack-scala" %%% "fun-stack-lambda-http" % version)
+    private val version = "0.1.4"
+    val web             = dep("io.github.fun-stack" %%% "fun-stack-web" % version)
+    val lambdaHttp      = dep("io.github.fun-stack" %%% "fun-stack-lambda-http" % version)
   }
 }
 
@@ -43,9 +43,9 @@ object NpmDeps {
   val tailwindTypography = "@tailwindcss/typography" -> "^0.4.0"
 
   val nodeFetch       = "node-fetch"               -> "2.6.1"
-  val abortController = "abortcontroller-polyfill" -> "1.5.0"
+  val fetchHeaders    = "fetch-headers"            -> "2.0.0"
 
-  val funpack = "fun-pack" -> "git://github.com/fun-stack-org/fun-pack#c51221a"
+  val funpack = "fun-pack" -> "git://github.com/fun-stack-org/fun-pack#e27292a"
 
   val Dev =
     "autoprefixer"          -> "10.2.5" ::

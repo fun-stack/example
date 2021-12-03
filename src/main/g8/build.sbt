@@ -5,16 +5,12 @@ Global / onChangedBuildSource := IgnoreSourceChanges
 inThisBuild(
   Seq(
     version := "0.1.0-SNAPSHOT",
-    scalaVersion := "2.13.6",
+    scalaVersion := "2.13.7",
   ),
 )
 
 lazy val commonSettings = Seq(
-  addCompilerPlugin("org.typelevel" % "kind-projector" % "0.13.0" cross CrossVersion.full),
-
-  resolvers ++=
-    ("jitpack" at "https://jitpack.io") ::
-      Nil,
+  addCompilerPlugin("org.typelevel" % "kind-projector" % "0.13.2" cross CrossVersion.full),
 
   libraryDependencies ++=
     Deps.scalatest.value % Test ::
@@ -37,12 +33,8 @@ lazy val webSettings = Seq(
   startWebpackDevServer / version := "3.11.2",
   webpackDevServerExtraArgs := Seq("--color"),
   webpackDevServerPort := 12345,
-  fastOptJS / webpackConfigFile := Some(
-    baseDirectory.value / "webpack.config.dev.js",
-  ),
-  fullOptJS / webpackConfigFile := Some(
-    baseDirectory.value / "webpack.config.prod.js",
-  ),
+  fastOptJS / webpackConfigFile := Some(baseDirectory.value / "webpack.config.dev.js"),
+  fullOptJS / webpackConfigFile := Some(baseDirectory.value / "webpack.config.prod.js"),
   fastOptJS / webpackBundlingMode := BundlingMode.LibraryOnly(),
   libraryDependencies += Deps.portableScala.value,
 )
@@ -105,7 +97,10 @@ lazy val lambdaHttp = project
         Nil,
   )
 
-addCommandAlias("dev", "devInit; devWatchAll; devDestroy") // watch all
+addCommandAlias("prod", "fullOptJS::webpack")
+addCommandAlias("dev", "devInit; devWatchAll; devDestroy")
+addCommandAlias("devf", "devInit; devWatchFrontend; devDestroy")
 addCommandAlias("devInit", "webClient/fastOptJS::startWebpackDevServer")
-addCommandAlias("devWatchAll", "~; webClient/fastOptJS::webpack")
+addCommandAlias("devWatchFrontend", "~; webClient/fastOptJS::webpack")
+addCommandAlias("devWatchAll", "~; lambdaHttp/fastOptJS::webpack; webClient/fastOptJS::webpack")
 addCommandAlias("devDestroy", "webClient/fastOptJS::stopWebpackDevServer")

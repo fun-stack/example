@@ -1,5 +1,5 @@
 module "$name;format="snake"$" {
-  source = "github.com/cornerman/fun-stack-tf?ref=cc78df5"
+  source = "github.com/cornerman/fun-stack-tf?ref=063cb10"
 
   domain               = "$domain$"
   catch_all_forward_to = "$email$"
@@ -26,9 +26,11 @@ module "$name;format="snake"$" {
   }
 
   prod_workspace = "default"   # deployment to domain
-  dev_workspaces = ["default"] # enables dev_setup
+  dev_workspaces = ["default"] # enables dev_setup, i.e. working locally
   dev_setup = {
-    local_website_url = "http://localhost:12345"
+    local_website_url = "http://localhost:12345" # auth can redirect to that website
+    # local_http_host   = "localhost:8080" # http requests from the frontend go to this host instead of our http lambda
+    # local_ws_host     = "localhost:8081" # ws requests from the frontend go to this host instead of our api lambda
   }
 }
 

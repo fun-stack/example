@@ -15,9 +15,9 @@ case class BooksFromYear(genre: String, year: Int)
 case class Book(title: String)
 
 object Api {
-  val booksListing: Endpoint[(BooksFromYear, Limit), String, List[Book], Any] =
+  val booksListing: PublicEndpoint[(BooksFromYear, Limit), String, List[Book], Any] =
     endpoint.get
-      .in(("books" / path[String]("genre") / path[Int]("year")).mapTo(BooksFromYear))
+      .in(("books" / path[String]("genre") / path[Int]("year")).mapTo[BooksFromYear])
       .in(query[Limit]("limit").description("Maximum number of books to retrieve"))
       .errorOut(stringBody)
       .out(jsonBody[List[Book]])

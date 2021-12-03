@@ -1,6 +1,6 @@
 package $name;format="camel"$.client
 
-import outwatch._
+import outwatch.OutWatch
 import cats.effect.IO
 import cats.effect.ExitCode
 import cats.effect.IOApp
@@ -21,6 +21,6 @@ object Main extends IOApp {
   Css // load css
 
   def run(args: List[String]) = {
-    Outwatch.renderInto[IO]("#app", UI.root).as(ExitCode.Success)
+    OutWatch.renderInto[IO]("#app", UI.root).as(ExitCode.Success)
   }
 }
