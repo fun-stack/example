@@ -6,12 +6,12 @@ module "$name;format="snake"$" {
   catch_all_forward_to = "$email$"
 
   website = {
-    source_dir        = "../web-client/target/scala-2.13/scalajs-bundler/main/dist"
+    source_dir        = "../webapp/target/scala-2.13/scalajs-bundler/main/dist"
     cache_files_regex = ".*-hashed.(js|css)"
   }
 
   http = {
-    source_dir  = "../lambda-http/target/scala-2.13/scalajs-bundler/main/dist"
+    source_dir  = "../lambda/target/scala-2.13/scalajs-bundler/main/dist"
     handler     = "main.handler"
     runtime     = "nodejs14.x"
     timeout     = 30

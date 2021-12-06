@@ -1,4 +1,4 @@
-package $name;format="camel"$.client
+package example.client
 
 import colibri.Subject
 import colibri.router._

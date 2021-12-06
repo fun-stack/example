@@ -1,9 +1,10 @@
-package $name;format="camel"$.lambda
+package example.lambda
 
 import scala.scalajs.js
-import $name;format="camel"$.apihttp._
 import funstack.lambda.http.Handler
 import cats.effect.IO
+
+import example.api._
 
 object Lambda {
   val booksListingImpl = Api.booksListing.serverLogic[IO]({ case (_, _) => IO.pure(Right(Nil)) })

@@ -1,4 +1,4 @@
-package $name;format="camel"$.client
+package example.client
 
 import outwatch.OutWatch
 import cats.effect.IO
@@ -20,7 +20,6 @@ object Main extends IOApp {
   TailwindCss
   Css // load css
 
-  def run(args: List[String]) = {
+  def run(args: List[String]) =
     OutWatch.renderInto[IO]("#app", UI.root).as(ExitCode.Success)
-  }
 }

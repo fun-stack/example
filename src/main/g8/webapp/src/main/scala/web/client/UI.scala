@@ -1,9 +1,10 @@
-package $name;format="camel"$.client
+package example.client
 
 import outwatch.dsl._
-import $name;format="camel"$.apihttp._
 import funstack.web.Fun
 import colibri.Subject
+
+import example.api._
 
 object UI {
   val blueButton = button(cls := "bg-blue-500 text-white px-4 py-2 rounded-lg")

@@ -1,9 +1,11 @@
-package $name;format="camel"$.apihttp
+package example.api
 
 import sttp.tapir._
 import sttp.tapir.generic.auto._
 import sttp.tapir.json.circe._
 import io.circe.generic.auto._
+
+// example from: https://github.com/softwaremill/tapir
 
 object types {
   type Limit     = Int

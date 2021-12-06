@@ -23,7 +23,7 @@ Go to `http://localhost:12345` in your browser. You will see your app there.
 Additionally, run your backend lambda locally (it automatically watches for changes):
 
 ```
-lambda-server http lambda-http/target/scala-2.13/scalajs-bundler/main/lambdahttp-fastopt.js handler
+lambda-server http lambda/target/scala-2.13/scalajs-bundler/main/lambdahttp-fastopt.js handler
 ```
 
 Now, the frontend can call the http server. Feel free to try and change your code and see how the page updates automatically.
