@@ -1,4 +1,4 @@
-package overtimehivemind.client
+package $name;format="camel"$.client
 
 import outwatch.OutWatch
 import cats.effect.IO
