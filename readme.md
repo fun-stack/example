@@ -1,5 +1,5 @@
 Fun-Stack Template
 
 ```
-sbt new fun-stack-org/fun-stack.g8
+sbt new fun-stack/fun-stack.g8
 ```
