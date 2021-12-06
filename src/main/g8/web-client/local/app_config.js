@@ -3,8 +3,8 @@ window.AppConfig = {
     "domain": "localhost:8080"
   },
   "environment": {},
-  "region": "eu-central-1",
-  "stage": "prod",
+  "region": "dummy-region",
+  "stage": "dummy-stage",
   "website": {
     "domain": "localhost:12345"
   }
