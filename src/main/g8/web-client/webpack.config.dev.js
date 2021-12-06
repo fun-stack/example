@@ -5,6 +5,6 @@ module.exports = webDev({
   assetsDir: "assets",
   extraWatchDirs: [
     "local" // frontend with local backend
-    // "../terraform/.terraform/modules/overtime-hivemind/serve/" // frontend with deployed backend
+    // "../terraform/.terraform/modules/$name;format="snake"$/serve/" // frontend with deployed backend
   ]
 });
