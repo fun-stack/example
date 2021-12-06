@@ -1,4 +1,4 @@
-package $name;format="camel"$.client
+package overtimehivemind.client
 
 import outwatch.OutWatch
 import cats.effect.IO
@@ -9,11 +9,11 @@ import scala.scalajs.js
 import scala.scalajs.js.annotation._
 
 @js.native
-@JSImport("../../../../src/main/css/index.css", JSImport.Namespace)
+@JSImport("src/main/css/index.css", JSImport.Namespace)
 object Css extends js.Object
 
 @js.native
-@JSImport("../../../../src/main/css/tailwind.css", JSImport.Namespace)
+@JSImport("src/main/css/tailwind.css", JSImport.Namespace)
 object TailwindCss extends js.Object
 
 object Main extends IOApp {

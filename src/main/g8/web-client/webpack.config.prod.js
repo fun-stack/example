@@ -1,3 +1,6 @@
-const {webProd} = require("fun-pack");
+const {webProd} = require("@fun-stack/fun-pack");
 
-module.exports = webProd();
+module.exports = webProd({
+  indexHtml: "src/main/html/index.html",
+  assetsDir: "assets"
+});

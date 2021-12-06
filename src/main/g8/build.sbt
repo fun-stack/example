@@ -49,7 +49,7 @@ lazy val webClient = project
   .in(file("web-client"))
   .settings(commonSettings, jsSettings, webSettings)
   .settings(
-    fullOptJS / webpackEmitSourceMaps := false,
+    fullOptJS/webpackEmitSourceMaps := true,
     libraryDependencies ++=
       Deps.outwatch.core.value ::
       Deps.funstack.web.value ::
@@ -88,10 +88,9 @@ lazy val lambdaHttp = project
   .dependsOn(apiHttp.js)
   .settings(
     /* scalaJSLinkerConfig ~= { _.withOptimizer(false) }, */
-    fullOptJS/webpackEmitSourceMaps := false,
-    fullOptJS/webpackConfigFile := Some(
-      baseDirectory.value / "webpack.config.prod.js",
-    ),
+    fastOptJS/webpackConfigFile := Some(baseDirectory.value / "webpack.config.dev.js"),
+    fullOptJS/webpackConfigFile := Some(baseDirectory.value / "webpack.config.prod.js"),
+    fullOptJS/webpackEmitSourceMaps := true,
     libraryDependencies ++=
       Deps.funstack.lambdaHttp.value ::
         Nil,

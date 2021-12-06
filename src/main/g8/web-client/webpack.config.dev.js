@@ -1,6 +1,10 @@
-const {webDev} = require("fun-pack");
+const {webDev} = require("@fun-stack/fun-pack");
 
-module.exports = webDev([
-  "local" // frontend with local backend
-  // "../terraform/.terraform/modules/$name$/serve/" // frontend with deployed backend
-]);
+module.exports = webDev({
+  indexHtml: "src/main/html/index.html",
+  assetsDir: "assets",
+  extraWatchDirs: [
+    "local" // frontend with local backend
+    // "../terraform/.terraform/modules/overtime-hivemind/serve/" // frontend with deployed backend
+  ]
+});

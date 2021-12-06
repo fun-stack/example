@@ -45,7 +45,7 @@ object NpmDeps {
   val nodeFetch       = "node-fetch"               -> "2.6.1"
   val fetchHeaders    = "fetch-headers"            -> "2.0.0"
 
-  val funpack = "fun-pack" -> "git://github.com/fun-stack-org/fun-pack#e27292a"
+  val funpack = "@fun-stack/fun-pack" -> "0.1.4"
 
   val Dev =
     "autoprefixer"          -> "10.2.5" ::

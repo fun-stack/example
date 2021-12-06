@@ -9,7 +9,7 @@ This is your whole application. All code in scala. Infrastructure as terraform c
 - yarn
 - node (>= 10.13.0)
 - terraform (>= 1.0.0): https://www.terraform.io/downloads.html
-- lambda-server: yarn add --global fun-lambda-server
+- lambda-server: yarn add --global @fun-stack/lambda-server
 
 ## Development
 

@@ -1,5 +1,6 @@
 module "$name;format="snake"$" {
-  source = "github.com/cornerman/fun-stack-tf?ref=063cb10"
+  source  = "fun-stack/fun/aws"
+  version = "0.1.0"
 
   domain               = "$domain$"
   catch_all_forward_to = "$email$"
@@ -15,6 +16,9 @@ module "$name;format="snake"$" {
     runtime     = "nodejs14.x"
     timeout     = 30
     memory_size = 256
+    environment = {
+      NODE_OPTIONS = "--enable-source-maps"
+  }
   }
 
   auth = {
