@@ -1,5 +1,5 @@
 // scala-js
-addSbtPlugin("org.scala-js"  % "sbt-scalajs"         % "1.7.1")
+addSbtPlugin("org.scala-js"  % "sbt-scalajs"         % "1.8.0")
 addSbtPlugin("ch.epfl.scala" % "sbt-scalajs-bundler" % "0.20.0")
 
 // https://github.com/ScalablyTyped/Converter/pull/377
