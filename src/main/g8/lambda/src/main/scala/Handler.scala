@@ -7,7 +7,7 @@ import cats.effect.IO
 import example.api._
 
 object Lambda {
-  val booksListingImpl = Api.booksListing.serverLogic[IO]({ case (_, _) => IO.pure(Right(Nil)) })
+  val booksListingImpl = Api.booksListing.serverLogic[IO] { case (_, _) => IO.pure(Right(Nil)) }
 
   val endpoints = List(
     booksListingImpl,

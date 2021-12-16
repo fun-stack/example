@@ -38,10 +38,10 @@ lazy val webapp = project
       "com.github.cornerman" %%% "colibri-router" % versions.colibri,
     ),
     Compile / npmDependencies        ++= Seq(
-      "snabbdom" -> "git://github.com/outwatch/snabbdom.git#semver:0.7.5", // for outwatch, workaround for: https://github.com/ScalablyTyped/Converter/issues/293
+      "snabbdom" -> "git://github.com/outwatch/snabbdom.git#semver:0.7.5",// for outwatch, workaround for: https://github.com/ScalablyTyped/Converter/issues/293
     ),
     stIgnore                         ++= List(
-      "snabbdom", // for outwatch, workaround for: https://github.com/ScalablyTyped/Converter/issues/293
+      "snabbdom",                                                         // for outwatch, workaround for: https://github.com/ScalablyTyped/Converter/issues/293
     ),
     Compile / npmDevDependencies     ++= Seq(
       "@fun-stack/fun-pack" -> versions.funPack, // sane defaults for webpack development and production, see webpack.config.*.js
