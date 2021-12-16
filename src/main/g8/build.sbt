@@ -23,7 +23,7 @@ lazy val jsSettings = Seq(
   libraryDependencies += "org.portable-scala" %%% "portable-scala-reflect" % "1.1.1",
 )
 
-lazy val `webapp` = project
+lazy val webapp = project
   .enablePlugins(
     ScalaJSPlugin,
     ScalaJSBundlerPlugin,
