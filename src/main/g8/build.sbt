@@ -38,7 +38,7 @@ lazy val webapp = project
       "com.github.cornerman" %%% "colibri-router" % versions.colibri,
     ),
     Compile / npmDependencies        ++= Seq(
-      "snabbdom" -> "git://github.com/outwatch/snabbdom.git#semver:0.7.5", // for outwatch, workaround for: https://github.com/ScalablyTyped/Converter/issues/293
+      "snabbdom" -> "github:outwatch/snabbdom.git#semver:0.7.5", // for outwatch, workaround for: https://github.com/ScalablyTyped/Converter/issues/293
     ),
     stIgnore                         ++= List(
       "snabbdom", // for outwatch, workaround for: https://github.com/ScalablyTyped/Converter/issues/293
