@@ -11,6 +11,7 @@ val versions = new {
 // See http://www.foundweekends.org/giter8/testing.html#Using+the+Giter8Plugin for more details.
 lazy val root = (project in file("."))
   .enablePlugins(ScriptedPlugin)
+  .aggregate(scalaStewardUpdater)
   .settings(
     name                := "funstack",
     Test / test         := {
