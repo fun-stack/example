@@ -25,7 +25,7 @@ lazy val scalaStewardUpdater = project
   .enablePlugins(ScalaJSPlugin)
   .disablePlugins(Giter8Plugin, Giter8TemplatePlugin)
   .settings(
-    scalaVersion         := "2.13.7",
+    scalaVersion         := "2.13.8",
     // replicate all dependencies here, so scala-steward can update them
     libraryDependencies ++= Seq(
       "io.github.fun-stack"         %%% "fun-stack-web"          % versions.funStack,
