@@ -14,5 +14,5 @@ object Lambda {
   )
 
   @js.annotation.JSExportTopLevel("handler")
-  val handler = Handler.handle[IO](endpoints)
+  val handler = Handler.handle(endpoints)
 }

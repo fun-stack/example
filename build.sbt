@@ -1,8 +1,8 @@
 val versions = new {
-  val outwatch = "1.0.0-RC4"
-  val colibri  = "0.1.2"
-  val funStack = "0.1.4"
-  val tapir    = "0.19.0"
+  val outwatch = "1.0.0-RC5"
+  val colibri  = "0.2.2"
+  val funStack = "0.3.0"
+  val tapir    = "0.19.3"
   val funPack  = "0.1.4"
 }
 
@@ -11,6 +11,7 @@ val versions = new {
 // See http://www.foundweekends.org/giter8/testing.html#Using+the+Giter8Plugin for more details.
 lazy val root = (project in file("."))
   .enablePlugins(ScriptedPlugin)
+  .aggregate(scalaStewardUpdater)
   .settings(
     name                := "funstack",
     Test / test         := {
@@ -24,7 +25,7 @@ lazy val scalaStewardUpdater = project
   .enablePlugins(ScalaJSPlugin)
   .disablePlugins(Giter8Plugin, Giter8TemplatePlugin)
   .settings(
-    scalaVersion         := "2.13.7",
+    scalaVersion         := "2.13.8",
     // replicate all dependencies here, so scala-steward can update them
     libraryDependencies ++= Seq(
       "io.github.fun-stack"         %%% "fun-stack-web"          % versions.funStack,

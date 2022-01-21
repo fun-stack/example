@@ -1,13 +1,13 @@
 Global / onChangedBuildSource := IgnoreSourceChanges // not working well with webpack devserver
 
 ThisBuild / version      := "0.1.0-SNAPSHOT"
-ThisBuild / scalaVersion := "2.13.7"
+ThisBuild / scalaVersion := "2.13.8"
 
 val versions = new {
-  val outwatch = "1.0.0-RC4"
-  val colibri  = "0.1.2"
-  val funStack = "0.1.4"
-  val tapir    = "0.19.0"
+  val outwatch = "1.0.0-RC5"
+  val colibri  = "0.2.2"
+  val funStack = "0.3.0"
+  val tapir    = "0.19.3"
   val funPack  = "0.1.4"
 }
 
@@ -38,7 +38,7 @@ lazy val webapp = project
       "com.github.cornerman" %%% "colibri-router" % versions.colibri,
     ),
     Compile / npmDependencies        ++= Seq(
-      "snabbdom" -> "git://github.com/outwatch/snabbdom.git#semver:0.7.5", // for outwatch, workaround for: https://github.com/ScalablyTyped/Converter/issues/293
+      "snabbdom" -> "github:outwatch/snabbdom.git#semver:0.7.5", // for outwatch, workaround for: https://github.com/ScalablyTyped/Converter/issues/293
     ),
     stIgnore                         ++= List(
       "snabbdom", // for outwatch, workaround for: https://github.com/ScalablyTyped/Converter/issues/293
