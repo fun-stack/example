@@ -2,7 +2,7 @@
 
 set -euo pipefail
 
-cd $(dirname "$0")
+cd \$(dirname "\$0")
 
 account="\$(aws sts get-caller-identity | jq -r '."Account"')"
 terraform_state_bucket="\${account}-$name;format="lower,hyphen"$-tfstate"
