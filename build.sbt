@@ -9,7 +9,7 @@ val versions = new {
   val colibri           = "0.2.3"
   val funStack          = "0.4.2"
   val tapir             = "0.19.3"
-  val funPack           = "0.1.9"
+  val funPack           = "0.1.10"
   val boopickle         = "1.4.0"
   val macrotaskExecutor = "1.0.0"
 }

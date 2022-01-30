@@ -4,13 +4,15 @@ locals {
 
 module "example" {
   source  = "fun-stack/fun/aws"
-  version = "0.3.0"
+  version = "0.4.0"
 
   stage = terraform.workspace
 
-  # domain                = "example.com"
-  # deploy_to_root_domain = local.is_prod
-  # catch_all_forward_to  = "me@example.net"
+  # domain = {
+  #   name                = "example.com"
+  #   deploy_to_subdomain = local.is_prod ? null : "${terraform.workspace}.env"
+  #   catch_all_email     = "me@example.net"
+  # }
 
   website = {
     source_dir        = "../webapp/target/scala-2.13/scalajs-bundler/main/dist"
