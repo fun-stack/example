@@ -41,6 +41,7 @@ You have to do these steps only once.
 Create your s3-bucket for the terraform state (it needs to be a globally unique name, you can still change it in `terraform/terraform.tf`):
 
 ```sh
+# set your AWS_PROFILE
 ./initial_setup.sh
 ```
 
@@ -74,6 +75,7 @@ sbt prod
 Then go into the terraform directory. Set your `AWS_PROFILE`. And run terraform:
 
 ```sh
+# set your AWS_PROFILE
 terraform init -upgrade -reconfigure
 terraform apply
 ```
