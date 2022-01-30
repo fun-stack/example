@@ -33,6 +33,9 @@ bin/
 *.iws
 .idea
 
+# terraform
+.terraform
+
 # mac
 .DS_Store
 
