@@ -5,6 +5,7 @@ on:
       - master
   pull_request:
   workflow_dispatch:
+
 jobs:
   build:
     runs-on: ubuntu-20.04
@@ -17,29 +18,16 @@ jobs:
       - name: Test
         run: sbt test
 
-      - name: Install Coursier
+      - name: Run fast/full-opt
         run: |
-          curl -fLo cs https://git.io/coursier-cli-linux
-          chmod +x cs
-          sudo mv cs /usr/local/bin
-
-      - name: Install g8
-        run: cs install giter8
-
-      - name: Use Template
-        run: |
-          export PATH=$HOME/.local/share/coursier/bin:$PATH
-          # http://www.foundweekends.org/giter8/testing.html
-          g8 file://${GITHUB_WORKSPACE}/ --name="Test project" --force
-          cd test-project
           sbt {webapp,lambda}/{fast,full}OptJS/webpack
 
-      # - uses: hashicorp/setup-terraform@v1
-      # - name: Validate Terraform
-      #   run: |
-      #     cd test-project/terraform
-      #     terraform init
-      #     terraform validate
+      - uses: hashicorp/setup-terraform@v1
+      - name: Validate Terraform
+        run: |
+          cd terraform
+          terraform init
+          terraform validate
 
       # - name: Debug over SSH (tmate)
       #   # if: ${{ failure() }}
