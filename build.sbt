@@ -47,7 +47,7 @@ lazy val webapp = project
       "reconnecting-websocket" -> "4.1.10",                                    // for fun-stack websockets, workaround for https://github.com/ScalablyTyped/Converter/issues/293 https://github.com/cornerman/mycelium/blob/6f40aa7018276a3281ce11f7047a6a3b9014bff6/build.sbt#74
       "setimmediate"           -> "1.0.5",                                     // polyfill for https://github.com/scala-js/scala-js-macrotask-executor
     ),
-    stIgnore                         ++= List(
+    stIgnore                         ++= Seq(
       "reconnecting-websocket",
       "snabbdom",
       "setimmediate",
