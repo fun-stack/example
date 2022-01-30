@@ -12,7 +12,7 @@ import boopickle.Default._
 import chameleon.ext.boopickle._
 
 object WsApiImpl extends WsApi[Handler.IOKleisli] {
-  private val ws = Fun.ws[String].get
+  private val ws = Fun.wsWithEvents[String].get
 
   def getNumber = Kleisli(_ => IO.pure(23))
 

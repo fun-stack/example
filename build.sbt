@@ -7,7 +7,7 @@ ThisBuild / scalaVersion := "2.13.8"
 val versions = new {
   val outwatch          = "1.0.0-RC5"
   val colibri           = "0.2.3"
-  val funStack          = "0.4.1"
+  val funStack          = "0.4.2"
   val tapir             = "0.19.3"
   val funPack           = "0.1.9"
   val boopickle         = "1.4.0"
@@ -49,7 +49,7 @@ lazy val webapp = project
     ),
     stIgnore                         ++= List(
       "reconnecting-websocket",
-      "snabbdom", // for outwatch, workaround for: https://github.com/ScalablyTyped/Converter/issues/293
+      "snabbdom",
       "setimmediate",
     ),
     Compile / npmDevDependencies     ++= Seq(

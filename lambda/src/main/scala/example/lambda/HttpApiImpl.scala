@@ -13,7 +13,7 @@ import boopickle.Default._
 import chameleon.ext.boopickle._
 
 object HttpApiImpl {
-  private val ws = Fun.ws[String].get
+  private val ws = Fun.wsWithEvents[String].get
 
   val booksListingImpl = HttpApi.booksListing.serverLogic[Handler.IOKleisli] { case (_, _) =>
     Kleisli { req =>
