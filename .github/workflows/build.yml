@@ -1,8 +1,8 @@
-name: Test
+name: Build
 on:
   push:
     branches:
-      - master
+      - test
   pull_request:
   workflow_dispatch:
 
@@ -14,9 +14,6 @@ jobs:
       - uses: actions/checkout@v2
       - uses: coursier/cache-action@v6
       - uses: olafurpg/setup-scala@v12
-
-      - name: Test
-        run: sbt test
 
       - name: Run fast/full-opt
         run: |
