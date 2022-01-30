@@ -1,6 +1,6 @@
 val versions = new {
   val outwatch = "1.0.0-RC5"
-  val colibri  = "0.2.2"
+  val colibri  = "0.2.3"
   val funStack = "0.4.1"
   val tapir    = "0.19.3"
   val funPack  = "0.1.4"
