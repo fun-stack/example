@@ -40,8 +40,6 @@ wait
 
 Now, the frontend can call the http server. Feel free to try and change your code and see how the page updates automatically.
 
-Alternatively, you can run your frontend against the real deployed backend: see file `web-client/webpack.config.dev.js`.
-
 #### Infos about webapp
 
 Webpack configuration: `webapp/webpack.config.dev.js`, `webapp/webpack.config.prod.js`
@@ -66,26 +64,27 @@ Webpack configuration: `lambda/webpack.config.dev.js`, `lambda/webpack.config.pr
 
 You have to do these steps only once.
 
-Create your s3-bucket for the terraform state (it needs to be a globally unique name, you can still change it in `terraform/terraform.tf`):
+Create an s3-bucket and dynamodb table for the terraform state (generates a `terraform/terraform.tf` file):
 
 ```sh
-# set your AWS_PROFILE
+# export AWS_PROFILE=<my-profile>
 ./initial_setup.sh
+# git add terraform/terraform.tf
 ```
 
 #### If you have a custom domain
 
-Set `domain = "example.com"` in `terraform/fun.tf`.
+Set your `domain` in `terraform/fun.tf`.
 
 Create a hosted zone in AWS for this custom domain.
-Either just register your domain in AWS directly and be done.
-Or create a hosted zone in AWS for your domain (then set the nameservers at your registrar to the values you get from the following command):
+Either just register your domain in AWS directly - then you do not need to do anything else here.
+Or create a hosted zone in AWS for your already owned domain:
 
 ```sh
 aws route53 create-hosted-zone --name "example.com" --caller-reference $(date +%s)
 ```
 
-If you need to register the nameservers with your own dns service you can list them again with these commands:
+For your already owned domain, you need point your domain registrar to the nameservers of this hosted zone. You need to do this where you bought the domain. Here is a command to print the nameserver IPs of the hosted zone again:
 
 ```sh
 HOSTED_ZONE_ID=$(aws route53 list-hosted-zones-by-name --dns-name "example.com" | jq -r ".HostedZones[0].Id")
