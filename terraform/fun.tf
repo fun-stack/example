@@ -59,28 +59,3 @@ module "example" {
   #   local_website_url = "http://localhost:12345" # auth can redirect to that website
   # }
 }
-
-# resource "aws_iam_role_policy_attachment" "http" {
-#   policy_arn = aws_iam_policy.http.arn
-#   role       = module.example.http_role.name
-# }
-
-# resource "aws_iam_policy" "http" {
-#   name = "${module.example.prefix}-http-policy"
-#   policy = <<EOF
-# {
-#     "Version": "2012-10-17",
-#     "Statement": [
-#         {
-#             "Effect": "Allow",
-#             "Action": [
-#               "dynamodb:*"
-#             ],
-#             "Resource": [
-#               "${aws_dynamodb_table.translation_cache.arn}"
-#             ]
-#         }
-#     ]
-# }
-# EOF
-#}
