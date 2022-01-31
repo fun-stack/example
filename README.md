@@ -1,6 +1,16 @@
 # Example
 
-This is your whole application. All code in scala. Infrastructure as terraform code (see `terraform` directory).
+This is your whole application. All code in scala. Infrastructure as terraform code.
+
+## Overview
+
+Three scala projects:
+- *lambda/*: backend code deployed as lambda function behind api gateway
+- *webapp/*: frontend code deployed to s3 bucket behind cloudfront
+- *api/*: shared code between lambda and webapp
+
+Terraform deployment:
+- *terraform/*: terraform code deploy backend and frontend to AWS.
 
 ## Requirements
 
@@ -31,6 +41,24 @@ wait
 Now, the frontend can call the http server. Feel free to try and change your code and see how the page updates automatically.
 
 Alternatively, you can run your frontend against the real deployed backend: see file `web-client/webpack.config.dev.js`.
+
+#### Infos about webapp
+
+Webpack configuration: `webapp/webpack.config.dev.js`, `webapp/webpack.config.prod.js`
+
+Postcss configuration (picked up by webpack): `webapp/postcss.config.js`
+
+Tailwind configuration (picked up by postcss): `webapp/tailwind.config.js`
+
+Template for index.html and css (picked up by webpack): `webapp/src/main/html/index.html`, `webapp/src/main/css/`
+
+Static assets folder (picked up by webpack): `webapp/assets/`
+
+Local development configuration for your webapp: `webapp/local/app_config.js`
+
+#### Infos about lambda
+
+Webpack configuration: `lambda/webpack.config.dev.js`, `lambda/webpack.config.prod.js`
 
 ## Deployment
 

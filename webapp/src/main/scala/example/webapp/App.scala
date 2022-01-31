@@ -5,6 +5,11 @@ import outwatch._
 import outwatch.dsl._
 
 object App {
+
+  // For styling, we use tailwindcss and daisyui:
+  // - https://tailwindcss.com/ - basic styles like p-5, space-x-2, mb-auto, ...
+  // - https://daisyui.com/ - based on tailwindcss with components like btn, navbar, footer, ...
+
   val pageHeader = {
     def link(name: String, page: Page): VDomModifier = {
       val styling = Page.current.map {
