@@ -1,0 +1,5 @@
+{
+  "devDependencies": {
+    "@fun-stack/lambda-server": "^0.1.11"
+  }
+}

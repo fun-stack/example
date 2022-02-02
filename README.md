@@ -19,7 +19,6 @@ Terraform deployment:
 - yarn
 - node (>= 10.13.0)
 - terraform (>= 1.0.0): https://www.terraform.io/downloads.html
-- lambda-server: yarn add --global @fun-stack/lambda-server
 
 ## Development
 
@@ -33,9 +32,12 @@ Go to `http://localhost:12345` in your browser. You will see your app there.
 Additionally, run your backend lambda locally (it automatically watches for changes):
 
 ```
-lambda-server http lambda/target/scala-2.13/scalajs-bundler/main/lambda-fastopt.js handlerHttp &
-lambda-server ws lambda/target/scala-2.13/scalajs-bundler/main/lambda-fastopt.js handlerWs &
-wait
+yarn install
+```
+
+```
+npx lambda-server http lambda/target/scala-2.13/scalajs-bundler/main/lambda-fastopt.js handlerHttp &
+npx lambda-server ws lambda/target/scala-2.13/scalajs-bundler/main/lambda-fastopt.js handlerWs &
 ```
 
 Now, the frontend can call the http server. Feel free to try and change your code and see how the page updates automatically.
