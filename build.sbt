@@ -3,7 +3,6 @@ Global / onChangedBuildSource := IgnoreSourceChanges // not working well with we
 ThisBuild / version      := "0.1.0-SNAPSHOT"
 ThisBuild / scalaVersion := "2.13.8"
 
-
 val versions = new {
   val outwatch          = "1.0.0-RC5"
   val colibri           = "0.2.3"
