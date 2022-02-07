@@ -12,4 +12,3 @@ module.exports = webDev({
     "src" // src for source maps
   ]
 });
-

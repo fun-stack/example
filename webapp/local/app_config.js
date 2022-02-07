@@ -1,16 +1,20 @@
 window.AppConfig = {
-  "ws": {
-    "allowUnauthenticated": true,
-    "url": "ws://localhost:8081"
-  },
-  "http": {
-    "allowUnauthenticated": true,
-    "url": "http://localhost:8080"
-  },
-  "environment": {},
-  "region": "dummy-region",
   "stage": "dummy-stage",
   "website": {
-    "url": "http://localhost:12345"
+    "url": "http://localhost:12345",
+    "environment": {},
+  },
+  "http": {
+    "url": "http://localhost:8080",
+    "allowUnauthenticated": true
+  },
+  "ws": {
+    "url": "ws://localhost:8081",
+    "allowUnauthenticated": true
+  },
+  "auth": {
+    "url": "http://localhost:8082",
+    "clientId": "fun",
+    "apiScope": "profile"
   }
 }

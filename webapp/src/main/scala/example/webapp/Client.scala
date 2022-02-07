@@ -1,22 +1,24 @@
 package example.webapp
 
-import boopickle.Default._
 import cats.effect.IO
-import chameleon.ext.boopickle._
-import example.api.{HttpApi, WsApi}
-import funstack.web.Fun
+import example.api.{Api, StreamsApi}
+import colibri.Observable
 
+import sloth.Client
+import funstack.web.Fun
 import java.nio.ByteBuffer
+import boopickle.Default._
+import chameleon.ext.boopickle._
 
 object WsClient {
-  val ws     = Fun.wsWithEvents[String].get
-  val client = ws.client[ByteBuffer]
+  val client       = Client(Fun.ws.transport[ByteBuffer])
+  val api: Api[IO] = client.wire[Api[IO]]
 
-  val api = client.wire[WsApi[IO]]
+  val streamsClient                      = Client(Fun.ws.streamsTransport[ByteBuffer])
+  val streamsApi: StreamsApi[Observable] = streamsClient.wire[StreamsApi[Observable]]
 }
 
 object HttpClient {
-  val http = Fun.http.get
-
-  val booksListing = http.client(HttpApi.booksListing)
+  val client       = Client(Fun.http.transport[ByteBuffer])
+  val api: Api[IO] = client.wire[Api[IO]]
 }

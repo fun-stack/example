@@ -3,6 +3,8 @@ package example.webapp
 import colibri.Subject
 import outwatch._
 import outwatch.dsl._
+import funstack.web.Fun
+import funstack.web.tapir
 
 object App {
 
@@ -29,7 +31,10 @@ object App {
       ),
       div(
         cls := "ml-auto",
-        Auth.loginControls,
+        Fun.auth.currentUser.map {
+          case Some(user) => a(cls := "btn btn-primary", s"Logout (${user.info.email})", href := Fun.auth.logoutUrl)
+          case None       => a(cls := "btn btn-primary", "Login", href := Fun.auth.loginUrl)
+        },
       ),
     )
   }
@@ -39,8 +44,8 @@ object App {
       cls := "p-5 footer bg-base-200 text-base-content footer-center",
       div(
         cls := "flex flex-row space-x-4",
-        a(cls := "link link-hover", "About us"),
-        a(cls := "link link-hover", "Contact"),
+        a(cls := "link link-hover", href := "#", "About us"),
+        a(cls := "link link-hover", href := "#", "Contact"),
       ),
     )
 
@@ -72,26 +77,53 @@ object App {
 object Components {
   import example.api.HttpApi
 
-  val httpApi = div(
-    // example of rendering an async call directly
-    // https://outwatch.github.io/docs/readme.html#rendering-futures
-    // https://outwatch.github.io/docs/readme.html#rendering-async-effects
-    b("My books: "),
-    HttpClient
-      .booksListing((HttpApi.BooksFromYear("drama", 2011), 10))
-      .map(_.toString),
-  )
-
-  val websocketApi = {
+  val httpApi = {
     val currentRandomNumber = Subject.behavior[Option[Int]](None)
 
-    VDomModifier(
+    div(
+      cls := "text-lg",
+      "Http",
       div(
         // example of rendering an async call directly
         // https://outwatch.github.io/docs/readme.html#rendering-futures
         // https://outwatch.github.io/docs/readme.html#rendering-async-effects
-        b("Get Number: "),
-        WsClient.api.getNumber,
+        b("My books: "),
+        tapir.Fun.http
+          .client(HttpApi.booksListing)((HttpApi.BooksFromYear("drama", 2011), 10))
+          .map(_.toString),
+      ),
+      div(
+        // example of rendering an async call directly
+        // https://outwatch.github.io/docs/readme.html#rendering-futures
+        // https://outwatch.github.io/docs/readme.html#rendering-async-effects
+        b("Number: "),
+        HttpClient.api.numberToString(3),
+      ),
+      div(
+        // https://outwatch.github.io/docs/readme.html#dynamic-content
+        b("Call: "),
+        button(
+          cls := "btn btn-primary btn-sm",
+          "New Random Number",
+          onClick.useAsync(HttpClient.api.getRandomNumber).map(Some.apply) --> currentRandomNumber,
+        ),
+        currentRandomNumber,
+      ),
+    )
+  }
+
+  val websocketApi = {
+    val currentRandomNumber = Subject.behavior[Option[Int]](None)
+
+    div(
+      cls := "text-lg",
+      "Ws",
+      div(
+        // example of rendering an async call directly
+        // https://outwatch.github.io/docs/readme.html#rendering-futures
+        // https://outwatch.github.io/docs/readme.html#rendering-async-effects
+        b("Number: "),
+        WsClient.api.numberToString(3),
       ),
       div(
         // https://outwatch.github.io/docs/readme.html#dynamic-content
@@ -105,8 +137,8 @@ object Components {
       ),
       div(
         // incoming events from the websocket
-        b("Events:"),
-        WsClient.ws.events.map(div(_)).scanToList,
+        b("Events (ws):"),
+        WsClient.streamsApi.logs.map(div(_)).scanToList,
       ),
     )
   }

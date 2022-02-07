@@ -1,14 +1,16 @@
+import scalajsbundler.NpmDependencies
+
 Global / onChangedBuildSource := IgnoreSourceChanges // not working well with webpack devserver
 
 ThisBuild / version      := "0.1.0-SNAPSHOT"
 ThisBuild / scalaVersion := "2.13.8"
 
 val versions = new {
-  val outwatch          = "1.0.0-RC5"
-  val colibri           = "0.2.5"
-  val funStack          = "0.4.4"
-  val tapir             = "0.19.4"
-  val funPack           = "0.1.10"
+  val outwatch          = "1.0.0-RC6"
+  val colibri           = "0.2.6"
+  val funStack          = "0.5.0"
+  val tapir             = "1.0.0-M1"
+  val funPack           = "0.2.0"
   val boopickle         = "1.4.0"
   val macrotaskExecutor = "1.0.0"
 }
@@ -37,6 +39,7 @@ lazy val webapp = project
     libraryDependencies              ++= Seq(
       "io.github.outwatch"   %%% "outwatch"                    % versions.outwatch,
       "io.github.fun-stack"  %%% "fun-stack-web"               % versions.funStack,
+      "io.github.fun-stack"  %%% "fun-stack-web-tapir"         % versions.funStack,
       "com.github.cornerman" %%% "colibri-router"              % versions.colibri,
       "io.suzaku"            %%% "boopickle"                   % versions.boopickle,
       "org.scala-js"         %%% "scala-js-macrotask-executor" % versions.macrotaskExecutor,
@@ -44,20 +47,21 @@ lazy val webapp = project
     Compile / npmDependencies        ++= Seq(
       "snabbdom"               -> "github:outwatch/snabbdom.git#semver:0.7.5", // for outwatch, workaround for: https://github.com/ScalablyTyped/Converter/issues/293
       "reconnecting-websocket" -> "4.1.10",                                    // for fun-stack websockets, workaround for https://github.com/ScalablyTyped/Converter/issues/293 https://github.com/cornerman/mycelium/blob/6f40aa7018276a3281ce11f7047a6a3b9014bff6/build.sbt#74
+      "jwt-decode"             -> "3.1.2",                                     // for fun-stack auth, workaround for https://github.com/ScalablyTyped/Converter/issues/293 https://github.com/cornerman/mycelium/blob/6f40aa7018276a3281ce11f7047a6a3b9014bff6/build.sbt#74
       "setimmediate"           -> "1.0.5",                                     // polyfill for https://github.com/scala-js/scala-js-macrotask-executor
     ),
     stIgnore                         ++= List(
       "reconnecting-websocket",
       "snabbdom",
       "setimmediate",
+      "jwt-decode",
     ),
     Compile / npmDevDependencies     ++= Seq(
       "@fun-stack/fun-pack" -> versions.funPack, // sane defaults for webpack development and production, see webpack.config.*.js
-      "autoprefixer"        -> "10.2.5",
-      "postcss"             -> "8.4.5",
-      "postcss-loader"      -> "4.2.0",
-      "tailwindcss"         -> "3.0.10",
-      "daisyui"             -> "1.25.4",
+      "autoprefixer"        -> "^10.2.5",
+      "postcss"             -> "^8.4.5",
+      "tailwindcss"         -> "^3.0.10",
+      "daisyui"             -> "^1.25.4",
     ),
     scalaJSUseMainModuleInitializer   := true,
     webpackDevServerPort              := 12345,
@@ -80,7 +84,6 @@ lazy val api = project
     libraryDependencies ++= Seq(
       "com.softwaremill.sttp.tapir" %%% "tapir-core"       % versions.tapir,
       "com.softwaremill.sttp.tapir" %%% "tapir-json-circe" % versions.tapir,
-      "io.suzaku"                   %%% "boopickle"        % versions.boopickle,
     ),
   )
 
@@ -94,9 +97,12 @@ lazy val lambda = project
   .settings(commonSettings, jsSettings)
   .settings(
     libraryDependencies              ++= Seq(
-      "io.github.fun-stack" %%% "fun-stack-lambda-ws"         % versions.funStack,
-      "io.github.fun-stack" %%% "fun-stack-lambda-http"       % versions.funStack,
+      "io.github.fun-stack" %%% "fun-stack-lambda-ws-event-authorizer" % versions.funStack,
+      "io.github.fun-stack" %%% "fun-stack-lambda-ws-rpc"         % versions.funStack,
+      "io.github.fun-stack" %%% "fun-stack-lambda-http-rpc"       % versions.funStack,
+      "io.github.fun-stack" %%% "fun-stack-lambda-http-api-tapir" % versions.funStack,
       "io.github.fun-stack" %%% "fun-stack-backend"           % versions.funStack,
+      "io.suzaku"           %%% "boopickle"                   % versions.boopickle,
       "org.scala-js"        %%% "scala-js-macrotask-executor" % versions.macrotaskExecutor,
     ),
     Compile / npmDependencies        ++= Seq(
@@ -117,10 +123,15 @@ lazy val lambda = project
   )
 
 addCommandAlias("prod", "fullOptJS/webpack")
-addCommandAlias("dev", "devInit; devWatchAll; devDestroy")
-addCommandAlias("devf", "devInitFrontend; devWatchFrontend; devDestroy") // compile only frontend
-addCommandAlias("devInitFrontend", "; webapp/fastOptJS/startWebpackDevServer; webapp/fastOptJS/webpack")
-addCommandAlias("devInit", "; lambda/fastOptJS/webpack; devInitFrontend")
+addCommandAlias("prodf", "webapp/fullOptJS/webpack")
+addCommandAlias("prodb", "lambda/fullOptJS/webpack")
+addCommandAlias("dev", "devInitAll; devWatchAll; devDestroyFrontend")
+addCommandAlias("devf", "devInitFrontend; devWatchFrontend; devDestroyFrontend") // compile only frontend
+addCommandAlias("devb", "devInitBackend; devWatchBackend") // compile only backend
+addCommandAlias("devInitBackend", "lambda/fastOptJS/webpack")
+addCommandAlias("devInitFrontend", "webapp/fastOptJS/startWebpackDevServer; webapp/fastOptJS/webpack")
+addCommandAlias("devInitAll", "devInitFrontend; devInitBackend")
 addCommandAlias("devWatchFrontend", "~; webapp/fastOptJS")
+addCommandAlias("devWatchBackend", "~; lambda/fastOptJS")
 addCommandAlias("devWatchAll", "~; lambda/fastOptJS; webapp/fastOptJS")
-addCommandAlias("devDestroy", "webapp/fastOptJS/stopWebpackDevServer")
+addCommandAlias("devDestroyFrontend", "webapp/fastOptJS/stopWebpackDevServer")

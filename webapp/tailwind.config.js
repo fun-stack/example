@@ -1,5 +1,5 @@
 module.exports = {
-  content: ["./*/*.html", "./*/*.js"],
+  content: ["./*.js"],
   plugins: [
     require('daisyui'),
   ],

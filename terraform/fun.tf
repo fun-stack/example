@@ -4,7 +4,7 @@ locals {
 
 module "example" {
   source  = "fun-stack/fun/aws"
-  version = "0.4.0"
+  version = "0.5.0"
 
   stage = terraform.workspace
 
@@ -15,38 +15,61 @@ module "example" {
   # }
 
   website = {
-    source_dir        = "../webapp/target/scala-2.13/scalajs-bundler/main/dist"
-    cache_files_regex = ".*-hashed.(js|css)"
+    source_dir                  = "../webapp/target/scala-2.13/scalajs-bundler/main/dist"
+    cache_files_regex           = ".*-hashed.(js|css)"
+    content_security_policy     = "default-src 'self'; connect-src https://* wss://*; frame-ancestors 'none'; frame-src 'none';"
     rewrites = {
       "robots.txt" = "robots.deny.txt" # local.is_prod ? "robots.allow.txt" : "robots.deny.txt"
     }
   }
 
   http = {
-    source_dir            = "../lambda/target/scala-2.13/scalajs-bundler/main/dist"
-    handler               = "main.handlerHttp"
-    runtime               = "nodejs14.x"
-    timeout               = 30
-    memory_size           = 256
-    allow_unauthenticated = true
-    environment = {
-      NODE_OPTIONS = "--enable-source-maps"
+    api = {
+      source_dir  = "../lambda/target/scala-2.13/scalajs-bundler/main/dist"
+      handler     = "main.httpApi"
+      runtime     = "nodejs14.x"
+      memory_size = 256
+      environment = {
+        NODE_OPTIONS = "--enable-source-maps"
+      }
+    }
+
+    rpc = {
+      source_dir  = "../lambda/target/scala-2.13/scalajs-bundler/main/dist"
+      handler     = "main.httpRpc"
+      runtime     = "nodejs14.x"
+      memory_size = 256
+      environment = {
+        NODE_OPTIONS = "--enable-source-maps"
+      }
     }
   }
 
   ws = {
-    source_dir            = "../lambda/target/scala-2.13/scalajs-bundler/main/dist"
-    handler               = "main.handlerWs"
-    runtime               = "nodejs14.x"
-    timeout               = 30
-    memory_size           = 256
-    allow_unauthenticated = true
-    environment = {
-      NODE_OPTIONS = "--enable-source-maps"
+    rpc = {
+      source_dir  = "../lambda/target/scala-2.13/scalajs-bundler/main/dist"
+      handler     = "main.wsRpc"
+      runtime     = "nodejs14.x"
+      memory_size = 256
+      environment = {
+        NODE_OPTIONS = "--enable-source-maps"
+      }
+    }
+
+    event_authorizer = {
+      source_dir  = "../lambda/target/scala-2.13/scalajs-bundler/main/dist"
+      handler     = "main.wsEventAuth"
+      runtime     = "nodejs14.x"
+      memory_size = 256
+      environment = {
+        NODE_OPTIONS = "--enable-source-maps"
+      }
     }
   }
 
   auth = {
+    image_file = "auth.jpg"
+    css_file   = "auth.css"
   }
 
   # budget = {
@@ -55,7 +78,7 @@ module "example" {
   # }
 
   # dev_setup = {
-  #   enabled = !local.is_prod
-  #   local_website_url = "http://localhost:12345" # auth can redirect to that website
+  #   # enabled           = !local.is_prod
+  #   local_website_url = "http://localhost:12345" # auth can redirect to that website, cors of http api allows origin
   # }
 }

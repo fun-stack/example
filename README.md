@@ -29,18 +29,24 @@ sbt dev
 
 Go to `http://localhost:12345` in your browser. You will see your app there.
 
-Additionally, run your backend lambda locally (it automatically watches for changes):
+But auth, http and websocket connections are failing now. Therefore, you can run your backend lambda locally (it automatically watches for changes) and a local auth server:
 
-```
+```sh
 yarn install
 ```
 
-```
-npx lambda-server http lambda/target/scala-2.13/scalajs-bundler/main/lambda-fastopt.js handlerHttp &
-npx lambda-server ws lambda/target/scala-2.13/scalajs-bundler/main/lambda-fastopt.js handlerWs &
+```sh
+npx fun-local-env \
+    --auth \
+    --ws \
+    --http \
+    --http-api lambda/target/scala-2.13/scalajs-bundler/main/lambda-fastopt.js httpApi \
+    --http-rpc lambda/target/scala-2.13/scalajs-bundler/main/lambda-fastopt.js httpRpc \
+    --ws-rpc lambda/target/scala-2.13/scalajs-bundler/main/lambda-fastopt.js wsRpc \
+    --ws-event-authorizer lambda/target/scala-2.13/scalajs-bundler/main/lambda-fastopt.js wsEventAuth
 ```
 
-Now, the frontend can call the http server. Feel free to try and change your code and see how the page updates automatically.
+Now, the frontend can call the backend. Feel free to try and change your code and see how the page updates automatically.
 
 #### Infos about webapp
 
@@ -123,3 +129,15 @@ terraform workspace switch <my-workspace>
 ```
 
 If you are not on the `default` terraform workspace, the app is available under: `https://<my-workspace>.env.example.com`.
+
+## Links
+
+SDK library to communicate with the infrastructure in your code:
+- Fun SDK Scala: [sdk-scala](https://github.com/fun-stack/sdk-scala)
+
+Terraform module for the corresponding AWS infrastructure:
+- Fun Terraform Module: [terraform-aws-fun](https://github.com/fun-stack/terraform-aws-fun)
+
+See local development module for mocking the AWS infrastructure locally:
+- Fun Local Environment: [local-env](https://github.com/fun-stack/local-env)
+

@@ -1,13 +1,14 @@
 package example.webapp
 
-import cats.effect.IO
+import cats.implicits._
+import cats.effect.{IO, IOApp}
 import outwatch.OutWatch
 
-object Main {
+import funstack.web.Fun
+
+object Main extends IOApp.Simple {
   LoadCss()
 
-  implicit val executionContext = org.scalajs.macrotaskexecutor.MacrotaskExecutor
-
-  def main(args: Array[String]): Unit =
-    OutWatch.renderInto[IO]("#app", App.layout).unsafeRunSync()
+  override def run =
+    Fun.ws.start *> OutWatch.renderInto[IO]("#app", App.layout)
 }
