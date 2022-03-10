@@ -22,31 +22,16 @@ Terraform deployment:
 
 ## Development
 
-Compile the application and run a development webserver (it automatically watches for changes):
+Compile the application and run a development webserver and lambda servers:
 ```sh
-sbt dev
+./dev.sh
 ```
 
 Go to `http://localhost:12345` in your browser. You will see your app there.
 
-But auth, http and websocket connections are failing now. Therefore, you can run your backend lambda locally (it automatically watches for changes) and a local auth server:
+Changing any source file will automatically recompile and hot-reload the website and lambda servers.
 
-```sh
-yarn install
-```
-
-```sh
-npx fun-local-env \
-    --auth \
-    --ws \
-    --http \
-    --http-api lambda/target/scala-2.13/scalajs-bundler/main/lambda-fastopt.js httpApi \
-    --http-rpc lambda/target/scala-2.13/scalajs-bundler/main/lambda-fastopt.js httpRpc \
-    --ws-rpc lambda/target/scala-2.13/scalajs-bundler/main/lambda-fastopt.js wsRpc \
-    --ws-event-authorizer lambda/target/scala-2.13/scalajs-bundler/main/lambda-fastopt.js wsEventAuth
-```
-
-Now, the frontend can call the backend. Feel free to try and change your code and see how the page updates automatically.
+To know about the details, have a look at [dev.sh](dev.sh)
 
 #### Infos about webapp
 
