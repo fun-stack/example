@@ -8,7 +8,7 @@ ThisBuild / scalaVersion := "2.13.8"
 val versions = new {
   val outwatch          = "1.0.0-RC6"
   val colibri           = "0.2.6"
-  val funStack          = "0.5.0"
+  val funStack          = "0.5.1"
   val tapir             = "1.0.0-M1"
   val funPack           = "0.2.0"
   val boopickle         = "1.4.0"
@@ -98,12 +98,12 @@ lazy val lambda = project
   .settings(
     libraryDependencies              ++= Seq(
       "io.github.fun-stack" %%% "fun-stack-lambda-ws-event-authorizer" % versions.funStack,
-      "io.github.fun-stack" %%% "fun-stack-lambda-ws-rpc"         % versions.funStack,
-      "io.github.fun-stack" %%% "fun-stack-lambda-http-rpc"       % versions.funStack,
-      "io.github.fun-stack" %%% "fun-stack-lambda-http-api-tapir" % versions.funStack,
-      "io.github.fun-stack" %%% "fun-stack-backend"           % versions.funStack,
-      "io.suzaku"           %%% "boopickle"                   % versions.boopickle,
-      "org.scala-js"        %%% "scala-js-macrotask-executor" % versions.macrotaskExecutor,
+      "io.github.fun-stack" %%% "fun-stack-lambda-ws-rpc"              % versions.funStack,
+      "io.github.fun-stack" %%% "fun-stack-lambda-http-rpc"            % versions.funStack,
+      "io.github.fun-stack" %%% "fun-stack-lambda-http-api-tapir"      % versions.funStack,
+      "io.github.fun-stack" %%% "fun-stack-backend"                    % versions.funStack,
+      "io.suzaku"           %%% "boopickle"                            % versions.boopickle,
+      "org.scala-js"        %%% "scala-js-macrotask-executor"          % versions.macrotaskExecutor,
     ),
     Compile / npmDependencies        ++= Seq(
       "setimmediate" -> "1.0.5", // polyfill for https://github.com/scala-js/scala-js-macrotask-executor
@@ -127,7 +127,7 @@ addCommandAlias("prodf", "webapp/fullOptJS/webpack")
 addCommandAlias("prodb", "lambda/fullOptJS/webpack")
 addCommandAlias("dev", "devInitAll; devWatchAll; devDestroyFrontend")
 addCommandAlias("devf", "devInitFrontend; devWatchFrontend; devDestroyFrontend") // compile only frontend
-addCommandAlias("devb", "devInitBackend; devWatchBackend") // compile only backend
+addCommandAlias("devb", "devInitBackend; devWatchBackend")                       // compile only backend
 addCommandAlias("devInitBackend", "lambda/fastOptJS/webpack")
 addCommandAlias("devInitFrontend", "webapp/fastOptJS/startWebpackDevServer; webapp/fastOptJS/webpack")
 addCommandAlias("devInitAll", "devInitFrontend; devInitBackend")
