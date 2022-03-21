@@ -12,7 +12,6 @@ val versions = new {
   val tapir             = "1.0.0-M1"
   val funPack           = "0.2.0"
   val boopickle         = "1.4.0"
-  val macrotaskExecutor = "1.0.0"
 }
 
 lazy val commonSettings = Seq(
@@ -27,6 +26,13 @@ lazy val jsSettings = Seq(
   libraryDependencies += "org.portable-scala" %%% "portable-scala-reflect" % "1.1.1",
 )
 
+lazy val scalaJsMacrotaskExecutor = Seq(
+  // https://github.com/scala-js/scala-js-macrotask-executor
+  libraryDependencies       += "org.scala-js" %%% "scala-js-macrotask-executor" % "1.0.0",
+  Compile / npmDependencies += "setimmediate"  -> "1.0.5", // polyfill
+  stIgnore                  += "setimmediate",
+)
+
 lazy val webapp = project
   .enablePlugins(
     ScalaJSPlugin,
@@ -34,7 +40,7 @@ lazy val webapp = project
     ScalablyTypedConverterPlugin,
   )
   .dependsOn(api)
-  .settings(commonSettings, jsSettings)
+  .settings(commonSettings, jsSettings, scalaJsMacrotaskExecutor)
   .settings(
     libraryDependencies              ++= Seq(
       "io.github.outwatch"   %%% "outwatch"                    % versions.outwatch,
@@ -42,18 +48,15 @@ lazy val webapp = project
       "io.github.fun-stack"  %%% "fun-stack-web-tapir"         % versions.funStack,
       "com.github.cornerman" %%% "colibri-router"              % versions.colibri,
       "io.suzaku"            %%% "boopickle"                   % versions.boopickle,
-      "org.scala-js"         %%% "scala-js-macrotask-executor" % versions.macrotaskExecutor,
     ),
     Compile / npmDependencies        ++= Seq(
       "snabbdom"               -> "github:outwatch/snabbdom.git#semver:0.7.5", // for outwatch, workaround for: https://github.com/ScalablyTyped/Converter/issues/293
       "reconnecting-websocket" -> "4.1.10",                                    // for fun-stack websockets, workaround for https://github.com/ScalablyTyped/Converter/issues/293 https://github.com/cornerman/mycelium/blob/6f40aa7018276a3281ce11f7047a6a3b9014bff6/build.sbt#74
       "jwt-decode"             -> "3.1.2",                                     // for fun-stack auth, workaround for https://github.com/ScalablyTyped/Converter/issues/293 https://github.com/cornerman/mycelium/blob/6f40aa7018276a3281ce11f7047a6a3b9014bff6/build.sbt#74
-      "setimmediate"           -> "1.0.5",                                     // polyfill for https://github.com/scala-js/scala-js-macrotask-executor
     ),
     stIgnore                         ++= List(
       "reconnecting-websocket",
       "snabbdom",
-      "setimmediate",
       "jwt-decode",
     ),
     Compile / npmDevDependencies     ++= Seq(
@@ -94,7 +97,7 @@ lazy val lambda = project
     ScalablyTypedConverterPlugin,
   )
   .dependsOn(api)
-  .settings(commonSettings, jsSettings)
+  .settings(commonSettings, jsSettings, scalaJsMacrotaskExecutor)
   .settings(
     libraryDependencies              ++= Seq(
       "io.github.fun-stack" %%% "fun-stack-lambda-ws-event-authorizer" % versions.funStack,
@@ -103,14 +106,11 @@ lazy val lambda = project
       "io.github.fun-stack" %%% "fun-stack-lambda-http-api-tapir"      % versions.funStack,
       "io.github.fun-stack" %%% "fun-stack-backend"                    % versions.funStack,
       "io.suzaku"           %%% "boopickle"                            % versions.boopickle,
-      "org.scala-js"        %%% "scala-js-macrotask-executor"          % versions.macrotaskExecutor,
     ),
     Compile / npmDependencies        ++= Seq(
-      "setimmediate" -> "1.0.5", // polyfill for https://github.com/scala-js/scala-js-macrotask-executor
       "aws-sdk"      -> "2.892.0",
     ),
     stIgnore                         ++= List(
-      "setimmediate",
       "aws-sdk",
     ),
     Compile / npmDevDependencies     ++= Seq(
