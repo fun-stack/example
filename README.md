@@ -27,7 +27,7 @@ Watch and compile the application. Runs a webserver for the website, http and we
 ./dev.sh
 ```
 
-You will see your locally running full-stack app at `http://localhost:12345`.
+You will see your locally running full-stack app at <http://localhost:12345>.
 
 Changing any source file will automatically recompile and hot-reload the website and backends.
 
