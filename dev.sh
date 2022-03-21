@@ -8,10 +8,15 @@ echo "Checking for yarn..." && yarn --version
 echo "Checking for sbt..." && sbt --script-version
 
 echo "Checking if ports can be opened..."
-nc -z 127.0.0.1  8080 &>/dev/null && (echo "Port 8080 is already in use";  exit 1)
-nc -z 127.0.0.1  8081 &>/dev/null && (echo "Port 8081 is already in use";  exit 1)
-nc -z 127.0.0.1  8082 &>/dev/null && (echo "Port 8082 is already in use";  exit 1)
-nc -z 127.0.0.1 12345 &>/dev/null && (echo "Port 12345 is already in use"; exit 1)
+PORT_HTTP=8080
+PORT_WS=8081
+PORT_AUTH=8082
+PORT_FRONTEND=12345
+
+nc -z 127.0.0.1  $PORT_HTTP     &>/dev/null && (echo "Port $PORT_HTTP is already in use";     exit 1)
+nc -z 127.0.0.1  $PORT_WS      &>/dev/null && (echo "Port $PORT_WS is already in use";      exit 1)
+nc -z 127.0.0.1  $PORT_AUTH     &>/dev/null && (echo "Port $PORT_AUTH is already in use";     exit 1)
+nc -z 127.0.0.1  $PORT_FRONTEND &>/dev/null && (echo "Port $PORT_FRONTEND is already in use"; exit 1)
 
 
 prefix() (
@@ -26,9 +31,9 @@ prefix() (
 yarn install
 
 npx fun-local-env \
-    --auth 8082 \
-    --ws 8001 \
-    --http 8080 \
+    --auth $PORT_AUTH \
+    --ws $PORT_WS \
+    --http $PORT_HTTP \
     --http-api lambda/target/scala-2.13/scalajs-bundler/main/lambda-fastopt.js httpApi \
     --http-rpc lambda/target/scala-2.13/scalajs-bundler/main/lambda-fastopt.js httpRpc \
     --ws-rpc lambda/target/scala-2.13/scalajs-bundler/main/lambda-fastopt.js wsRpc \
