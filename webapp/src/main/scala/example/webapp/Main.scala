@@ -1,6 +1,5 @@
 package example.webapp
 
-import cats.implicits._
 import cats.effect.{IO, IOApp}
 import outwatch.OutWatch
 
