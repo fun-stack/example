@@ -22,16 +22,16 @@ Terraform deployment:
 
 ## Development
 
-Compile the application and run a development webserver and lambda servers:
+Watch and compile the application. Runs a webserver for the website, http and websocket servers for your backend lambdas, and a local auth server:
 ```sh
 ./dev.sh
 ```
 
-Go to `http://localhost:12345` in your browser. You will see your app there.
+You will see your locally running full-stack app at `http://localhost:12345`.
 
-Changing any source file will automatically recompile and hot-reload the website and lambda servers.
+Changing any source file will automatically recompile and hot-reload the website and backends.
 
-To know about the details, have a look at [dev.sh](dev.sh)
+To know more about the details, have a look at [dev.sh](dev.sh)
 
 #### Infos about webapp
 
