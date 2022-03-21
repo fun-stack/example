@@ -1,6 +1,6 @@
 # Example
 
-This is your whole application. All code in scala. Infrastructure as terraform code.
+This is your whole application. All code in scala. Infrastructure as terraform code. To start a new project, simply download or clone this example.
 
 ## Overview
 
