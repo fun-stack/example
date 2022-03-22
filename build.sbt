@@ -6,12 +6,12 @@ ThisBuild / version      := "0.1.0-SNAPSHOT"
 ThisBuild / scalaVersion := "2.13.8"
 
 val versions = new {
-  val outwatch          = "1.0.0-RC6"
-  val colibri           = "0.2.6"
-  val funStack          = "0.5.2"
-  val tapir             = "1.0.0-M1"
-  val funPack           = "0.2.0"
-  val boopickle         = "1.4.0"
+  val outwatch  = "1.0.0-RC6"
+  val colibri   = "0.2.6"
+  val funStack  = "0.5.2"
+  val tapir     = "1.0.0-M3"
+  val funPack   = "0.2.0"
+  val boopickle = "1.4.0"
 }
 
 lazy val commonSettings = Seq(
@@ -43,11 +43,11 @@ lazy val webapp = project
   .settings(commonSettings, jsSettings, scalaJsMacrotaskExecutor)
   .settings(
     libraryDependencies              ++= Seq(
-      "io.github.outwatch"   %%% "outwatch"                    % versions.outwatch,
-      "io.github.fun-stack"  %%% "fun-stack-web"               % versions.funStack,
-      "io.github.fun-stack"  %%% "fun-stack-web-tapir"         % versions.funStack,
-      "com.github.cornerman" %%% "colibri-router"              % versions.colibri,
-      "io.suzaku"            %%% "boopickle"                   % versions.boopickle,
+      "io.github.outwatch"   %%% "outwatch"            % versions.outwatch,
+      "io.github.fun-stack"  %%% "fun-stack-web"       % versions.funStack,
+      "io.github.fun-stack"  %%% "fun-stack-web-tapir" % versions.funStack,
+      "com.github.cornerman" %%% "colibri-router"      % versions.colibri,
+      "io.suzaku"            %%% "boopickle"           % versions.boopickle,
     ),
     Compile / npmDependencies        ++= Seq(
       "snabbdom"               -> "github:outwatch/snabbdom.git#semver:0.7.5", // for outwatch, workaround for: https://github.com/ScalablyTyped/Converter/issues/293
@@ -108,7 +108,7 @@ lazy val lambda = project
       "io.suzaku"           %%% "boopickle"                            % versions.boopickle,
     ),
     Compile / npmDependencies        ++= Seq(
-      "aws-sdk"      -> "2.892.0",
+      "aws-sdk" -> "2.892.0",
     ),
     stIgnore                         ++= List(
       "aws-sdk",
