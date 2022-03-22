@@ -19,13 +19,13 @@ object Entrypoints {
 
   @js.annotation.JSExportTopLevel("httpRpc")
   val httpRpc = http.rpc.Handler.handleKleisli(
-    Router[ByteBuffer, http.rpc.Handler.IOKleisli](ApiRequestLogger)
+    Router[ByteBuffer, http.rpc.Handler.IOKleisli](new ApiRequestLogger[http.rpc.Handler.IOKleisli])
       .route[Api[apigateway.Handler.IOKleisli]](ApiImpl),
   )
 
   @js.annotation.JSExportTopLevel("wsRpc")
   val wsRpc = ws.rpc.Handler.handleKleisli(
-    Router[ByteBuffer, ws.rpc.Handler.IOKleisli](ApiRequestLogger)
+    Router[ByteBuffer, ws.rpc.Handler.IOKleisli](new ApiRequestLogger[ws.rpc.Handler.IOKleisli])
       .route[Api[apigateway.Handler.IOKleisli]](ApiImpl),
   )
 

@@ -1,15 +1,16 @@
 package example.lambda
 
-import funstack.lambda.http
+import cats.Functor
+import cats.data.Kleisli
 import sloth.LogHandler
 
-object ApiRequestLogger extends LogHandler[http.rpc.Handler.IOKleisli] {
+class ApiRequestLogger[X[_] <: Kleisli[X, _, _]: Functor] extends LogHandler[X] {
   implicit val executionContext = org.scalajs.macrotaskexecutor.MacrotaskExecutor
-  def logRequest[A, T](
+  def logRequest[ARG, T](
     path: List[String],
-    argumentObject: A,
-    result: http.rpc.Handler.IOKleisli[T],
-  ): http.rpc.Handler.IOKleisli[T] = {
+    argumentObject: ARG,
+    result: Kleisli[X, _, T],
+  ): Kleisli[X, _, T] = {
     println(s"-> ${fansi.Color.Yellow(path.mkString("."))}(${argumentObject})")
     result.tapWith { (_, res) =>
       print(s"<- ")
