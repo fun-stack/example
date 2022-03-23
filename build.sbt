@@ -8,7 +8,6 @@ val versions = new {
   val colibri   = "0.2.6"
   val funStack  = "0.5.2"
   val tapir     = "1.0.0-M1"
-  val funPack   = "0.2.0"
   val boopickle = "1.4.0"
   val pprint    = "0.7.2"
 }
@@ -32,6 +31,11 @@ lazy val scalaJsMacrotaskExecutor = Seq(
   stIgnore                  += "setimmediate",
 )
 
+def readJsDependencies(baseDirectory: File, field: String): Seq[(String, String)] = {
+  val packageJson = ujson.read(IO.read(new File(s"$baseDirectory/package.json")))
+  packageJson(field).obj.mapValues(_.str.toString).toSeq
+}
+
 lazy val webapp = project
   .enablePlugins(
     ScalaJSPlugin,
@@ -48,7 +52,7 @@ lazy val webapp = project
       "com.github.cornerman" %%% "colibri-router"      % versions.colibri,
       "io.suzaku"            %%% "boopickle"           % versions.boopickle,
     ),
-    Compile / npmDependencies        ++= Seq(
+    Compile / npmDependencies        ++= readJsDependencies(baseDirectory.value, "dependencies") ++ Seq(
       "snabbdom"               -> "github:outwatch/snabbdom.git#semver:0.7.5", // for outwatch, workaround for: https://github.com/ScalablyTyped/Converter/issues/293
       "reconnecting-websocket" -> "4.1.10",                                    // for fun-stack websockets, workaround for https://github.com/ScalablyTyped/Converter/issues/293 https://github.com/cornerman/mycelium/blob/6f40aa7018276a3281ce11f7047a6a3b9014bff6/build.sbt#74
       "jwt-decode"             -> "3.1.2",                                     // for fun-stack auth, workaround for https://github.com/ScalablyTyped/Converter/issues/293 https://github.com/cornerman/mycelium/blob/6f40aa7018276a3281ce11f7047a6a3b9014bff6/build.sbt#74
@@ -58,13 +62,7 @@ lazy val webapp = project
       "snabbdom",
       "jwt-decode",
     ),
-    Compile / npmDevDependencies     ++= Seq(
-      "@fun-stack/fun-pack" -> versions.funPack, // sane defaults for webpack development and production, see webpack.config.*.js
-      "autoprefixer"        -> "^10.2.5",
-      "postcss"             -> "^8.4.5",
-      "tailwindcss"         -> "^3.0.10",
-      "daisyui"             -> "^1.25.4",
-    ),
+    Compile / npmDevDependencies     ++= readJsDependencies(baseDirectory.value, "devDependencies"),
     scalaJSUseMainModuleInitializer   := true,
     webpackDevServerPort              := 12345,
     webpackDevServerExtraArgs         := Seq("--color"),
@@ -107,15 +105,11 @@ lazy val lambda = project
       "io.suzaku"           %%% "boopickle"                            % versions.boopickle,
       "com.lihaoyi"         %%% "pprint"                               % versions.pprint,
     ),
-    Compile / npmDependencies        ++= Seq(
-      "aws-sdk" -> "2.892.0",
-    ),
+    Compile / npmDependencies        ++= readJsDependencies(baseDirectory.value, "dependencies"),
     stIgnore                         ++= List(
       "aws-sdk",
     ),
-    Compile / npmDevDependencies     ++= Seq(
-      "@fun-stack/fun-pack" -> versions.funPack, // sane defaults for webpack development and production, see webpack.config.*.js
-    ),
+    Compile / npmDevDependencies     ++= readJsDependencies(baseDirectory.value, "devDependencies"),
     fullOptJS / webpackEmitSourceMaps := true,
     fastOptJS / webpackEmitSourceMaps := true,
     fastOptJS / webpackConfigFile     := Some(baseDirectory.value / "webpack.config.dev.js"),

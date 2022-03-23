@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "aws-sdk": "2.892.0"
+  },
+  "devDependencies": {
+    "@fun-stack/fun-pack": "0.2.0"
+  }
+}
