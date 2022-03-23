@@ -17,3 +17,12 @@ updates:
       interval: "weekly"
     target-branch: "js-dependencies-from-package-json"
 
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+
+  - package-ecosystem: "terraform"
+    directory: "/terraform"
+    schedule:
+      interval: "weekly"

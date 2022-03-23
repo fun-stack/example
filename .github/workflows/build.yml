@@ -61,7 +61,7 @@ jobs:
 
       - name: Run fast/full-opt
         run: |
-          sbt scalafmtCheck scalafmtSbtCheck {webapp,lambda}/{fast,full}OptJS/webpack
+          sbt scalafmtCheck scalafmtSbtCheck compile {webapp,lambda}/{fast,full}OptJS/webpack
 
       - uses: hashicorp/setup-terraform@v1
       - name: Validate Terraform
