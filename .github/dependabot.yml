@@ -9,13 +9,11 @@ updates:
     directory: "/webapp"
     schedule:
       interval: "weekly"
-    target-branch: "js-dependencies-from-package-json"
 
   - package-ecosystem: "npm"
     directory: "/lambda"
     schedule:
       interval: "weekly"
-    target-branch: "js-dependencies-from-package-json"
 
   - package-ecosystem: "github-actions"
     directory: "/"
