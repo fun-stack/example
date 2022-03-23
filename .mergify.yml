@@ -9,7 +9,7 @@ pull_request_rules:
   - name: Label dependency-update PRs
     conditions:
       - or:
-        - author=dependabot
+        - author~=^dependabot(|-preview)\[bot\]$
         - author=scala-steward
     actions:
       label:
@@ -19,7 +19,7 @@ pull_request_rules:
     conditions:
       - and:
         - or:
-          - author=dependabot
+          - author~=^dependabot(|-preview)\[bot\]$
           - author=scala-steward
         - base=master
         - check-success=build
