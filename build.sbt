@@ -10,6 +10,7 @@ val versions = new {
   val tapir     = "1.0.0-M1"
   val funPack   = "0.2.0"
   val boopickle = "1.4.0"
+  val pprint    = "0.7.2"
 }
 
 lazy val commonSettings = Seq(
@@ -104,6 +105,7 @@ lazy val lambda = project
       "io.github.fun-stack" %%% "fun-stack-lambda-http-api-tapir"      % versions.funStack,
       "io.github.fun-stack" %%% "fun-stack-backend"                    % versions.funStack,
       "io.suzaku"           %%% "boopickle"                            % versions.boopickle,
+      "com.lihaoyi"         %%% "pprint"                               % versions.pprint,
     ),
     Compile / npmDependencies        ++= Seq(
       "aws-sdk" -> "2.892.0",
