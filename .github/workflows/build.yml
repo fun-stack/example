@@ -59,7 +59,7 @@ jobs:
 
 
 
-      - name: Run fast/full-opt
+      - name: Compile and Bundle
         run: |
           sbt scalafmtCheck scalafmtSbtCheck compile {webapp,lambda}/{fast,full}OptJS/webpack
 
@@ -72,6 +72,16 @@ jobs:
 
       - name: yarn install
         run: yarn install
+
+      - name: Test local http server
+        run: |
+          npx fun-local-env \
+            --ws \
+            --http 8080 \
+            --http-api lambda/target/scala-2.13/scalajs-bundler/main/lambda-fastopt.js httpApi \
+            --ws-rpc lambda/target/scala-2.13/scalajs-bundler/main/lambda-fastopt.js wsRpc &
+          until nc -z 127.0.0.1 8080 &>/dev/null; do sleep 0.5; done
+          [ "$(curl -v localhost:8080/books/drama/2011?limit=10)" == '[{"title":"Programming in Scala"}]' ]
 
       # - name: Debug over SSH (tmate)
       #   # if: ${{ failure() }}
