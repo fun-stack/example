@@ -15,7 +15,7 @@ class ApiRequestLogger[F[_]: Functor] extends LogHandler[F] {
     val args = if (argumentObject.asInstanceOf[js.UndefOr[_]] == js.undefined) "" else argumentObject
     println(s"-> ${fansi.Color.Yellow(path.mkString("."))}($args)")
     result.map { res =>
-      print(s"<- ")
+      print("<- ")
       pprint.pprintln(res)
       res
     }
