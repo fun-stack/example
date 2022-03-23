@@ -5,17 +5,24 @@ queue_rules:
       - check-success=build
 
 pull_request_rules:
-  - name: assign and label scala-steward's PRs
+
+  - name: Label dependency-update PRs
     conditions:
-      - author=scala-steward
+      - or:
+        - author=dependabot
+        - author=scala-steward
     actions:
       label:
         add: [dependency-update]
-  - name: merge scala-steward's PRs
+
+  - name: Merge dependency-update PRs
     conditions:
-      - base=master
-      - author=scala-steward
-      - check-success=build
+      - and:
+        - or:
+          - author=dependabot
+          - author=scala-steward
+        - base=master
+        - check-success=build
     actions:
       queue:
         name: default
