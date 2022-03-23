@@ -11,9 +11,9 @@ jobs:
     runs-on: ubuntu-20.04
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: coursier/cache-action@v6
-      - uses: olafurpg/setup-scala@v12
+      - uses: olafurpg/setup-scala@v13
 
 
 
@@ -61,7 +61,9 @@ jobs:
 
       - name: Compile and Bundle
         run: |
-          sbt scalafmtCheck scalafmtSbtCheck compile {webapp,lambda}/{fast,full}OptJS/webpack
+          # Runner has 7G of RAM, so 4G for sbt is ok here:
+          # https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners#supported-runners-and-hardware-resources
+          sbt --mem 4096 scalafmtCheck scalafmtSbtCheck compile {webapp,lambda}/{fast,full}OptJS/webpack
 
       - uses: hashicorp/setup-terraform@v1
       - name: Validate Terraform
