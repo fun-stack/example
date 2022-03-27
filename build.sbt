@@ -9,7 +9,7 @@ val versions = new {
   val funStack  = "0.5.2"
   val tapir     = "1.0.0-M1"
   val boopickle = "1.4.0"
-  val pprint    = "0.7.2"
+  val pprint    = "0.7.3"
 }
 
 lazy val commonSettings = Seq(
