@@ -61,7 +61,7 @@ Create an s3-bucket and dynamodb table for the terraform state (generates a `ter
 
 ```sh
 # export AWS_PROFILE=<my-profile>
-./initial_setup.sh
+./terraform/initial_setup.sh
 # git add terraform/terraform.tf
 ```
 
