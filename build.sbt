@@ -4,31 +4,28 @@ ThisBuild / version      := "0.1.0-SNAPSHOT"
 ThisBuild / scalaVersion := "2.13.8"
 
 val versions = new {
-  val outwatch  = "1.0.0-RC6"
-  val colibri   = "0.2.6"
-  val funStack  = "0.5.2"
-  val tapir     = "1.0.0-M1"
+  val outwatch  = "1.0.0-RC7"
+  val colibri   = "0.5.0"
+  val funStack  = "0.6.0"
+  val tapir     = "1.0.0-M6"
   val boopickle = "1.4.0"
   val pprint    = "0.7.3"
 }
 
 lazy val commonSettings = Seq(
   addCompilerPlugin("org.typelevel" % "kind-projector" % "0.13.2" cross CrossVersion.full),
-  scalacOptions --= Seq("-Xfatal-warnings"), // overwrite option from https://github.com/DavidGregory084/sbt-tpolecat
+
+  // overwrite option from https://github.com/DavidGregory084/sbt-tpolecat
+  scalacOptions --= Seq("-Xfatal-warnings"),
+  scalacOptions --= Seq("-Xcheckinit"), // produces check-and-throw code on every val access
 )
 
 lazy val jsSettings = Seq(
   webpack / version   := "4.46.0",
   useYarn             := true,
+  scalaJSLinkerConfig ~= { _.withOptimizer(false) },
   scalaJSLinkerConfig ~= { _.withModuleKind(ModuleKind.CommonJSModule) },
   libraryDependencies += "org.portable-scala" %%% "portable-scala-reflect" % "1.1.2",
-)
-
-lazy val scalaJsMacrotaskExecutor = Seq(
-  // https://github.com/scala-js/scala-js-macrotask-executor
-  libraryDependencies       += "org.scala-js" %%% "scala-js-macrotask-executor" % "1.0.0",
-  Compile / npmDependencies += "setimmediate"  -> "1.0.5", // polyfill
-  stIgnore                  += "setimmediate",
 )
 
 def readJsDependencies(baseDirectory: File, field: String): Seq[(String, String)] = {
@@ -43,12 +40,12 @@ lazy val webapp = project
     ScalablyTypedConverterPlugin,
   )
   .dependsOn(api)
-  .settings(commonSettings, jsSettings, scalaJsMacrotaskExecutor)
+  .settings(commonSettings, jsSettings)
   .settings(
     libraryDependencies              ++= Seq(
       "io.github.outwatch"   %%% "outwatch"            % versions.outwatch,
       "io.github.fun-stack"  %%% "fun-stack-web"       % versions.funStack,
-      "io.github.fun-stack"  %%% "fun-stack-web-tapir" % versions.funStack,
+      "io.github.fun-stack"  %%% "fun-stack-web-tapir" % versions.funStack, // this pulls in scala-java-time, which will drastically increase the javascript bundle size. Remove if not needed.
       "com.github.cornerman" %%% "colibri-router"      % versions.colibri,
       "io.suzaku"            %%% "boopickle"           % versions.boopickle,
     ),
@@ -94,7 +91,7 @@ lazy val lambda = project
     ScalablyTypedConverterPlugin,
   )
   .dependsOn(api)
-  .settings(commonSettings, jsSettings, scalaJsMacrotaskExecutor)
+  .settings(commonSettings, jsSettings)
   .settings(
     libraryDependencies              ++= Seq(
       "io.github.fun-stack" %%% "fun-stack-lambda-ws-event-authorizer" % versions.funStack,

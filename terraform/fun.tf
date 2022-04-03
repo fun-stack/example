@@ -8,16 +8,16 @@ module "example" {
 
   stage = terraform.workspace
 
-  # domain = {
-  #   name                = "example.com"
-  #   deploy_to_subdomain = local.is_prod ? null : "${terraform.workspace}.env"
-  #   catch_all_email     = "me@example.net"
-  # }
+  domain = {
+    name                = "fun-stack.org"
+    deploy_to_subdomain = local.is_prod ? null : "${terraform.workspace}.env"
+    catch_all_email     = "johannes@karoff.net"
+  }
 
   website = {
-    source_dir                  = "../webapp/target/scala-2.13/scalajs-bundler/main/dist"
-    cache_files_regex           = ".*-hashed.(js|css)"
-    content_security_policy     = "default-src 'self'; connect-src https://* wss://*; frame-ancestors 'none'; frame-src 'none';"
+    source_dir              = "../webapp/target/scala-2.13/scalajs-bundler/main/dist"
+    cache_files_regex       = ".*-hashed.(js|css)"
+    content_security_policy = "default-src 'self'; connect-src https://* wss://*; frame-ancestors 'none'; frame-src 'none';"
     rewrites = {
       "robots.txt" = "robots.deny.txt" # local.is_prod ? "robots.allow.txt" : "robots.deny.txt"
     }
@@ -72,10 +72,10 @@ module "example" {
     css_file   = "auth.css"
   }
 
-  # budget = {
-  #   limit_monthly_dollar = "10.0"
-  #   notify_email         = "me@example.net"
-  # }
+  budget = {
+    limit_monthly_dollar = "10.0"
+    notify_email         = "budget@fun-stack.org"
+  }
 
   # dev_setup = {
   #   # enabled           = !local.is_prod
