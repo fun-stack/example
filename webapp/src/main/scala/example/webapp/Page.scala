@@ -8,22 +8,22 @@ sealed trait Page {
 }
 
 object Page {
-  case object Home  extends Page
-  case object Page2 extends Page
+  case object Home      extends Page
+  case object Api      extends Page
 
   object Paths {
-    val Home  = Root
-    val Page2 = Root / "page2"
+    val Home      = Root
+    val Api      = Root / "api"
   }
 
   val fromPath: Path => Page = {
-    case Paths.Page2 => Page.Page2
-    case _           => Page.Home
+    case Paths.Api      => Page.Api
+    case _               => Page.Home
   }
 
   val toPath: Page => Path = {
-    case Page.Page2 => Paths.Page2
-    case Page.Home  => Paths.Home
+    case Page.Api      => Paths.Api
+    case Page.Home      => Paths.Home
   }
 
   val current: Subject[Page] = Router.path

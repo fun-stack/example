@@ -1,7 +1,7 @@
 package example.webapp
 
 import cats.effect.{IO, IOApp}
-import outwatch.OutWatch
+import outwatch.Outwatch
 
 import funstack.web.Fun
 
@@ -9,5 +9,5 @@ object Main extends IOApp.Simple {
   LoadCss()
 
   override def run =
-    Fun.ws.start *> OutWatch.renderInto[IO]("#app", App.layout)
+    Fun.ws.start *> Outwatch.renderInto[IO]("#app", App.layout)
 }
