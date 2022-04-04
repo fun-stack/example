@@ -1121,10 +1121,10 @@ csso@^4.0.2:
   dependencies:
     css-tree "^1.1.2"
 
-daisyui@^2.13.3:
-  version "2.13.3"
-  resolved "https://registry.yarnpkg.com/daisyui/-/daisyui-2.13.3.tgz#511697bcbc041981df0f9c22057eaf89102d8bf7"
-  integrity sha512-tYoczVQz2DtM1frqxnkXN+T8xMyMIA3ePdIdP/ScnDrdlHRlUaOTa6/UXlBfoeqCmD8AI27bCUFrQygoQ1t2oA==
+daisyui@^2.13.6:
+  version "2.13.6"
+  resolved "https://registry.yarnpkg.com/daisyui/-/daisyui-2.13.6.tgz#91f938671d60ee6cc9ac8f720c7f7676affd47d4"
+  integrity sha512-Z3DOqNwIKxp4og9qd64i8/eS4i3TccmmfcaKKXM/Y619FmRjKXRmKAm/GTu9qH+4W7GcVdL8IRxuw0z5GQSqvQ==
   dependencies:
     color "^4.2"
     css-selector-tokenizer "^0.8.0"
