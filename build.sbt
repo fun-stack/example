@@ -21,7 +21,7 @@ lazy val jsSettings = Seq(
   webpack / version   := "4.46.0",
   useYarn             := true,
   scalaJSLinkerConfig ~= { _.withModuleKind(ModuleKind.CommonJSModule) },
-  libraryDependencies += "org.portable-scala" %%% "portable-scala-reflect" % "1.1.1",
+  libraryDependencies += "org.portable-scala" %%% "portable-scala-reflect" % "1.1.2",
 )
 
 lazy val scalaJsMacrotaskExecutor = Seq(
