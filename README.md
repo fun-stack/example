@@ -5,12 +5,12 @@ This is your whole application. All code in scala. Infrastructure as terraform c
 ## Overview
 
 Three scala projects:
-- *lambda/*: backend code deployed as lambda function behind api gateway
+- *lambda/*: backend code deployed as lambda functions behind api gateway
 - *webapp/*: frontend code deployed to s3 bucket behind cloudfront
 - *api/*: shared code between lambda and webapp
 
 Terraform deployment:
-- *terraform/*: terraform code deploy backend and frontend to AWS.
+- *terraform/*: terraform code to deploy backend and frontend to AWS.
 
 ## Requirements
 
@@ -32,6 +32,11 @@ You will see your locally running full-stack app at <http://localhost:12345>.
 Changing any source file will automatically recompile and hot-reload the website and backends.
 
 To know more about the details, have a look at [dev.sh](dev.sh)
+
+If you just want to develop on your frontend without any backend:
+```sh
+sbt devf
+```
 
 #### Infos about webapp
 
