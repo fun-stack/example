@@ -63,7 +63,7 @@ jobs:
         run: |
           # Runner has 7G of RAM, so 4G for sbt is ok here:
           # https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners#supported-runners-and-hardware-resources
-          sbt --mem 4096 scalafmtCheck scalafmtSbtCheck compile {webapp,lambda}/{fast,full}OptJS/webpack
+          sbt --mem 4096 scalafmtCheck enableFatalWarnings compile scalafmtSbtCheck {webapp,lambda}/{fast,full}OptJS/webpack
 
       - uses: hashicorp/setup-terraform@v2
       - name: Validate Terraform

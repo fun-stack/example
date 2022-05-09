@@ -126,3 +126,6 @@ addCommandAlias("devWatchFrontend", "~; webapp/fastOptJS")
 addCommandAlias("devWatchBackend", "~; lambda/fastOptJS")
 addCommandAlias("devWatchAll", "~; lambda/fastOptJS; webapp/fastOptJS")
 addCommandAlias("devDestroyFrontend", "webapp/fastOptJS/stopWebpackDevServer")
+
+addCommandAlias("enableFatalWarnings", "set ThisBuild/scalacOptions += \"-Xfatal-warnings\"")
+addCommandAlias("disableFatalWarnings", "set ThisBuild/scalacOptions -= \"-Xfatal-warnings\"")
