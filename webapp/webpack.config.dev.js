@@ -5,8 +5,7 @@ module.exports = webDev({
   indexHtml: "src/main/html/index.html",
   assetsDir: "assets",
   extraWatchDirs: [
-    "local" // frontend with local backend
-    // "../terraform/.terraform/modules/example/serve/" // frontend with deployed backend
+    "local" // local app config for frontend
   ],
   extraStaticDirs: [
     "src" // src for source maps
