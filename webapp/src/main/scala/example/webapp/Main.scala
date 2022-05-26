@@ -4,9 +4,10 @@ import cats.effect.{IO, IOApp}
 import outwatch.Outwatch
 
 import funstack.web.Fun
+import scala.scalajs.js
 
 object Main extends IOApp.Simple {
-  LoadCss()
+  js.Dynamic.global.require("src/main/css/index.css")
 
   override def run =
     Fun.ws.start &> Outwatch.renderInto[IO]("#app", App.layout)
