@@ -2,7 +2,7 @@
 # yarn lockfile v1
 
 
-"@fun-stack/fun-local-env@^0.3.0":
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/@fun-stack/fun-local-env/-/fun-local-env-0.3.0.tgz#a583f351076cbcab5dd35071590388d8875be011"
-  integrity sha512-2OETbbUl84tFgm0R3T7PytMKylrr84gRfP67UwpQOLg8PQqukzfdjCzJAX8p0Z2ZUULWMHpT+RVwcsW2av26/w==
+"@fun-stack/fun-local-env@^0.3.2":
+  version "0.3.2"
+  resolved "https://registry.yarnpkg.com/@fun-stack/fun-local-env/-/fun-local-env-0.3.2.tgz#76bc139cd8ab84e250d129794b28ce029a7cddd2"
+  integrity sha512-IqgJuHy59tfSGMhubGcC/DFClJqemyptIVm8OaeY/wW8bUqorXaTIVxCwvNt+EoT18XS7R9vavLsU50lsUAYuQ==

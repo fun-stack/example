@@ -14,10 +14,10 @@ Terraform deployment:
 
 ## Requirements
 
-- aws-cli
 - sbt
 - yarn
 - node (>= 10.13.0)
+- aws-cli
 - terraform (>= 1.0.0): https://www.terraform.io/downloads.html
 
 ## Development
@@ -32,11 +32,6 @@ You will see your locally running full-stack app at <http://localhost:12345>.
 Changing any source file will automatically recompile and hot-reload the website and backends.
 
 To know more about the details, have a look at [dev.sh](dev.sh)
-
-If you just want to develop on your frontend without any backend:
-```sh
-sbt devf
-```
 
 #### Infos about webapp
 
@@ -94,7 +89,7 @@ aws route53 get-hosted-zone --id $HOSTED_ZONE_ID | jq ".DelegationSet.NameServer
 First build the application:
 
 ```sh
-sbt prod
+./prod.sh
 ```
 
 Then go into the terraform directory. Set your `AWS_PROFILE`. And run terraform:

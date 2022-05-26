@@ -28,19 +28,31 @@ prefix() (
   awk -v prefix="$colored_prefix" '{ print prefix $0; system("") }'
 )
 
+(cd lambda && yarn install && npx webpack \
+    bundle \
+    --watch \
+    --config webpack.config.dev.js \
+    | prefix "WEBPACK_BACKEND" 4 & \
+)
+
+(cd webapp && yarn install && npx webpack \
+    serve \
+    --port $PORT_FRONTEND \
+    --config webpack.config.dev.js \
+    | prefix "WEBPACK_FRONTEND" 4 & \
+)
+
 yarn install
 
 npx fun-local-env \
     --auth $PORT_AUTH \
     --ws $PORT_WS \
     --http $PORT_HTTP \
-    --http-api lambda/target/scala-2.13/scalajs-bundler/main/lambda-fastopt.js httpApi \
-    --http-rpc lambda/target/scala-2.13/scalajs-bundler/main/lambda-fastopt.js httpRpc \
-    --ws-rpc lambda/target/scala-2.13/scalajs-bundler/main/lambda-fastopt.js wsRpc \
-    --ws-event-authorizer lambda/target/scala-2.13/scalajs-bundler/main/lambda-fastopt.js wsEventAuth \
+    --http-api lambda/target/dev/main.js httpApi \
+    --http-rpc lambda/target/dev/main.js httpRpc \
+    --ws-rpc lambda/target/dev/main.js wsRpc \
+    --ws-event-authorizer lambda/target/dev/main.js wsEventAuth \
     | prefix "BACKEND" 4 &
 
 sbt dev shell
 printf "\n"
-
-
