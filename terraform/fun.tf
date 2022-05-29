@@ -8,11 +8,11 @@ module "example" {
 
   stage = terraform.workspace
 
-  domain = {
-    name                = "fun-stack.org"
-    deploy_to_subdomain = local.is_prod ? null : "${terraform.workspace}.env"
-    catch_all_email     = "johannes@karoff.net"
-  }
+  # domain = {
+  #   name                = "example.com"
+  #   deploy_to_subdomain = local.is_prod ? null : "${terraform.workspace}.env"
+  #   catch_all_email     = "me@example.net"
+  # }
 
   website = {
     source_dir              = "../webapp/target/scala-2.13/scalajs-bundler/main/dist"
@@ -72,10 +72,10 @@ module "example" {
     css_file   = "auth.css"
   }
 
-  budget = {
-    limit_monthly_dollar = "10.0"
-    notify_email         = "budget@fun-stack.org"
-  }
+  # budget = {
+  #   limit_monthly_dollar = "10.0"
+  #   notify_email         = "budget@example.com"
+  # }
 
   # dev_setup = {
   #   # enabled           = !local.is_prod
