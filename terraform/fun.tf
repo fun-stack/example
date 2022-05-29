@@ -15,7 +15,7 @@ module "example" {
   # }
 
   website = {
-    source_dir              = "../webapp/target/scala-2.13/scalajs-bundler/main/dist"
+    source_dir              = "../webapp/target/dist"
     cache_files_regex       = ".*-hashed.(js|css)"
     content_security_policy = "default-src 'self'; connect-src https://* wss://*; frame-ancestors 'none'; frame-src 'none';"
     rewrites = {
@@ -25,7 +25,7 @@ module "example" {
 
   http = {
     api = {
-      source_dir  = "../lambda/target/scala-2.13/scalajs-bundler/main/dist"
+      source_dir  = "../lambda/target/dist"
       handler     = "main.httpApi"
       runtime     = "nodejs14.x"
       memory_size = 256
@@ -35,7 +35,7 @@ module "example" {
     }
 
     rpc = {
-      source_dir  = "../lambda/target/scala-2.13/scalajs-bundler/main/dist"
+      source_dir  = "../lambda/target/dist"
       handler     = "main.httpRpc"
       runtime     = "nodejs14.x"
       memory_size = 256
@@ -47,7 +47,7 @@ module "example" {
 
   ws = {
     rpc = {
-      source_dir  = "../lambda/target/scala-2.13/scalajs-bundler/main/dist"
+      source_dir  = "../lambda/target/dist"
       handler     = "main.wsRpc"
       runtime     = "nodejs14.x"
       memory_size = 256
@@ -57,7 +57,7 @@ module "example" {
     }
 
     event_authorizer = {
-      source_dir  = "../lambda/target/scala-2.13/scalajs-bundler/main/dist"
+      source_dir  = "../lambda/target/dist"
       handler     = "main.wsEventAuth"
       runtime     = "nodejs14.x"
       memory_size = 256

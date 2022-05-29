@@ -1,5 +1,5 @@
 {
   "devDependencies": {
-    "@fun-stack/fun-local-env": "^0.3.0"
+    "@fun-stack/fun-local-env": "^0.3.2"
   }
 }

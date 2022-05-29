@@ -1,10 +1,19 @@
 {
-  "dependencies": {},
+  "private": true,
+  "license": "UNLICENSED",
+  "dependencies": {
+    "jwt-decode": "3.1.2",
+    "reconnecting-websocket": "4.1.10",
+    "snabbdom": "github:outwatch/snabbdom.git#semver:0.7.5"
+  },
   "devDependencies": {
-    "@fun-stack/fun-pack": "0.2.0",
+    "@fun-stack/fun-pack": "0.2.2",
     "autoprefixer": "^10.4.7",
+    "daisyui": "^2.15.0",
     "postcss": "^8.4.13",
     "tailwindcss": "^3.0.24",
-    "daisyui": "^2.15.0"
+    "typescript": "4.3",
+    "webpack": "4.46.0",
+    "webpack-cli": "^4.9.2"
   }
 }
