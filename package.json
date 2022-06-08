@@ -1,4 +1,5 @@
 {
+  "license": "UNLICENSED",
   "devDependencies": {
     "@fun-stack/fun-local-env": "^0.3.2"
   }
