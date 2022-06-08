@@ -55,6 +55,14 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-scalablytyped-
 
+      - name: Cache Cypress binary
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cache/Cypress
+          key: ${{ runner.os }}-scalablytyped-${{ hashfiles('build.sbt') }}-${{ hashFiles('*/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-scalablytyped-
 
 
 
@@ -75,15 +83,31 @@ jobs:
       - name: yarn install
         run: yarn install
 
-      - name: Test local http server
+      - name: End-to-End Tests
         run: |
-          npx fun-local-env \
-            --ws \
-            --http 8080 \
-            --http-api lambda/target/scala-2.13/scalajs-bundler/main/lambda-fastopt.js httpApi \
-            --ws-rpc lambda/target/scala-2.13/scalajs-bundler/main/lambda-fastopt.js wsRpc &
+          # Start frontend dev-webserver
+          (sbt webapp/fastOptJS/startWebpackDevServer shell || kill 0) &
+
+          # Start the lambda backend
+          (npx fun-local-env \
+              --auth 8082 \
+              --ws 8081 \
+              --http 8080 \
+              --http-api lambda/target/scala-2.13/scalajs-bundler/main/lambda-fastopt.js httpApi \
+              --http-rpc lambda/target/scala-2.13/scalajs-bundler/main/lambda-fastopt.js httpRpc \
+              --ws-rpc lambda/target/scala-2.13/scalajs-bundler/main/lambda-fastopt.js wsRpc \
+              --ws-event-authorizer lambda/target/scala-2.13/scalajs-bundler/main/lambda-fastopt.js wsEventAuth \
+                > /dev/null || kill 0) &
+
+          # Test http api
           until nc -z 127.0.0.1 8080 &>/dev/null; do sleep 0.5; done
           [ "$(curl -v localhost:8080/books/drama/2011?limit=10)" == '[{"title":"Programming in Scala"}]' ]
+
+          # Wait until the dev server is running
+          npx wait-on http://localhost:12345
+
+          # Run UI tests
+          npx cypress run
 
       # - name: Debug over SSH (tmate)
       #   # if: ${{ failure() }}
