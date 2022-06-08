@@ -1,6 +1,6 @@
 package example.webapp
 
-import outwatch.VModifier
+import outwatch._
 import outwatch.dsl._
 import funstack.web.Fun
 
@@ -10,44 +10,43 @@ object App {
   // - https://tailwindcss.com/ - basic styles like p-5, space-x-2, mb-auto, ...
   // - https://daisyui.com/ - based on tailwindcss with components like btn, navbar, footer, ...
 
-  val pageHeader = {
-    def link(name: String, page: Page): VModifier = {
-      val styling = Page.current.map {
-        case `page` => cls := "btn-neutral"
-        case _      => cls := "btn-ghost"
-      }
+  val layout = div(
+    cls := "flex flex-col h-screen",
+    pageHeader,
+    pageBody,
+    pageFooter,
+  )
 
-      a(cls := "btn", name, page.href, styling)
+  def pageHeader =
+    header(
+      div(
+        pageLink("Home", Page.Home),
+        pageLink("API", Page.Api)(cls := "nav-api"),
+        cls := "space-x-2",
+      ),
+      div(
+        authControls,
+        cls := "ml-auto",
+      ),
+      cls := "navbar shadow-lg",
+    )
+
+  def authControls =
+    Fun.auth.currentUser.map {
+      case Some(user) => a(s"Logout (${user.info.email})", href := Fun.auth.logoutUrl, cls := "btn btn-primary", cls := "logout-button")
+      case None       => a("Login", href := Fun.auth.loginUrl, cls := "btn btn-primary", cls := "login-button")
     }
 
-    header(
-      cls := "navbar shadow-lg",
-      div(
-        cls := "space-x-2",
-        link("Home", Page.Home),
-        link("API", Page.Api),
-      ),
-      div(
-        cls := "ml-auto",
-        Fun.auth.currentUser.map {
-          case Some(user) => a(cls := "btn btn-primary", s"Logout (${user.info.email})", href := Fun.auth.logoutUrl)
-          case None       => a(cls := "btn btn-primary", "Login", href := Fun.auth.loginUrl)
-        },
-      ),
-    )
+  def pageLink(name: String, page: Page): VNode = {
+    val styling = Page.current.map {
+      case `page` => cls := "btn-neutral"
+      case _      => cls := "btn-ghost"
+    }
+
+    a(cls := "btn", name, page.href, styling)
   }
 
-  val pageFooter =
-    footer(
-      cls := "p-5 footer bg-base-200 text-base-content footer-center",
-      div(
-        cls := "flex flex-row space-x-4",
-        a(cls := "link link-hover", href := "#", "About us"),
-        a(cls := "link link-hover", href := "#", "Contact"),
-      ),
-    )
-
-  val pageBody = div(
+  def pageBody = div(
     cls := "p-10 mb-auto",
     // client-side router depending on the path in the address bar
     Page.current.map {
@@ -60,15 +59,21 @@ object App {
         div(
           cls := "space-y-4",
           Components.httpApi,
-          Components.websocketApi,
+          Components.httpRpcApi,
+          Components.websocketRpcApi,
+          Components.websocketEvents,
         )
     },
   )
 
-  val layout = div(
-    cls := "flex flex-col h-screen",
-    pageHeader,
-    pageBody,
-    pageFooter,
-  )
+  def pageFooter =
+    footer(
+      cls := "p-5 footer bg-base-200 text-base-content footer-center",
+      div(
+        cls := "flex flex-row space-x-4",
+        a(cls := "link link-hover", href := "#", "About us"),
+        a(cls := "link link-hover", href := "#", "Contact"),
+      ),
+    )
+
 }
