@@ -2,9 +2,34 @@ locals {
   is_prod = terraform.workspace == "default"
 }
 
+resource "aws_security_group" "test" {
+  name   = "fun-sg"
+  vpc_id = module.vpc.vpc_id
+
+  egress {
+    from_port        = 0
+    to_port          = 0
+    protocol         = "-1"
+    cidr_blocks      = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
+  }
+}
+
+module "vpc" {
+  source  = "terraform-aws-modules/vpc/aws"
+  version = "3.14.0"
+
+  name               = "fun-vpc"
+  cidr               = "10.10.0.0/16"
+  azs                = jsondecode("[\"eu-central-1a\",\"eu-central-1b\",\"eu-central-1c\"]")
+  private_subnets    = jsondecode("[\"10.10.1.0/24\",\"10.10.2.0/24\",\"10.10.3.0/24\"]")
+  public_subnets     = jsondecode("[\"10.10.101.0/24\",\"10.10.102.0/24\",\"10.10.103.0/24\"]")
+  enable_nat_gateway = true
+}
+
 module "example" {
   source  = "fun-stack/fun/aws"
-  version = "0.6.1"
+  version = "0.6.2"
 
   stage = terraform.workspace
 
@@ -31,6 +56,10 @@ module "example" {
       memory_size = 256
       environment = {
         NODE_OPTIONS = "--enable-source-maps"
+      }
+      vpc_config = {
+        subnet_ids         = module.vpc.private_subnets
+        security_group_ids = [aws_security_group.test.id]
       }
     }
 
