@@ -113,7 +113,7 @@ lazy val lambda = project
     fullOptJS / webpackConfigFile     := Some(baseDirectory.value / "webpack.config.prod.js"),
   )
 
-addCommandAlias("prod", "fullOptJS/webpack")
+addCommandAlias("prod", "; lambda/fullOptJS/webpack; webapp/fullOptJS/webpack")
 addCommandAlias("prodf", "webapp/fullOptJS/webpack")
 addCommandAlias("prodb", "lambda/fullOptJS/webpack")
 addCommandAlias("dev", "devInitAll; devWatchAll; devDestroyFrontend")
