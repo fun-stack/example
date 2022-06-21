@@ -10,17 +10,17 @@ pull_request_rules:
     conditions:
       - or:
         - author~=^dependabot(|-preview)\[bot\]$
-        - author=scala-steward
+        - and:
+          - author=fdietze
+          - body~=Have a fantastic day writing Scala
     actions:
       label:
-        add: [dependency-update]
+        add: [dependencies, scala]
 
   - name: Merge dependency-update PRs
     conditions:
       - and:
-        - or:
-          - author~=^dependabot(|-preview)\[bot\]$
-          - author=scala-steward
+        - label=dependencies
         - base=master
         - check-success=build
     actions:
