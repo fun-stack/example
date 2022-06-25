@@ -8,11 +8,8 @@ pull_request_rules:
 
   - name: Label dependency-update PRs
     conditions:
-      - or:
-        - author~=^dependabot(|-preview)\[bot\]$
-        - and:
-          - author=fdietze
-          - body~=Have a fantastic day writing Scala
+      - author=fdietze
+      - body~=Have a fantastic day writing Scala
     actions:
       label:
         add: [dependencies, scala]
