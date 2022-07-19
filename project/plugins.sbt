@@ -3,7 +3,7 @@ addSbtPlugin("ch.epfl.scala" % "sbt-scalajs-bundler" % "0.20.0")
 
 addSbtPlugin("org.scalablytyped.converter" % "sbt-converter" % "1.0.0-beta39")
 
-addSbtPlugin("io.github.davidgregory084" % "sbt-tpolecat" % "0.3.3")
+addSbtPlugin("io.github.davidgregory084" % "sbt-tpolecat" % "0.4.0")
 addSbtPlugin("org.scalameta"             % "sbt-scalafmt" % "2.4.6")
 
 // for reading npmDependencies from package.json
