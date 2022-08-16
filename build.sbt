@@ -124,5 +124,5 @@ addCommandAlias("devInitFrontend", "webapp/fastOptJS/startWebpackDevServer; weba
 addCommandAlias("devInitAll", "devInitFrontend; devInitBackend")
 addCommandAlias("devWatchFrontend", "~; webapp/fastOptJS")
 addCommandAlias("devWatchBackend", "~; lambda/fastOptJS")
-addCommandAlias("devWatchAll", "~; lambda/fastOptJS; webapp/fastOptJS")
+addCommandAlias("devWatchAll", "~; lambda/fastOptJS; webapp/fastOptJS; compile; Test/compile")
 addCommandAlias("devDestroyFrontend", "webapp/fastOptJS/stopWebpackDevServer")
