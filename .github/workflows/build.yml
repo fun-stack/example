@@ -70,8 +70,8 @@ jobs:
           terraform init
           terraform validate
 
-      - name: yarn install
-        run: yarn install
+      - name: Yarn install
+        run: yarn install --frozen-lockfile
 
       - name: End-to-End Tests
         run: |
