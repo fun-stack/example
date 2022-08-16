@@ -55,17 +55,6 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-scalablytyped-
 
-      - name: Cache Cypress binary
-        uses: actions/cache@v3
-        with:
-          path: |
-            ~/.cache/Cypress
-          key: ${{ runner.os }}-cypress-${{ hashFiles('yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-cypress-
-
-
-
 
       - name: Compile and Bundle
         run: |
@@ -80,8 +69,8 @@ jobs:
           terraform init
           terraform validate
 
-      - name: yarn install
-        run: yarn install
+      - name: Yarn install
+        run: yarn install --frozen-lockfile
 
       - name: End-to-End Tests
         run: |
@@ -106,8 +95,8 @@ jobs:
           # Wait until the dev server is running
           npx wait-on http://localhost:12345
 
-          # Run UI tests
-          npx cypress run
+      - name: Cypress run (UI tests)
+        uses: cypress-io/github-action@v4.2.0
 
       # - name: Debug over SSH (tmate)
       #   # if: ${{ failure() }}
