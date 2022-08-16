@@ -55,16 +55,6 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-scalablytyped-
 
-      - name: Cache Cypress binary
-        uses: actions/cache@v3
-        with:
-          path: |
-            ~/.cache/Cypress
-          key: ${{ runner.os }}-scalablytyped-${{ hashfiles('build.sbt') }}-${{ hashFiles('*/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-scalablytyped-
-
-
 
 
       - name: Compile and Bundle
@@ -106,8 +96,8 @@ jobs:
           # Wait until the dev server is running
           npx wait-on http://localhost:12345
 
-          # Run UI tests
-          npx cypress run
+      - name: Cypress run (UI tests)
+        uses: cypress-io/github-action@v4.2.0
 
       # - name: Debug over SSH (tmate)
       #   # if: ${{ failure() }}
