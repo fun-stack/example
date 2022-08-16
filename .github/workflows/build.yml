@@ -62,7 +62,7 @@ jobs:
             ~/.cache/Cypress
           key: ${{ runner.os }}-scalablytyped-${{ hashfiles('build.sbt') }}-${{ hashFiles('*/yarn.lock') }}
           restore-keys: |
-            ${{ runner.os }}-scalablytyped-
+            ${{ runner.os }}-cypress-
 
 
 
