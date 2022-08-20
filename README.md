@@ -102,7 +102,8 @@ sbt prod
 Then go into the terraform directory. Set your `AWS_PROFILE`. And run terraform:
 
 ```sh
-# set your AWS_PROFILE
+export AWS_PROFILE=...
+cd terraform
 terraform init -upgrade -reconfigure
 terraform apply
 ```
