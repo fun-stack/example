@@ -5,9 +5,9 @@ ThisBuild / scalaVersion := "2.13.8"
 
 val versions = new {
   val outwatch  = "1.0.0-RC8"
-  val colibri   = "0.6.0"
+  val colibri   = "0.6.1"
   val funStack  = "0.7.0"
-  val tapir     = "1.0.0-M7"
+  val tapir     = "1.0.4"
   val boopickle = "1.4.0"
   val pprint    = "0.7.3"
 }
