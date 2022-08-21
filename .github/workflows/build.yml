@@ -58,7 +58,8 @@ jobs:
             compile Test/compile \
             test \
             scalafmtCheck scalafmtSbtCheck \
-            {webapp,lambda}/fastOptJS/webpack
+            {webapp,lambda}/fastOptJS/webpack \
+            prod
 
       - uses: hashicorp/setup-terraform@v2
       - name: Validate Terraform
