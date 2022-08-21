@@ -89,7 +89,7 @@ object Components {
         div("(press random number button)", cls := "text-gray-500"),
         div(
           WsClient.streamsApi.logs.map(div(_)).scanToList,
-          cls                                   := "websocket-event-list",
+          cls := "websocket-event-list",
         ),
       ),
     )

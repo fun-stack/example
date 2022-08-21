@@ -65,19 +65,19 @@ lazy val webapp = project
   .dependsOn(api)
   .settings(commonSettings, scalaJsSettings)
   .settings(
-    libraryDependencies              ++= Seq(
+    libraryDependencies ++= Seq(
       "io.github.outwatch"   %%% "outwatch"            % versions.outwatch,
       "io.github.fun-stack"  %%% "fun-stack-web"       % versions.funStack,
       "io.github.fun-stack"  %%% "fun-stack-web-tapir" % versions.funStack, // this pulls in scala-java-time, which will drastically increase the javascript bundle size. Remove if not needed.
       "com.github.cornerman" %%% "colibri-router"      % versions.colibri,
       "io.suzaku"            %%% "boopickle"           % versions.boopickle,
     ),
-    Compile / npmDependencies        ++= readJsDependencies(baseDirectory.value, "dependencies") ++ Seq(
+    Compile / npmDependencies ++= readJsDependencies(baseDirectory.value, "dependencies") ++ Seq(
       "snabbdom"               -> "github:outwatch/snabbdom.git#semver:0.7.5", // for outwatch, workaround for: https://github.com/ScalablyTyped/Converter/issues/293
       "reconnecting-websocket" -> "4.1.10",                                    // for fun-stack websockets, workaround for https://github.com/ScalablyTyped/Converter/issues/293 https://github.com/cornerman/mycelium/blob/6f40aa7018276a3281ce11f7047a6a3b9014bff6/build.sbt#74
       "jwt-decode"             -> "3.1.2",                                     // for fun-stack auth, workaround for https://github.com/ScalablyTyped/Converter/issues/293 https://github.com/cornerman/mycelium/blob/6f40aa7018276a3281ce11f7047a6a3b9014bff6/build.sbt#74
     ),
-    stIgnore                         ++= List(
+    stIgnore ++= List(
       "reconnecting-websocket",
       "snabbdom",
       "jwt-decode",
@@ -116,7 +116,7 @@ lazy val lambda = project
   .dependsOn(api)
   .settings(commonSettings, scalaJsSettings, scalaJsBundlerSettings)
   .settings(
-    libraryDependencies              ++= Seq(
+    libraryDependencies ++= Seq(
       "io.github.fun-stack" %%% "fun-stack-lambda-ws-event-authorizer" % versions.funStack,
       "io.github.fun-stack" %%% "fun-stack-lambda-ws-rpc"              % versions.funStack,
       "io.github.fun-stack" %%% "fun-stack-lambda-http-rpc"            % versions.funStack,
@@ -125,8 +125,8 @@ lazy val lambda = project
       "io.suzaku"           %%% "boopickle"                            % versions.boopickle,
       "com.lihaoyi"         %%% "pprint"                               % versions.pprint,
     ),
-    Compile / npmDependencies        ++= readJsDependencies(baseDirectory.value, "dependencies"),
-    stIgnore                         ++= List(
+    Compile / npmDependencies ++= readJsDependencies(baseDirectory.value, "dependencies"),
+    stIgnore ++= List(
       "aws-sdk",
     ),
     Compile / npmDevDependencies     ++= readJsDependencies(baseDirectory.value, "devDependencies"),
