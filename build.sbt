@@ -65,6 +65,7 @@ lazy val webapp = project
   .dependsOn(api)
   .settings(commonSettings, scalaJsSettings)
   .settings(
+    Test / test := {}, // skip tests, since we don't have any in this subproject. Remove this line, once there are tests
     libraryDependencies ++= Seq(
       "io.github.outwatch"   %%% "outwatch"            % versions.outwatch,
       "io.github.fun-stack"  %%% "fun-stack-web"       % versions.funStack,
@@ -101,6 +102,7 @@ lazy val api = project
   .enablePlugins(ScalaJSPlugin)
   .settings(commonSettings)
   .settings(
+    Test / test := {}, // skip tests, since we don't have any in this subproject. Remove this line, once there are tests
     libraryDependencies ++= Seq(
       "com.softwaremill.sttp.tapir" %%% "tapir-core"       % versions.tapir,
       "com.softwaremill.sttp.tapir" %%% "tapir-json-circe" % versions.tapir,
@@ -116,6 +118,7 @@ lazy val lambda = project
   .dependsOn(api)
   .settings(commonSettings, scalaJsSettings, scalaJsBundlerSettings)
   .settings(
+    Test / test := {}, // skip tests, since we don't have any in this subproject. Remove this line, once there are tests
     libraryDependencies ++= Seq(
       "io.github.fun-stack" %%% "fun-stack-lambda-ws-event-authorizer" % versions.funStack,
       "io.github.fun-stack" %%% "fun-stack-lambda-ws-rpc"              % versions.funStack,
