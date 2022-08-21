@@ -68,6 +68,7 @@ jobs:
           cd terraform
           terraform init
           terraform validate
+          rm .terraform.lock.hcl
 
       - name: Yarn install
         run: yarn install --frozen-lockfile
