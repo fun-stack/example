@@ -98,6 +98,9 @@ jobs:
       - name: Cypress run (UI tests)
         uses: cypress-io/github-action@v4.2.0
 
+      - name: Check if working directory is clean
+        run: git diff --quiet --exit-code || (git status && false)
+
       # - name: Debug over SSH (tmate)
       #   # if: ${{ failure() }}
       #   uses: mxschmitt/action-tmate@v3
