@@ -12,11 +12,12 @@ val versions = new {
   val pprint    = "0.7.3"
 }
 
-ThisBuild / resolvers ++= Seq(
-  "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots",
-  "Sonatype OSS Snapshots S01" at "https://s01.oss.sonatype.org/content/repositories/snapshots", // https://central.sonatype.org/news/20210223_new-users-on-s01/
-  "Jitpack" at "https://jitpack.io",
-)
+// Uncomment, if you want to use snapshot dependencies from sonatype or jitpack
+// ThisBuild / resolvers ++= Seq(
+//   "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots",
+//   "Sonatype OSS Snapshots S01" at "https://s01.oss.sonatype.org/content/repositories/snapshots", // https://central.sonatype.org/news/20210223_new-users-on-s01/
+//   "Jitpack" at "https://jitpack.io",
+// )
 
 val enableFatalWarnings =
   sys.env.get("ENABLE_FATAL_WARNINGS").flatMap(value => scala.util.Try(value.toBoolean).toOption).getOrElse(false)
