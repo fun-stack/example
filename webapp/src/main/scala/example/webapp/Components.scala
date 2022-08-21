@@ -10,31 +10,6 @@ import cats.effect.IO
 object Components {
   import example.api.HttpApi
 
-  def renderApi(api: Api[IO]): VModifier = {
-    val currentRandomNumber = Subject.behavior[Option[Int]](None)
-
-    VModifier(
-      div(
-        // example of rendering an async call directly
-        // https://outwatch.github.io/docs/readme.html#rendering-futures
-        // https://outwatch.github.io/docs/readme.html#rendering-async-effects
-        b("Number: "),
-        api.numberToString(3),
-      ),
-      div(
-        // example of dynamic content with EmitterBuilder (onClick), IO (asEffect), and Subject/Observable/Observer (currentRandomNumber)
-        // https://outwatch.github.io/docs/readme.html#dynamic-content
-        b("Call: "),
-        button(
-          cls := "btn btn-primary btn-sm",
-          "New Random Number",
-          onClick.asEffect(api.getRandomNumber).map(Some.apply) --> currentRandomNumber,
-        ),
-        currentRandomNumber,
-      ),
-    )
-  }
-
   val httpApi = div(
     h2("Http Api", cls := "text-xl"),
     div(
