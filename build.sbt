@@ -12,20 +12,43 @@ val versions = new {
   val pprint    = "0.7.3"
 }
 
+ThisBuild / resolvers ++= Seq(
+  "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots",
+  "Sonatype OSS Snapshots S01" at "https://s01.oss.sonatype.org/content/repositories/snapshots", // https://central.sonatype.org/news/20210223_new-users-on-s01/
+  "Jitpack" at "https://jitpack.io",
+)
+
+val enableFatalWarnings =
+  sys.env.get("ENABLE_FATAL_WARNINGS").flatMap(value => scala.util.Try(value.toBoolean).toOption).getOrElse(false)
+
 lazy val commonSettings = Seq(
   addCompilerPlugin("org.typelevel" % "kind-projector" % "0.13.2" cross CrossVersion.full),
 
-  // overwrite option from https://github.com/DavidGregory084/sbt-tpolecat
-  scalacOptions --= Seq("-Xfatal-warnings"),
+  // overwrite scalacOptions "-Xfatal-warnings" from https://github.com/DavidGregory084/sbt-tpolecat
+  if (enableFatalWarnings) scalacOptions += "-Xfatal-warnings" else scalacOptions -= "-Xfatal-warnings",
+  scalacOptions ++= Seq("-Ymacro-annotations", "-Vimplicits", "-Vtype-diffs"),
   scalacOptions --= Seq("-Xcheckinit"), // produces check-and-throw code on every val access
 )
 
-lazy val jsSettings = Seq(
-  webpack / version   := "4.46.0",
-  useYarn             := true,
-  scalaJSLinkerConfig ~= { _.withOptimizer(false) },
+lazy val scalaJsSettings = Seq(
   scalaJSLinkerConfig ~= { _.withModuleKind(ModuleKind.CommonJSModule) },
   libraryDependencies += "org.portable-scala" %%% "portable-scala-reflect" % "1.1.2",
+) ++ scalaJsBundlerSettings ++ scalaJsMacrotaskExecutor ++ scalaJsSecureRandom
+
+lazy val scalaJsBundlerSettings = Seq(
+  webpack / version := "4.46.0",
+  useYarn           := true,
+  yarnExtraArgs     += "--frozen-lockfile",
+)
+
+lazy val scalaJsMacrotaskExecutor = Seq(
+  // https://github.com/scala-js/scala-js-macrotask-executor
+  libraryDependencies += "org.scala-js" %%% "scala-js-macrotask-executor" % "1.1.0",
+)
+
+lazy val scalaJsSecureRandom = Seq(
+  // https://www.scala-js.org/news/2022/04/04/announcing-scalajs-1.10.0
+  libraryDependencies += "org.scala-js" %%% "scalajs-java-securerandom" % "1.0.0",
 )
 
 def readJsDependencies(baseDirectory: File, field: String): Seq[(String, String)] = {
@@ -40,7 +63,7 @@ lazy val webapp = project
     ScalablyTypedConverterPlugin,
   )
   .dependsOn(api)
-  .settings(commonSettings, jsSettings)
+  .settings(commonSettings, scalaJsSettings)
   .settings(
     libraryDependencies              ++= Seq(
       "io.github.outwatch"   %%% "outwatch"            % versions.outwatch,
@@ -91,7 +114,7 @@ lazy val lambda = project
     ScalablyTypedConverterPlugin,
   )
   .dependsOn(api)
-  .settings(commonSettings, jsSettings)
+  .settings(commonSettings, scalaJsSettings, scalaJsBundlerSettings)
   .settings(
     libraryDependencies              ++= Seq(
       "io.github.fun-stack" %%% "fun-stack-lambda-ws-event-authorizer" % versions.funStack,
