@@ -1,13 +1,21 @@
+const {commonConfig} = require('./webpack.config.common.js'); // https://github.com/fun-stack/fun-pack/blob/master/src/webpack.config.web.dev.js
 const {webDev} = require("@fun-stack/fun-pack");
+const {merge} = require("webpack-merge");
 
-// https://github.com/fun-stack/fun-pack
-module.exports = webDev({
-  indexHtml: "src/main/html/index.html",
+module.exports = merge(
+  // https://github.com/fun-stack/fun-pack
+  webDev({
+    // commented out because CopyWebpackPlugin is defined here to exclude the sprite files.
+    // indexHtml: "src/main/html/index.html",
   assetsDir: "assets",
   extraWatchDirs: [
-    "local" // local app config for frontend
+    "local", // frontend with local backend
+    "src/css",
+    // "../terraform/.terraform/modules/nocode/serve/" // frontend with deployed backend
   ],
   extraStaticDirs: [
     "src" // src for source maps
   ]
-});
+  }),
+  commonConfig
+);
