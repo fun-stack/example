@@ -20,6 +20,8 @@ Terraform deployment:
 - node (>= 10.13.0)
 - terraform (>= 1.0.0): https://www.terraform.io/downloads.html
 
+The provided `default.nix` contains these dependencies, so if you are using `nix`, just run a `nix-shell` :-)
+
 ## Development
 
 Watch and compile the application. Runs a webserver for the website, http and websocket servers for your backend lambdas, and a local auth server:
@@ -100,7 +102,8 @@ sbt prod
 Then go into the terraform directory. Set your `AWS_PROFILE`. And run terraform:
 
 ```sh
-# set your AWS_PROFILE
+export AWS_PROFILE=...
+cd terraform
 terraform init -upgrade -reconfigure
 terraform apply
 ```
