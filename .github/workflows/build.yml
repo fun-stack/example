@@ -68,6 +68,7 @@ jobs:
           cd terraform
           terraform init
           terraform validate
+          rm .terraform.lock.hcl
 
       - name: Yarn install
         run: yarn install --frozen-lockfile
@@ -97,6 +98,9 @@ jobs:
 
       - name: Cypress run (UI tests)
         uses: cypress-io/github-action@v4.2.0
+
+      - name: Check if working directory is clean
+        run: git diff --quiet --exit-code || (git status && false)
 
       # - name: Debug over SSH (tmate)
       #   # if: ${{ failure() }}
