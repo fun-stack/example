@@ -1,11 +1,8 @@
 package example.webapp
 
-import example.api.Api
 import colibri.Subject
-import outwatch.VModifier
 import outwatch.dsl._
 import funstack.web.tapir
-import cats.effect.IO
 
 object Components {
   import example.api.HttpApi
