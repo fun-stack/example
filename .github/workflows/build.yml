@@ -72,7 +72,7 @@ jobs:
       - name: Yarn install
         run: yarn install --frozen-lockfile
 
-      - name: End-to-End Tests
+      - name: Prepare End-to-End Tests
         run: |
           # Start frontend dev-webserver
           (
