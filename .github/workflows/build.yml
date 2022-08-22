@@ -49,7 +49,6 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-scalablytyped-
 
-
       - name: Compile and Bundle
         run: |
           # Runner has 7G of RAM, so 4G for sbt is ok here:
@@ -58,8 +57,7 @@ jobs:
             compile Test/compile \
             test \
             scalafmtCheck scalafmtSbtCheck \
-            {webapp,lambda}/fastOptJS/webpack \
-            prod
+            {webapp,lambda}/fastOptJS/webpack
 
       - uses: hashicorp/setup-terraform@v2
       - name: Validate Terraform
@@ -101,9 +99,12 @@ jobs:
       - name: Cypress run (UI tests)
         uses: cypress-io/github-action@v4.2.0
 
-      - name: On failure, print logs
+      - name: On E2E test failure, print logs
         if: failure()
         run: if [[ -f ~/local-env-logs ]]; then cat ~/local-env-logs; fi
+
+      - name: Production build
+        run: sbt prod
 
       - name: Check if working directory is clean
         run: git diff --quiet --exit-code || (git status && false)
