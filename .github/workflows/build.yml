@@ -75,7 +75,7 @@ jobs:
           # Start frontend dev-webserver
           (
             cd webapp/target/scala-2.13/scalajs-bundler/main
-            node node_modules/.bin/webpack-dev-server --bail --port 12345 --config  webpack.config.dev.js || kill 0
+            node node_modules/webpack-dev-server/bin/webpack-dev-server.js --config webpack.config.dev.js --port 12345 || kill 0
           ) &
 
           # Start the lambda backend
