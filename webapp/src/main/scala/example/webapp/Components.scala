@@ -1,11 +1,8 @@
 package example.webapp
 
-import example.api.Api
 import colibri.Subject
-import outwatch.VModifier
 import outwatch.dsl._
 import funstack.web.tapir
-import cats.effect.IO
 
 object Components {
   import example.api.HttpApi
@@ -89,7 +86,7 @@ object Components {
         div("(press random number button)", cls := "text-gray-500"),
         div(
           WsClient.streamsApi.logs.map(div(_)).scanToList,
-          cls                                   := "websocket-event-list",
+          cls := "websocket-event-list",
         ),
       ),
     )

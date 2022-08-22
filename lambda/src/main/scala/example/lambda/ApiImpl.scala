@@ -8,7 +8,6 @@ import funstack.lambda.apigateway.Handler
 import sloth.Client
 import cats.effect.IO
 import cats.data.Kleisli
-import cats.implicits._
 
 import java.nio.ByteBuffer
 import boopickle.Default._

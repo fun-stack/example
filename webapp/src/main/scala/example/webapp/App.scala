@@ -33,8 +33,9 @@ object App {
 
   def authControls =
     Fun.auth.currentUser.map {
-      case Some(user) => a(s"Logout (${user.info.email})", href := Fun.auth.logoutUrl, cls := "btn btn-primary", cls := "logout-button")
-      case None       => a("Login", href := Fun.auth.loginUrl, cls := "btn btn-primary", cls := "login-button")
+      case Some(user) =>
+        a(s"Logout (${user.info.email})", href := Fun.auth.logoutUrl, cls := "btn btn-primary", cls := "logout-button")
+      case None => a("Login", href := Fun.auth.loginUrl, cls := "btn btn-primary", cls := "login-button")
     }
 
   def pageLink(name: String, page: Page): VNode = {
@@ -55,7 +56,7 @@ object App {
           cls := "text-bold",
           "Welcome!",
         )
-      case Page.Api  =>
+      case Page.Api =>
         div(
           cls := "space-y-4",
           Components.httpApi,

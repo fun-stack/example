@@ -1,10 +1,16 @@
 name: Build
 on:
   push:
-    branches:
-      - master
+    branches: ["master"]
   pull_request:
+    types: [ opened, synchronize ]
   workflow_dispatch:
+
+# automatically cancel previous runs on the same PR
+# https://stackoverflow.com/questions/66335225/how-to-cancel-previous-runs-in-the-pr-when-you-push-new-commitsupdate-the-curre/67939898#67939898
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.sha }}
+  cancel-in-progress: true
 
 jobs:
   build:
@@ -14,7 +20,8 @@ jobs:
       - uses: actions/checkout@v3
       - uses: coursier/cache-action@v6
       - uses: olafurpg/setup-scala@v13
-
+        with:
+          java-version: openjdk@1.17
 
 
       # https://github.com/actions/cache/blob/master/examples.md#node---yarn
@@ -22,7 +29,8 @@ jobs:
         id: yarn-cache-dir-path
         run: echo "::set-output name=dir::$(yarn cache dir)"
 
-      - uses: actions/cache@v3
+      - name: Cache yarn
+        uses: actions/cache@v3
         id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
@@ -30,20 +38,6 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-yarn-
 
-
-      - uses: actions/cache@v3
-        name: Cache node_modules
-        with:
-          path: "node_modules"
-          key: ${{ runner.os }}-node_modules-${{ hashFiles('yarn.lock') }}
-          restore-keys: ${{ runner.os }}-node_modules
-
-      - uses: actions/cache@v3
-        name: Cache scalajs-bundler node_modules
-        with:
-          path: "*/target/**/main/node_modules"
-          key: ${{ runner.os }}-scalajsbundler-node_modules-${{ hashFiles('*/yarn.lock') }}
-          restore-keys: ${{ runner.os }}-scalajsbundler-node_modules
 
       - name: Cache Scalablytyped transpilations
         uses: actions/cache@v3
@@ -55,12 +49,15 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-scalablytyped-
 
-
       - name: Compile and Bundle
         run: |
           # Runner has 7G of RAM, so 4G for sbt is ok here:
           # https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners#supported-runners-and-hardware-resources
-          sbt --mem 4096 scalafmtCheck scalafmtSbtCheck compile {webapp,lambda}/fastOptJS/webpack prod
+          ENABLE_FATAL_WARNINGS=true sbt --mem 4096 \
+            compile Test/compile \
+            test \
+            scalafmtCheck scalafmtSbtCheck \
+            {webapp,lambda}/fastOptJS/webpack
 
       - uses: hashicorp/setup-terraform@v2
       - name: Validate Terraform
@@ -73,10 +70,13 @@ jobs:
       - name: Yarn install
         run: yarn install --frozen-lockfile
 
-      - name: End-to-End Tests
+      - name: Prepare End-to-End Tests
         run: |
           # Start frontend dev-webserver
-          (sbt webapp/fastOptJS/startWebpackDevServer shell || kill 0) &
+          (
+            cd webapp/target/scala-2.13/scalajs-bundler/main
+            node node_modules/webpack-dev-server/bin/webpack-dev-server.js --config webpack.config.dev.js --port 12345 || kill 0
+          ) &
 
           # Start the lambda backend
           (npx fun-local-env \
@@ -87,7 +87,7 @@ jobs:
               --http-rpc lambda/target/scala-2.13/scalajs-bundler/main/lambda-fastopt.js httpRpc \
               --ws-rpc lambda/target/scala-2.13/scalajs-bundler/main/lambda-fastopt.js wsRpc \
               --ws-event-authorizer lambda/target/scala-2.13/scalajs-bundler/main/lambda-fastopt.js wsEventAuth \
-                > /dev/null || kill 0) &
+                > /tmp/local-env-logs 2>&1 || kill 0) &
 
           # Test http api
           until nc -z 127.0.0.1 8080 &>/dev/null; do sleep 0.5; done
@@ -98,6 +98,17 @@ jobs:
 
       - name: Cypress run (UI tests)
         uses: cypress-io/github-action@v4.2.0
+
+      - name: On E2E test failure, print logs
+        if: failure()
+        run: if [[ -f /tmp/local-env-logs ]]; then cat /tmp/local-env-logs; fi
+
+      - name: Production build
+        run: |
+          # Runner has 7G of RAM, so 4G for sbt is ok here:
+          # https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners#supported-runners-and-hardware-resources
+          ENABLE_FATAL_WARNINGS=true sbt --mem 4096 \
+            prod
 
       - name: Check if working directory is clean
         run: git diff --quiet --exit-code || (git status && false)

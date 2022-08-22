@@ -1,4 +1,6 @@
-const {lambdaDev} = require('@fun-stack/fun-pack');
+const {lambdaDev} = require("@fun-stack/fun-pack"); // https://github.com/fun-stack/fun-pack/blob/master/src/webpack.config.lambda.dev.js
+const webpack = require('webpack');
 
-// https://github.com/fun-stack/fun-pack
-module.exports = lambdaDev();
+const config = lambdaDev();
+
+module.exports = config;

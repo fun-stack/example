@@ -31,6 +31,8 @@ object Entrypoints {
 
   @js.annotation.JSExportTopLevel("wsEventAuth")
   val wsEventAuth = ws.eventauthorizer.Handler.handleKleisli(
-    Router.contra[ByteBuffer, ws.eventauthorizer.Handler.IOKleisli].route[StreamsApi[ws.eventauthorizer.Handler.IOKleisli]](StreamsApiAuthImpl),
+    Router
+      .contra[ByteBuffer, ws.eventauthorizer.Handler.IOKleisli]
+      .route[StreamsApi[ws.eventauthorizer.Handler.IOKleisli]](StreamsApiAuthImpl),
   )
 }

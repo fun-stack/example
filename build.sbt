@@ -12,20 +12,44 @@ val versions = new {
   val pprint    = "0.7.3"
 }
 
+// Uncomment, if you want to use snapshot dependencies from sonatype or jitpack
+// ThisBuild / resolvers ++= Seq(
+//   "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots",
+//   "Sonatype OSS Snapshots S01" at "https://s01.oss.sonatype.org/content/repositories/snapshots", // https://central.sonatype.org/news/20210223_new-users-on-s01/
+//   "Jitpack" at "https://jitpack.io",
+// )
+
+val enableFatalWarnings =
+  sys.env.get("ENABLE_FATAL_WARNINGS").flatMap(value => scala.util.Try(value.toBoolean).toOption).getOrElse(false)
+
 lazy val commonSettings = Seq(
   addCompilerPlugin("org.typelevel" % "kind-projector" % "0.13.2" cross CrossVersion.full),
 
-  // overwrite option from https://github.com/DavidGregory084/sbt-tpolecat
-  scalacOptions --= Seq("-Xfatal-warnings"),
+  // overwrite scalacOptions "-Xfatal-warnings" from https://github.com/DavidGregory084/sbt-tpolecat
+  if (enableFatalWarnings) scalacOptions += "-Xfatal-warnings" else scalacOptions -= "-Xfatal-warnings",
+  scalacOptions ++= Seq("-Ymacro-annotations", "-Vimplicits", "-Vtype-diffs"),
   scalacOptions --= Seq("-Xcheckinit"), // produces check-and-throw code on every val access
 )
 
-lazy val jsSettings = Seq(
-  webpack / version   := "4.46.0",
-  useYarn             := true,
-  scalaJSLinkerConfig ~= { _.withOptimizer(false) },
+lazy val scalaJsSettings = Seq(
   scalaJSLinkerConfig ~= { _.withModuleKind(ModuleKind.CommonJSModule) },
   libraryDependencies += "org.portable-scala" %%% "portable-scala-reflect" % "1.1.2",
+) ++ scalaJsBundlerSettings ++ scalaJsMacrotaskExecutor ++ scalaJsSecureRandom
+
+lazy val scalaJsBundlerSettings = Seq(
+  webpack / version := "4.46.0",
+  useYarn           := true,
+  yarnExtraArgs     += "--frozen-lockfile",
+)
+
+lazy val scalaJsMacrotaskExecutor = Seq(
+  // https://github.com/scala-js/scala-js-macrotask-executor
+  libraryDependencies += "org.scala-js" %%% "scala-js-macrotask-executor" % "1.1.0",
+)
+
+lazy val scalaJsSecureRandom = Seq(
+  // https://www.scala-js.org/news/2022/04/04/announcing-scalajs-1.10.0
+  libraryDependencies += "org.scala-js" %%% "scalajs-java-securerandom" % "1.0.0",
 )
 
 def readJsDependencies(baseDirectory: File, field: String): Seq[(String, String)] = {
@@ -40,21 +64,22 @@ lazy val webapp = project
     ScalablyTypedConverterPlugin,
   )
   .dependsOn(api)
-  .settings(commonSettings, jsSettings)
+  .settings(commonSettings, scalaJsSettings)
   .settings(
-    libraryDependencies              ++= Seq(
+    Test / test := {}, // skip tests, since we don't have any in this subproject. Remove this line, once there are tests
+    libraryDependencies ++= Seq(
       "io.github.outwatch"   %%% "outwatch"            % versions.outwatch,
       "io.github.fun-stack"  %%% "fun-stack-web"       % versions.funStack,
       "io.github.fun-stack"  %%% "fun-stack-web-tapir" % versions.funStack, // this pulls in scala-java-time, which will drastically increase the javascript bundle size. Remove if not needed.
       "com.github.cornerman" %%% "colibri-router"      % versions.colibri,
       "io.suzaku"            %%% "boopickle"           % versions.boopickle,
     ),
-    Compile / npmDependencies        ++= readJsDependencies(baseDirectory.value, "dependencies") ++ Seq(
+    Compile / npmDependencies ++= readJsDependencies(baseDirectory.value, "dependencies") ++ Seq(
       "snabbdom"               -> "github:outwatch/snabbdom.git#semver:0.7.5", // for outwatch, workaround for: https://github.com/ScalablyTyped/Converter/issues/293
       "reconnecting-websocket" -> "4.1.10",                                    // for fun-stack websockets, workaround for https://github.com/ScalablyTyped/Converter/issues/293 https://github.com/cornerman/mycelium/blob/6f40aa7018276a3281ce11f7047a6a3b9014bff6/build.sbt#74
       "jwt-decode"             -> "3.1.2",                                     // for fun-stack auth, workaround for https://github.com/ScalablyTyped/Converter/issues/293 https://github.com/cornerman/mycelium/blob/6f40aa7018276a3281ce11f7047a6a3b9014bff6/build.sbt#74
     ),
-    stIgnore                         ++= List(
+    stIgnore ++= List(
       "reconnecting-websocket",
       "snabbdom",
       "jwt-decode",
@@ -78,6 +103,7 @@ lazy val api = project
   .enablePlugins(ScalaJSPlugin)
   .settings(commonSettings)
   .settings(
+    Test / test := {}, // skip tests, since we don't have any in this subproject. Remove this line, once there are tests
     libraryDependencies ++= Seq(
       "com.softwaremill.sttp.tapir" %%% "tapir-core"       % versions.tapir,
       "com.softwaremill.sttp.tapir" %%% "tapir-json-circe" % versions.tapir,
@@ -91,9 +117,10 @@ lazy val lambda = project
     ScalablyTypedConverterPlugin,
   )
   .dependsOn(api)
-  .settings(commonSettings, jsSettings)
+  .settings(commonSettings, scalaJsSettings, scalaJsBundlerSettings)
   .settings(
-    libraryDependencies              ++= Seq(
+    Test / test := {}, // skip tests, since we don't have any in this subproject. Remove this line, once there are tests
+    libraryDependencies ++= Seq(
       "io.github.fun-stack" %%% "fun-stack-lambda-ws-event-authorizer" % versions.funStack,
       "io.github.fun-stack" %%% "fun-stack-lambda-ws-rpc"              % versions.funStack,
       "io.github.fun-stack" %%% "fun-stack-lambda-http-rpc"            % versions.funStack,
@@ -102,8 +129,8 @@ lazy val lambda = project
       "io.suzaku"           %%% "boopickle"                            % versions.boopickle,
       "com.lihaoyi"         %%% "pprint"                               % versions.pprint,
     ),
-    Compile / npmDependencies        ++= readJsDependencies(baseDirectory.value, "dependencies"),
-    stIgnore                         ++= List(
+    Compile / npmDependencies ++= readJsDependencies(baseDirectory.value, "dependencies"),
+    stIgnore ++= List(
       "aws-sdk",
     ),
     Compile / npmDevDependencies     ++= readJsDependencies(baseDirectory.value, "devDependencies"),
