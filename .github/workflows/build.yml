@@ -87,7 +87,7 @@ jobs:
               --http-rpc lambda/target/scala-2.13/scalajs-bundler/main/lambda-fastopt.js httpRpc \
               --ws-rpc lambda/target/scala-2.13/scalajs-bundler/main/lambda-fastopt.js wsRpc \
               --ws-event-authorizer lambda/target/scala-2.13/scalajs-bundler/main/lambda-fastopt.js wsEventAuth \
-                > ~/local-env-logs 2>&1 || kill 0) &
+                > /tmp/local-env-logs 2>&1 || kill 0) &
 
           # Test http api
           until nc -z 127.0.0.1 8080 &>/dev/null; do sleep 0.5; done
@@ -101,7 +101,7 @@ jobs:
 
       - name: On E2E test failure, print logs
         if: failure()
-        run: if [[ -f ~/local-env-logs ]]; then cat ~/local-env-logs; fi
+        run: if [[ -f /tmp/local-env-logs ]]; then cat /tmp/local-env-logs; fi
 
       - name: Production build
         run: |
