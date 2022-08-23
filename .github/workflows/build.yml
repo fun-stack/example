@@ -99,11 +99,11 @@ jobs:
                 > /tmp/local-env-logs 2>&1 || kill 0) &
 
           # Test http api
-          until nc -z 127.0.0.1 8080 &>/dev/null; do sleep 0.5; done
-          [ "$(curl -v localhost:8080/books/drama/2011?limit=10)" == '[{"title":"Programming in Scala"}]' ]
+          until nc -z 127.0.0.1 $HTTP_PORT &>/dev/null; do sleep 0.5; done
+          [ "$(curl -v localhost:$HTTP_PORT/books/drama/2011?limit=10)" == '[{"title":"Programming in Scala"}]' ]
 
           # Wait until the dev server is running
-          npx wait-on http://localhost:12345
+          npx wait-on http://localhost:$FRONTEND_PORT
 
       - name: Cypress run (UI tests)
         uses: cypress-io/github-action@v4.2.0
