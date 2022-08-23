@@ -19,6 +19,7 @@ Terraform deployment:
 - node (>= 10.13.0)
 - aws-cli
 - terraform (>= 1.0.0): https://www.terraform.io/downloads.html
+- [direnv](https://direnv.net/)
 
 The provided `shell.nix` contains these dependencies, so if you are using `nix`, just run a `nix-shell`.
 
@@ -26,14 +27,15 @@ The provided `shell.nix` contains these dependencies, so if you are using `nix`,
 
 Watch and compile the application. Runs a webserver for the website, http and websocket servers for your backend lambdas, and a local auth server:
 ```sh
-./dev.sh
+# assuming direnv sourced .envrc:
+dev
 ```
 
 You will see your locally running full-stack app at <http://localhost:12345>.
 
 Changing any source file will automatically recompile and hot-reload the website and backends.
 
-To know more about the details, have a look at [dev.sh](dev.sh)
+To know more about the details, have a look at [scripts/dev](scripts/dev).
 
 If you just want to develop on your frontend without any backend:
 ```sh
