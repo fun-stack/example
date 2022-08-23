@@ -1,6 +1,6 @@
 describe("Basic functionality", function () {
   beforeEach(() => {
-    cy.visit("http://localhost:12345");
+    cy.visit("http://localhost:" + Cypress.env('FRONTEND_PORT'));
   });
 
   it("HTTP API", function () {
