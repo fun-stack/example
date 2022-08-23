@@ -1,0 +1,69 @@
+#!/usr/bin/env bash
+# https://vaneyckt.io/posts/safer_bash_scripts_with_set_euxo_pipefail
+set -Eeuo pipefail
+# cd to script location
+cd "$(dirname "${BASH_SOURCE[0]}")"
+
+# source envrc if not already loaded
+test -z "${ENVRC_LOADED:-}" && source ../.envrc
+
+# cd to root location
+cd ..
+
+export LOGDIR=${LOGDIR:-$(mktemp -d)}
+export BACKEND_LOG="$LOGDIR/backend.log"
+
+print_logfiles() (
+    echo "Logfile directory:    $LOGDIR"
+    echo "Backend logs:         less +F $BACKEND_LOG"
+)
+
+cleanup() {
+    print_logfiles
+
+    trap - SIGTERM
+    kill -- -$$
+}
+
+# kill background jobs on exit
+trap cleanup SIGINT SIGTERM EXIT
+
+
+# prefix output to distinguish their source
+prefix() {
+  prefix="$1"
+  color="$2"
+  colored_prefix="[$(tput setaf "$color")$prefix$(tput sgr0)] "
+  sed -u "s/^/$colored_prefix/"
+}
+
+./scripts/check-build-tools-and-ports
+
+
+echo ""
+print_logfiles | tee lastrun.log
+echo ""
+
+
+yarn install --frozen-lockfile
+
+# npx runs commands installed by yarn.
+# fun-local-env is part of github.com/fun-stack. fun-local-env simulates a local
+# AWS (amazon cloud) environment. It simulates several services, for our case
+# AWS-lambda, API-gateway, cognito. It allows us to develop for AWS infrastructure
+# without the requirement to deploy to it during development.
+(
+  echo "starting lambda backend"
+  (npx fun-local-env \
+      --auth $AUTH_PORT \
+      --http $HTTP_PORT \
+      --http-api lambda/target/scala-2.13/scalajs-bundler/main/lambda-fastopt.js httpApi \
+      --ws $WS_PORT \
+      --ws-rpc lambda/target/scala-2.13/scalajs-bundler/main/lambda-fastopt.js wsRpc \
+      || kill 0) \
+      2>&1 | tee "$BACKEND_LOG" \
+      2>&1 | prefix "BACKEND" 4
+) &
+
+echo "starting webapp"
+sbt dev shell

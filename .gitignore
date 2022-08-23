@@ -47,3 +47,4 @@ bin/
 #general
 *.class
 /node_modules
+.envrc.local

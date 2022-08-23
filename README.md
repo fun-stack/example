@@ -14,13 +14,13 @@ Terraform deployment:
 
 ## Requirements
 
-- aws-cli
 - sbt
 - yarn
 - node (>= 10.13.0)
+- aws-cli
 - terraform (>= 1.0.0): https://www.terraform.io/downloads.html
 
-The provided `default.nix` contains these dependencies, so if you are using `nix`, just run a `nix-shell` :-)
+The provided `shell.nix` contains these dependencies, so if you are using `nix`, just run a `nix-shell`.
 
 ## Development
 

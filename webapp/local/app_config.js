@@ -5,11 +5,11 @@ window.AppConfig = {
     "environment": {},
   },
   "http": {
-    "url": "http://localhost:8080",
+    "url": "http://localhost:18080",
     "allowUnauthenticated": true
   },
   "ws": {
-    "url": "ws://localhost:8081",
+    "url": "ws://localhost:18081",
     "allowUnauthenticated": true
   },
   "auth": {
