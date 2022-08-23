@@ -44,7 +44,6 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-yarn-
 
-
       - name: Cache Scalablytyped transpilations
         uses: actions/cache@v3
         with:
@@ -54,6 +53,10 @@ jobs:
           key: ${{ runner.os }}-scalablytyped-${{ hashfiles('build.sbt') }}-${{ hashFiles('*/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-scalablytyped-
+
+
+      - name: load envrc
+        uses: HatsuneMiku3939/direnv-action@v1
 
       - name: Compile and Bundle
         run: |
@@ -81,14 +84,14 @@ jobs:
           # Start frontend dev-webserver
           (
             cd webapp/target/scala-2.13/scalajs-bundler/main
-            node node_modules/webpack-dev-server/bin/webpack-dev-server.js --config webpack.config.dev.js --port 12345 || kill 0
+            node node_modules/webpack-dev-server/bin/webpack-dev-server.js --config webpack.config.dev.js --port $FRONTEND_PORT || kill 0
           ) &
 
           # Start the lambda backend
           (npx fun-local-env \
-              --auth 8082 \
-              --ws 8081 \
-              --http 8080 \
+              --auth $AUTH_PORT \
+              --ws $WS_PORT \
+              --http $HTTP_PORT \
               --http-api lambda/target/scala-2.13/scalajs-bundler/main/lambda-fastopt.js httpApi \
               --http-rpc lambda/target/scala-2.13/scalajs-bundler/main/lambda-fastopt.js httpRpc \
               --ws-rpc lambda/target/scala-2.13/scalajs-bundler/main/lambda-fastopt.js wsRpc \
