@@ -1,7 +1,7 @@
 # Don't add any credentials here!
 #
 # This is an example for `.envrc.local`. 
-# To add credentials for local development, make a copy of this file and name it `.envrc.local`.
+# To add credentials or personal preferences for local development, make a copy of this file and name it `.envrc.local`.
 # `.envrc.local` is in `.gitignore` and therefore can't be accidentally commited.
 
 # If you use nix, you can run the nix-shell automatically with the following command
