@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# https://vaneyckt.io/posts/safer_bash_scripts_with_set_euxo_pipefail
+set -Eeuo pipefail
+
+echo "Checking for brew..." && brew --version || (echo "Installing brew..." && /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)")
+echo "Checking for node..." && node --version || (echo "Installing node..." && brew install node)
+echo "Checking for yarn..." && yarn --version || (echo "Installing yarn..." && npm --global install yarn)
+echo "Checking for sbt..." && sbt --script-version || (echo "Installing sbt..." && brew install sbt)
+echo "Checking for gnu-sed..." && gsed --version || (echo "Installing gnu-sed..." && brew install gnu-sed)
+echo "Checking for coreutils..." && timeout --version || (echo "Installing coreutils..." && brew install coreutils) # Instead of checking for coreutils directly, we check for any existence of GNU tools on Mac i.e. timeout
+echo "Checking for direnv..." && direnv --version || (echo "Installing direnv..." && brew install direnv)

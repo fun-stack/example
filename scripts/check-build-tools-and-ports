@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+# https://vaneyckt.io/posts/safer_bash_scripts_with_set_euxo_pipefail
+set -Eeuo pipefail
+# cd to script location
+cd "$(dirname "${BASH_SOURCE[0]}")"
+
+# source envrc if not already loaded
+test -z "${ENVRC_LOADED:-}" && source ../.envrc
+
+echo -n "Checking for node:   " && node --version
+echo -n "Checking for yarn:   " && yarn --version
+echo -n "Checking for sbt:    " && sbt --script-version
+echo -n "Checking for nc:     " && (command -v nc || (echo "nc: command not found"; exit 1))
+
+# Do not edit these ports
+echo -en "\nChecking if ports can be opened..."
+
+nc -z 127.0.0.1  $FRONTEND_PORT &>/dev/null && (echo "Port $FRONTEND_PORT is already in use"; exit 1)
+nc -z 127.0.0.1  $HTTP_PORT     &>/dev/null && (echo "Port $HTTP_PORT is already in use";     exit 1)
+nc -z 127.0.0.1  $WS_PORT       &>/dev/null && (echo "Port $WS_PORT is already in use";       exit 1)
+nc -z 127.0.0.1  $AUTH_PORT     &>/dev/null && (echo "Port $AUTH_PORT is already in use";     exit 1)
+echo "OK"
+

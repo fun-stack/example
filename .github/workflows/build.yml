@@ -44,7 +44,6 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-yarn-
 
-
       - name: Cache Scalablytyped transpilations
         uses: actions/cache@v3
         with:
@@ -54,6 +53,10 @@ jobs:
           key: ${{ runner.os }}-scalablytyped-${{ hashfiles('build.sbt') }}-${{ hashFiles('*/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-scalablytyped-
+
+
+      - name: load envrc
+        uses: HatsuneMiku3939/direnv-action@v1
 
       - name: Compile and Bundle
         run: |
@@ -81,14 +84,14 @@ jobs:
           # Start frontend dev-webserver
           (
             cd webapp/target/scala-2.13/scalajs-bundler/main
-            node node_modules/webpack-dev-server/bin/webpack-dev-server.js --config webpack.config.dev.js --port 12345 || kill 0
+            node node_modules/webpack-dev-server/bin/webpack-dev-server.js --config webpack.config.dev.js --port $FRONTEND_PORT || kill 0
           ) &
 
           # Start the lambda backend
           (npx fun-local-env \
-              --auth 8082 \
-              --ws 8081 \
-              --http 8080 \
+              --auth $AUTH_PORT \
+              --ws $WS_PORT \
+              --http $HTTP_PORT \
               --http-api lambda/target/scala-2.13/scalajs-bundler/main/lambda-fastopt.js httpApi \
               --http-rpc lambda/target/scala-2.13/scalajs-bundler/main/lambda-fastopt.js httpRpc \
               --ws-rpc lambda/target/scala-2.13/scalajs-bundler/main/lambda-fastopt.js wsRpc \
@@ -96,11 +99,11 @@ jobs:
                 > /tmp/local-env-logs 2>&1 || kill 0) &
 
           # Test http api
-          until nc -z 127.0.0.1 8080 &>/dev/null; do sleep 0.5; done
-          [ "$(curl -v localhost:8080/books/drama/2011?limit=10)" == '[{"title":"Programming in Scala"}]' ]
+          until nc -z 127.0.0.1 $HTTP_PORT &>/dev/null; do sleep 0.5; done
+          [ "$(curl -v localhost:$HTTP_PORT/books/drama/2011?limit=10)" == '[{"title":"Programming in Scala"}]' ]
 
           # Wait until the dev server is running
-          npx wait-on http://localhost:12345
+          npx wait-on http://localhost:$FRONTEND_PORT
 
       - name: Cypress run (UI tests)
         uses: cypress-io/github-action@v4.2.0

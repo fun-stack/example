@@ -86,7 +86,7 @@ lazy val webapp = project
     ),
     Compile / npmDevDependencies     ++= readJsDependencies(baseDirectory.value, "devDependencies"),
     scalaJSUseMainModuleInitializer   := true,
-    webpackDevServerPort              := 12345,
+    webpackDevServerPort              := sys.env.get("FRONTEND_PORT").get.toInt,
     webpackDevServerExtraArgs         := Seq("--color"),
     startWebpackDevServer / version   := "3.11.3",
     fullOptJS / webpackEmitSourceMaps := true,

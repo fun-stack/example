@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# https://vaneyckt.io/posts/safer_bash_scripts_with_set_euxo_pipefail
+set -Eeuo pipefail
+# cd to script location
+cd "$(dirname "${BASH_SOURCE[0]}")"
+
+( cd ..
+  export ENABLE_FATAL_WARNINGS=true
+  sbt "~;compile;Test/compile;scalafmtCheck;scalafmtSbtCheck"
+)

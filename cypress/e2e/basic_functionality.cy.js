@@ -1,6 +1,6 @@
 describe("Basic functionality", function () {
   beforeEach(() => {
-    cy.visit("http://localhost:12345");
+    cy.visit("/");
   });
 
   it("HTTP API", function () {
