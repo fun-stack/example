@@ -1,10 +1,10 @@
 package example.api
 
-trait Api[F[_]] {
+trait WebsocketApi[F[_]] {
   def numberToString(number: Int): F[String]
   def getRandomNumber: F[Int]
 }
 
-trait StreamsApi[F[_]] {
+trait WebsocketEventApi[F[_]] {
   def logs: F[String]
 }
