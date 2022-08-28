@@ -6,19 +6,17 @@ import colibri.Observable
 import sloth.Client
 import funstack.web.Fun
 
-import java.nio.ByteBuffer
-import boopickle.Default._
-import chameleon.ext.boopickle._
+import chameleon.ext.circe._
 
 object WsClient {
-  val client                = Client(Fun.ws.transport[ByteBuffer])
+  val client                = Client(Fun.ws.transport[String])
   val api: WebsocketApi[IO] = client.wire[WebsocketApi[IO]]
 
-  val eventClient                             = Client(Fun.ws.streamsTransport[ByteBuffer])
+  val eventClient                             = Client(Fun.ws.streamsTransport[String])
   val eventApi: WebsocketEventApi[Observable] = eventClient.wire[WebsocketEventApi[Observable]]
 }
 
 object HttpClient {
-  val client              = Client(Fun.http.transport[ByteBuffer])
+  val client              = Client(Fun.http.transport[String])
   val api: HttpRpcApi[IO] = client.wire[HttpRpcApi[IO]]
 }

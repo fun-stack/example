@@ -4,12 +4,11 @@ ThisBuild / version      := "0.1.0-SNAPSHOT"
 ThisBuild / scalaVersion := "2.13.8"
 
 val versions = new {
-  val outwatch  = "1.0.0-RC8"
-  val colibri   = "0.6.1"
-  val funStack  = "0.7.0"
-  val tapir     = "1.0.4"
-  val boopickle = "1.4.0"
-  val pprint    = "0.7.3"
+  val outwatch = "1.0.0-RC8"
+  val colibri  = "0.6.1"
+  val funStack = "0.7.0"
+  val tapir    = "1.0.4"
+  val pprint   = "0.7.3"
 }
 
 // Uncomment, if you want to use snapshot dependencies from sonatype or jitpack
@@ -72,7 +71,6 @@ lazy val webapp = project
       "io.github.fun-stack"  %%% "fun-stack-web"       % versions.funStack,
       "io.github.fun-stack"  %%% "fun-stack-web-tapir" % versions.funStack, // this pulls in scala-java-time, which will drastically increase the javascript bundle size. Remove if not needed.
       "com.github.cornerman" %%% "colibri-router"      % versions.colibri,
-      "io.suzaku"            %%% "boopickle"           % versions.boopickle,
     ),
     Compile / npmDependencies ++= readJsDependencies(baseDirectory.value, "dependencies") ++ Seq(
       "snabbdom"               -> "github:outwatch/snabbdom.git#semver:0.7.5", // for outwatch, workaround for: https://github.com/ScalablyTyped/Converter/issues/293
@@ -126,7 +124,6 @@ lazy val lambda = project
       "io.github.fun-stack" %%% "fun-stack-lambda-http-rpc"            % versions.funStack,
       "io.github.fun-stack" %%% "fun-stack-lambda-http-api-tapir"      % versions.funStack,
       "io.github.fun-stack" %%% "fun-stack-backend"                    % versions.funStack,
-      "io.suzaku"           %%% "boopickle"                            % versions.boopickle,
       "com.lihaoyi"         %%% "pprint"                               % versions.pprint,
     ),
     Compile / npmDependencies ++= readJsDependencies(baseDirectory.value, "dependencies"),
