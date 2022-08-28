@@ -9,12 +9,10 @@ import sloth.Client
 import cats.effect.IO
 import cats.data.Kleisli
 
-import java.nio.ByteBuffer
-import boopickle.Default._
-import chameleon.ext.boopickle._
+import chameleon.ext.circe._
 
 object HttpApiImpl {
-  private val client     = Client.contra(Fun.ws.sendTransport[ByteBuffer])
+  private val client     = Client.contra(Fun.ws.sendTransport[String])
   private val streamsApi = client.wire[WebsocketEventApi[Kleisli[IO, *, Unit]]]
 
   val booksListingImpl = HttpApi.booksListing.serverLogic[Handler.IOKleisli] { case (_, _) =>

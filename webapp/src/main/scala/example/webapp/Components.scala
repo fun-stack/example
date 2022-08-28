@@ -1,6 +1,7 @@
 package example.webapp
 
 import colibri.Subject
+import example.api
 import outwatch.dsl._
 import funstack.web.tapir
 
@@ -58,8 +59,8 @@ object Components {
         // example of rendering an async call directly
         // https://outwatch.github.io/docs/readme.html#rendering-futures
         // https://outwatch.github.io/docs/readme.html#rendering-async-effects
-        b("Number to string via api call: "),
-        span(WsClient.api.numberToString(3), cls := "websocket-rpc-number-to-string"),
+        b("Sum via api call: "),
+        span(WsClient.api.sum(api.Numbers(1, 4)), cls := "websocket-rpc-sum"),
       ),
       div(
         // example of dynamic content with EmitterBuilder (onClick), IO (asEffect), and Subject/Observable/Observer (currentRandomNumber)

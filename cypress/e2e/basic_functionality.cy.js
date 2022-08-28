@@ -15,7 +15,7 @@ describe("Basic functionality", function () {
 
   it("Websocket RPC API", function () {
     cy.get('.nav-api').click();
-    cy.get('.websocket-rpc-number-to-string').should("have.text", "3");
+    cy.get('.websocket-rpc-sum').should("have.text", "5");
   });
 
   it("Websocket Events", function () {

@@ -1,9 +1,9 @@
 package example.api
 
+import io.circe.generic.JsonCodec
 import sttp.tapir._
 import sttp.tapir.generic.auto._
 import sttp.tapir.json.circe._
-import io.circe.generic.auto._
 
 // example from: https://github.com/softwaremill/tapir
 
@@ -14,8 +14,8 @@ object HttpApi {
   }
   import types._
 
-  case class BooksFromYear(genre: String, year: Int)
-  case class Book(title: String)
+  @JsonCodec case class BooksFromYear(genre: String, year: Int)
+  @JsonCodec case class Book(title: String)
 
   val booksListing: PublicEndpoint[(BooksFromYear, Limit), String, List[Book], Any] =
     endpoint.get
