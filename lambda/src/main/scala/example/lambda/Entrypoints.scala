@@ -1,12 +1,12 @@
 package example.lambda
 
+import cats.effect.IO
 import example.api.{HttpRpcApi, WebsocketApi, WebsocketEventApi}
-import funstack.lambda.{apigateway, http, ws}
+import funstack.lambda.{http, ws}
 import sloth.Router
 
 import java.nio.ByteBuffer
 import boopickle.Default._
-import cats.effect.IO
 import chameleon.ext.boopickle._
 
 import scala.scalajs.js
