@@ -1,12 +1,12 @@
 package example.lambda
 
-import example.api.{Api, StreamsApi}
-
+import example.api.{HttpRpcApi, WebsocketApi, WebsocketEventApi}
 import funstack.lambda.{apigateway, http, ws}
 import sloth.Router
 
 import java.nio.ByteBuffer
 import boopickle.Default._
+import cats.effect.IO
 import chameleon.ext.boopickle._
 
 import scala.scalajs.js
@@ -18,21 +18,21 @@ object Entrypoints {
   )
 
   @js.annotation.JSExportTopLevel("httpRpc")
-  val httpRpc = http.rpc.Handler.handleKleisli(
-    Router[ByteBuffer, http.rpc.Handler.IOKleisli](new ApiRequestLogger[http.rpc.Handler.IOKleisli])
-      .route[Api[apigateway.Handler.IOKleisli]](ApiImpl),
-  )
+  val httpRpc = http.rpc.Handler.handle { request: http.rpc.Handler.Request =>
+    Router[ByteBuffer, IO](new ApiRequestLogger[IO])
+      .route[HttpRpcApi[IO]](new HttpRpcApiImpl(request))
+  }
 
   @js.annotation.JSExportTopLevel("wsRpc")
-  val wsRpc = ws.rpc.Handler.handleKleisli(
-    Router[ByteBuffer, ws.rpc.Handler.IOKleisli](new ApiRequestLogger[ws.rpc.Handler.IOKleisli])
-      .route[Api[apigateway.Handler.IOKleisli]](ApiImpl),
-  )
+  val wsRpc = ws.rpc.Handler.handle[ByteBuffer] { request: ws.rpc.Handler.Request =>
+    Router[ByteBuffer, IO](new ApiRequestLogger[IO])
+      .route[WebsocketApi[IO]](new WebsocketApiImpl(request))
+  }
 
   @js.annotation.JSExportTopLevel("wsEventAuth")
   val wsEventAuth = ws.eventauthorizer.Handler.handleKleisli(
     Router
       .contra[ByteBuffer, ws.eventauthorizer.Handler.IOKleisli]
-      .route[StreamsApi[ws.eventauthorizer.Handler.IOKleisli]](StreamsApiAuthImpl),
+      .route[WebsocketEventApi[ws.eventauthorizer.Handler.IOKleisli]](WebsocketEventApiAuthImpl),
   )
 }

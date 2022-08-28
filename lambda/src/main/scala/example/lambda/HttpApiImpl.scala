@@ -1,6 +1,6 @@
 package example.lambda
 
-import example.api.{HttpApi, StreamsApi}
+import example.api.{HttpApi, WebsocketEventApi}
 
 import funstack.lambda.http.api.tapir.Handler
 import funstack.backend.Fun
@@ -15,7 +15,7 @@ import chameleon.ext.boopickle._
 
 object HttpApiImpl {
   private val client     = Client.contra(Fun.ws.sendTransport[ByteBuffer])
-  private val streamsApi = client.wire[StreamsApi[Kleisli[IO, *, Unit]]]
+  private val streamsApi = client.wire[WebsocketEventApi[Kleisli[IO, *, Unit]]]
 
   val booksListingImpl = HttpApi.booksListing.serverLogic[Handler.IOKleisli] { case (_, _) =>
     Kleisli { req =>
