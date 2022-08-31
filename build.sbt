@@ -84,9 +84,12 @@ lazy val webapp = project
       "snabbdom",
       "jwt-decode",
     ),
-    Compile / npmDevDependencies     ++= readJsDependencies(baseDirectory.value, "devDependencies"),
-    scalaJSUseMainModuleInitializer   := true,
-    webpackDevServerPort              := sys.env.get("FRONTEND_PORT").get.toInt,
+    Compile / npmDevDependencies   ++= readJsDependencies(baseDirectory.value, "devDependencies"),
+    scalaJSUseMainModuleInitializer := true,
+    webpackDevServerPort := sys.env
+      .get("FRONTEND_PORT")
+      .flatMap(port => scala.util.Try(port.toInt).toOption)
+      .getOrElse(12345),
     webpackDevServerExtraArgs         := Seq("--color"),
     startWebpackDevServer / version   := "3.11.3",
     fullOptJS / webpackEmitSourceMaps := true,
@@ -146,6 +149,11 @@ addCommandAlias("prodb", "lambda/fullOptJS/webpack")
 addCommandAlias("dev", "devInitAll; devWatchAll; devDestroyFrontend")
 addCommandAlias("devf", "devInitFrontend; devWatchFrontend; devDestroyFrontend") // compile only frontend
 addCommandAlias("devb", "devInitBackend; devWatchBackend")                       // compile only backend
+
+// devInitBackend needs to execute {...}/fastOptJS/webpack, to prepare all npm dependencies.
+// We want to avoid this expensive preparation in the hot-reload process,
+// and therefore only watch {...}/fastOptJS, where dependencies can be resolved from the previously prepared
+// node_modules folder.
 addCommandAlias("devInitBackend", "lambda/fastOptJS/webpack")
 addCommandAlias("devInitFrontend", "webapp/fastOptJS/startWebpackDevServer; webapp/fastOptJS/webpack")
 addCommandAlias("devInitAll", "devInitFrontend; devInitBackend")
