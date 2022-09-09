@@ -136,3 +136,11 @@ Terraform module for the corresponding AWS infrastructure:
 See local development module for mocking the AWS infrastructure locally:
 - Fun Local Environment: [local-env](https://github.com/fun-stack/local-env)
 
+
+# Troubleshooting
+
+# bad path
+
+```
+sbt clean
+```
