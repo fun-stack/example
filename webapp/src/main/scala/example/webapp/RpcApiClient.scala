@@ -8,7 +8,7 @@ import funstack.web.Fun
 
 import chameleon.ext.circe._
 
-object WsClient {
+object WsRpcClient {
   val client          = Client(Fun.ws.transport[String])
   val api: RpcApi[IO] = client.wire[RpcApi[IO]]
 
@@ -16,7 +16,7 @@ object WsClient {
   val eventApi: EventApi[Observable] = eventClient.wire[EventApi[Observable]]
 }
 
-object HttpClient {
+object HttpRpcClient {
   val client          = Client(Fun.http.transport[String])
   val api: RpcApi[IO] = client.wire[RpcApi[IO]]
 }
