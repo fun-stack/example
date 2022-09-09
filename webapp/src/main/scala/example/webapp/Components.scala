@@ -22,7 +22,7 @@ object Components {
     ),
   )
 
-  def httpRpcApi = {
+  def RpcApi = {
     val currentRandomNumber = Subject.behavior[Option[Int]](None)
 
     div(
@@ -86,7 +86,7 @@ object Components {
         // incoming events from the websocket
         div("(press random number button)", cls := "text-gray-500"),
         div(
-          WsClient.eventApi.logs.map(div(_)).scanToList,
+          WsClient.eventApi.myMessages.map(div(_)).scanToList,
           cls := "websocket-event-list",
         ),
       ),

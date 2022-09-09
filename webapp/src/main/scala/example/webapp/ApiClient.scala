@@ -1,7 +1,7 @@
 package example.webapp
 
 import cats.effect.IO
-import example.api.{HttpRpcApi, WebsocketApi, WebsocketEventApi}
+import example.api.{EventApi, RpcApi}
 import colibri.Observable
 import sloth.Client
 import funstack.web.Fun
@@ -9,14 +9,14 @@ import funstack.web.Fun
 import chameleon.ext.circe._
 
 object WsClient {
-  val client                = Client(Fun.ws.transport[String])
-  val api: WebsocketApi[IO] = client.wire[WebsocketApi[IO]]
+  val client          = Client(Fun.ws.transport[String])
+  val api: RpcApi[IO] = client.wire[RpcApi[IO]]
 
-  val eventClient                             = Client(Fun.ws.streamsTransport[String])
-  val eventApi: WebsocketEventApi[Observable] = eventClient.wire[WebsocketEventApi[Observable]]
+  val eventClient                    = Client(Fun.ws.streamsTransport[String])
+  val eventApi: EventApi[Observable] = eventClient.wire[EventApi[Observable]]
 }
 
 object HttpClient {
-  val client              = Client(Fun.http.transport[String])
-  val api: HttpRpcApi[IO] = client.wire[HttpRpcApi[IO]]
+  val client          = Client(Fun.http.transport[String])
+  val api: RpcApi[IO] = client.wire[RpcApi[IO]]
 }
