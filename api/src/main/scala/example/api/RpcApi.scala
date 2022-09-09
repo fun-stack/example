@@ -4,8 +4,8 @@ import io.circe.generic.JsonCodec
 
 trait RpcApi[F[_]] {
   def numberToString(number: Int): F[String]
-  def sum(numbers: Numbers): F[Int]
+  def scale(point: Point, factor: Double): F[Point]
   def getRandomNumber: F[Int]
 }
 
-@JsonCodec case class Numbers(a: Int, b: Int)
+@JsonCodec case class Point(x: Double, y: Double)

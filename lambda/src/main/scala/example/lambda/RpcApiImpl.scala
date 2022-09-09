@@ -2,7 +2,7 @@ package example.lambda
 
 import cats.data.Kleisli
 import cats.effect.IO
-import example.api.{EventApi, Numbers, RpcApi}
+import example.api.{EventApi, Point, RpcApi}
 import funstack.backend.Fun
 import funstack.lambda.apigateway.Request
 import sloth.Client
@@ -15,7 +15,9 @@ class RpcApiImpl(request: Request) extends RpcApi[IO] {
 
   override def numberToString(number: Int): IO[String] = IO(number.toString)
 
-  override def sum(numbers: Numbers): IO[Int] = IO { numbers.a + numbers.b }
+  override def scale(point: Point, factor: Double): IO[Point] = IO {
+    point.copy(x = point.x * factor, y = point.y * factor)
+  }
 
   override def getRandomNumber: IO[Int] = {
     val userId = request.auth.map(_.sub)
