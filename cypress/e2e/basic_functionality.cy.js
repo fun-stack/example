@@ -15,7 +15,7 @@ describe("Basic functionality", function () {
 
   it("Websocket RPC API", function () {
     cy.get('.nav-api').click();
-    cy.get('.websocket-rpc-scaled-point').should("have.text", "Point(3, 12)");
+    cy.get('.websocket-rpc-scaled-point').should("have.text", "Point(6,12)");
   });
 
   it("Websocket Events", function () {

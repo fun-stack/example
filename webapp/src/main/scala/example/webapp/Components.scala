@@ -60,7 +60,7 @@ object Components {
         // https://outwatch.github.io/docs/readme.html#rendering-futures
         // https://outwatch.github.io/docs/readme.html#rendering-async-effects
         b("Sum via api call: "),
-        span(WsRpcClient.api.scale(api.Point(1, 4), 3).map(_.toString), cls := "websocket-rpc-scaled-point"),
+        span(WsRpcClient.api.scale(api.Point(2, 4), 3).map(_.toString), cls := "websocket-rpc-scaled-point"),
       ),
       div(
         // example of dynamic content with EmitterBuilder (onClick), IO (asEffect), and Subject/Observable/Observer (currentRandomNumber)
