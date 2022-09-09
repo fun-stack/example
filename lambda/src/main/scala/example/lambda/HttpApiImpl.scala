@@ -1,6 +1,6 @@
 package example.lambda
 
-import example.api.{HttpApi, EventApi}
+import example.api.{EventApi, HttpApi}
 
 import funstack.lambda.apigateway.Handler
 import funstack.backend.Fun
