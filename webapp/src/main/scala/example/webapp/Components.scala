@@ -22,7 +22,7 @@ object Components {
     ),
   )
 
-  def RpcApi = {
+  def httpRpcApi = {
     val currentRandomNumber = Subject.behavior[Option[Int]](None)
 
     div(

@@ -58,6 +58,7 @@ yarn install --frozen-lockfile
       --auth $AUTH_PORT \
       --http $HTTP_PORT \
       --http-api lambda/target/scala-2.13/scalajs-bundler/main/lambda-fastopt.js httpApi \
+      --http-rpc lambda/target/scala-2.13/scalajs-bundler/main/lambda-fastopt.js httpRpc \
       --ws $WS_PORT \
       --ws-rpc lambda/target/scala-2.13/scalajs-bundler/main/lambda-fastopt.js wsRpc \
       || kill 0) \

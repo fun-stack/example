@@ -8,7 +8,7 @@ in
       git
       terraform
 
-      nodejs
+      nodejs-16_x
       yarn
 
       sbt

@@ -60,7 +60,7 @@ object App {
         div(
           cls := "space-y-4",
           Components.httpApi,
-          Components.RpcApi,
+          Components.httpRpcApi,
           Components.websocketRpcApi,
           Components.websocketEvents,
         )
