@@ -1,6 +1,7 @@
 package example.webapp
 
 import colibri.Subject
+import example.api
 import outwatch.dsl._
 import funstack.web.tapir
 
@@ -21,7 +22,7 @@ object Components {
     ),
   )
 
-  def httpRpcApi = {
+  def RpcApi = {
     val currentRandomNumber = Subject.behavior[Option[Int]](None)
 
     div(
@@ -31,7 +32,7 @@ object Components {
         // https://outwatch.github.io/docs/readme.html#rendering-futures
         // https://outwatch.github.io/docs/readme.html#rendering-async-effects
         b("Number to string via api call: "),
-        span(HttpClient.api.numberToString(3), cls := "http-rpc-number-to-string"),
+        span(HttpRpcClient.api.numberToString(3), cls := "http-rpc-number-to-string"),
       ),
       div(
         // example of dynamic content with EmitterBuilder (onClick), IO (asEffect), and Subject/Observable/Observer (currentRandomNumber)
@@ -42,7 +43,7 @@ object Components {
         ),
         button(
           "Get New Random Number from API",
-          onClick.asEffect(HttpClient.api.getRandomNumber).map(Some.apply) --> currentRandomNumber,
+          onClick.asEffect(HttpRpcClient.api.getRandomNumber).map(Some.apply) --> currentRandomNumber,
           cls := "btn btn-primary btn-sm",
         ),
       ),
@@ -58,8 +59,8 @@ object Components {
         // example of rendering an async call directly
         // https://outwatch.github.io/docs/readme.html#rendering-futures
         // https://outwatch.github.io/docs/readme.html#rendering-async-effects
-        b("Number to string via api call: "),
-        span(WsClient.api.numberToString(3), cls := "websocket-rpc-number-to-string"),
+        b("Sum via api call: "),
+        span(WsRpcClient.api.scale(api.Point(2, 4), 3).map(_.toString), cls := "websocket-rpc-scaled-point"),
       ),
       div(
         // example of dynamic content with EmitterBuilder (onClick), IO (asEffect), and Subject/Observable/Observer (currentRandomNumber)
@@ -70,7 +71,7 @@ object Components {
         ),
         button(
           "Get New Random Number from API",
-          onClick.asEffect(WsClient.api.getRandomNumber).map(Some.apply) --> currentRandomNumber,
+          onClick.asEffect(WsRpcClient.api.getRandomNumber).map(Some.apply) --> currentRandomNumber,
           cls := "btn btn-primary btn-sm",
           cls := "websocket-rpc-new-random-number-button",
         ),
@@ -85,7 +86,7 @@ object Components {
         // incoming events from the websocket
         div("(press random number button)", cls := "text-gray-500"),
         div(
-          WsClient.streamsApi.logs.map(div(_)).scanToList,
+          WsRpcClient.eventApi.myMessages.map(div(_)).scanToList,
           cls := "websocket-event-list",
         ),
       ),
