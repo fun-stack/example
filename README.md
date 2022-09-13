@@ -144,3 +144,5 @@ See local development module for mocking the AWS infrastructure locally:
 ```
 sbt clean
 ```
+
+# Your lockfile needs to be updated, but yarn was run with `--frozen-lockfile`.
