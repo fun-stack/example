@@ -4,7 +4,7 @@ locals {
 
 module "example" {
   source  = "fun-stack/fun/aws"
-  version = "0.6.5"
+  version = "0.10.6"
 
   stage = terraform.workspace
 
@@ -68,17 +68,17 @@ module "example" {
   }
 
   auth = {
-    image_file = "auth.jpg"
-    css_file   = "auth.css"
+    image_base64_content = filebase64("auth.jpg")
+    css_content          = file("auth.css")
   }
-
-  # budget = {
-  #   limit_monthly_dollar = "10.0"
-  #   notify_email         = "budget@example.com"
-  # }
 
   # dev_setup = {
   #   # enabled           = !local.is_prod
   #   local_website_url = "http://localhost:12345" # auth can redirect to that website, cors of http api allows origin
   # }
+
+  providers = {
+    aws = aws
+    aws.us-east-1 = aws.us-east-1
+  }
 }
