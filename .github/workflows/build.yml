@@ -72,9 +72,22 @@ jobs:
       - name: Validate Terraform
         run: |
           cd terraform
+
+          cat <<EOF > terraform.tf
+          provider "aws" {
+            region = "eu-central-1"
+          }
+
+          provider "aws" {
+            alias  = "us-east-1"
+            region = "us-east-1"
+          }
+          EOF
+
           terraform init
           terraform validate
-          rm .terraform.lock.hcl
+
+          rm -r .terraform.lock.hcl terraform.tf
 
       - name: Yarn install
         run: yarn install --frozen-lockfile
