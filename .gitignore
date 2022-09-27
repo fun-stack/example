@@ -48,3 +48,8 @@ bin/
 *.class
 node_modules
 .envrc.local
+
+#because scalajs-bundler doesn't play well with lockfiles
+webapp/yarn.lock
+lambda/yarn.lock
+

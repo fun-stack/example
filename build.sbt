@@ -38,7 +38,6 @@ lazy val scalaJsSettings = Seq(
 lazy val scalaJsBundlerSettings = Seq(
   webpack / version := "4.46.0",
   useYarn           := true,
-  yarnExtraArgs     += "--frozen-lockfile",
 )
 
 lazy val scalaJsMacrotaskExecutor = Seq(
