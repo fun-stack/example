@@ -3,7 +3,7 @@
   "dependencies": {},
   "devDependencies": {
     "@fun-stack/fun-pack": "0.2.5",
-    "autoprefixer": "^10.4.8",
+    "autoprefixer": "^10.4.12",
     "daisyui": "^2.27.0",
     "postcss": "^8.4.16",
     "postcss-loader": "^4.2.0",
