@@ -4,6 +4,6 @@
     "aws-sdk": "2.1223.0"
   },
   "devDependencies": {
-    "@fun-stack/fun-pack": "0.2.5"
+    "@fun-stack/fun-pack": "0.2.6"
   }
 }
