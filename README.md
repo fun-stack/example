@@ -18,7 +18,7 @@ Terraform deployment:
 - yarn
 - node (>= 10.13.0)
 - aws-cli
-- terraform (>= 1.0.0): https://www.terraform.io/downloads.html
+- terraform (at the time of writing, TF version between 1.0.0 and 1.2.9 (incl.) is recommended): https://www.terraform.io/downloads.html
 - [direnv](https://direnv.net/)
 
 The provided `shell.nix` contains these dependencies, so if you are using `nix`, just run a `nix-shell`.
@@ -73,6 +73,7 @@ Create an s3-bucket and dynamodb table for the terraform state (generates a `ter
 ./terraform/initial_setup.sh
 # git add terraform/terraform.tf
 ```
+Be aware that the `setup.sh` script uses region `eu-central-1`. Edit the created `terraform.tf` with the region of your account if needed.
 
 #### If you have a custom domain
 
