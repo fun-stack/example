@@ -3,6 +3,8 @@ Global / onChangedBuildSource := IgnoreSourceChanges // not working well with we
 ThisBuild / version      := "0.1.0-SNAPSHOT"
 ThisBuild / scalaVersion := "2.13.8"
 
+Global / excludeLintKeys += webpackDevServerPort // TODO:
+
 val versions = new {
   val outwatch = "1.0.0-RC8"
   val colibri  = "0.7.0"
@@ -36,7 +38,9 @@ lazy val scalaJsSettings = Seq(
 ) ++ scalaJsBundlerSettings ++ scalaJsMacrotaskExecutor ++ scalaJsSecureRandom
 
 lazy val scalaJsBundlerSettings = Seq(
-  webpack / version := "4.46.0",
+  webpack / version := "5.75.0",
+  webpackCliVersion := "5.0.0",
+  startWebpackDevServer / version   := "4.11.1",
   useYarn           := true,
 )
 
@@ -88,7 +92,6 @@ lazy val webapp = project
       .flatMap(port => scala.util.Try(port.toInt).toOption)
       .getOrElse(12345),
     webpackDevServerExtraArgs         := Seq("--color"),
-    startWebpackDevServer / version   := "3.11.3",
     fullOptJS / webpackEmitSourceMaps := true,
     fastOptJS / webpackEmitSourceMaps := true,
     fastOptJS / webpackBundlingMode   := BundlingMode.LibraryOnly(),
