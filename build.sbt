@@ -38,10 +38,10 @@ lazy val scalaJsSettings = Seq(
 ) ++ scalaJsBundlerSettings ++ scalaJsMacrotaskExecutor ++ scalaJsSecureRandom
 
 lazy val scalaJsBundlerSettings = Seq(
-  webpack / version := "5.75.0",
-  webpackCliVersion := "5.0.0",
-  startWebpackDevServer / version   := "4.11.1",
-  useYarn           := true,
+  webpack / version               := "5.75.0",
+  webpackCliVersion               := "5.0.0",
+  startWebpackDevServer / version := "4.11.1",
+  useYarn                         := true,
 )
 
 lazy val scalaJsMacrotaskExecutor = Seq(
