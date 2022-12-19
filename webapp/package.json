@@ -2,7 +2,7 @@
   "license": "UNLICENSED",
   "dependencies": {},
   "devDependencies": {
-    "@fun-stack/fun-pack": "0.3.0",
+    "@fun-stack/fun-pack": "0.3.4",
     "autoprefixer": "^10.4.12",
     "daisyui": "^2.27.0",
     "postcss": "^8.4.16",
