@@ -46,7 +46,7 @@ lazy val scalaJsBundlerSettings = Seq(
 
 lazy val scalaJsMacrotaskExecutor = Seq(
   // https://github.com/scala-js/scala-js-macrotask-executor
-  libraryDependencies += "org.scala-js" %%% "scala-js-macrotask-executor" % "1.1.0",
+  libraryDependencies += "org.scala-js" %%% "scala-js-macrotask-executor" % "1.1.1",
 )
 
 lazy val scalaJsSecureRandom = Seq(
