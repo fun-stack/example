@@ -39,10 +39,10 @@
     debug "^3.1.0"
     lodash.once "^4.1.1"
 
-"@fun-stack/fun-local-env@^0.3.7":
-  version "0.3.7"
-  resolved "https://registry.yarnpkg.com/@fun-stack/fun-local-env/-/fun-local-env-0.3.7.tgz#3f95989b14d97688c91cca7902d1d9bf3c19eff1"
-  integrity sha512-AzdxK5+42yJzPTOlFEwuFg1uPcOWOniCdSF8ciARdbE5ZTFotbMhVsQPSzAjlEEmuuwDpNjqWuOSM1bUo5jjdQ==
+"@fun-stack/fun-local-env@^0.3.10":
+  version "0.3.10"
+  resolved "https://registry.yarnpkg.com/@fun-stack/fun-local-env/-/fun-local-env-0.3.10.tgz#58da30e5e90f695af09d6d4cd0fde1bd0ce8695f"
+  integrity sha512-jUtwod7dmvGKH34SNeJjvVj72RE+U9mv1ld1Aroua/5DKoGb+JRZV3SljsmJSncnawI/26e0hw1jdzUEB1JkTQ==
 
 "@hapi/hoek@^9.0.0":
   version "9.3.0"
