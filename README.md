@@ -18,7 +18,7 @@ Terraform deployment:
 - yarn
 - node (>= 10.13.0)
 - aws-cli
-- terraform (at the time of writing, TF version between 1.0.0 and 1.2.9 (incl.) is recommended): https://www.terraform.io/downloads.html
+- terraform (>= 1.3.0): https://www.terraform.io/downloads.html
 - [direnv](https://direnv.net/)
 
 The provided `shell.nix` contains these dependencies, so if you are using `nix`, just run a `nix-shell`.
