@@ -13,7 +13,3 @@ output "url_ws" {
 output "url_auth" {
   value = module.example.url_auth
 }
-
-output "app_config" {
-  value = module.example.app_config
-}
