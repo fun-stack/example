@@ -2,6 +2,7 @@ package example.webapp
 
 import colibri.Subject
 import example.api
+import outwatch._
 import outwatch.dsl._
 import funstack.web.tapir
 
@@ -86,7 +87,7 @@ object Components {
         // incoming events from the websocket
         div("(press random number button)", cls := "text-gray-500"),
         div(
-          WsRpcClient.eventApi.myMessages.map(div(_)).scanToList,
+          WsRpcClient.eventApi.myMessages.map(div(_)).scan[VMod](VMod.empty)(_ ++ _),
           cls := "websocket-event-list",
         ),
       ),
