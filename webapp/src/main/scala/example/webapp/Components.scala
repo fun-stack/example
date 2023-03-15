@@ -2,6 +2,7 @@ package example.webapp
 
 import colibri.Subject
 import example.api
+import outwatch._
 import outwatch.dsl._
 import funstack.web.tapir
 
