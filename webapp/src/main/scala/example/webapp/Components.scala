@@ -86,7 +86,7 @@ object Components {
         // incoming events from the websocket
         div("(press random number button)", cls := "text-gray-500"),
         div(
-          WsRpcClient.eventApi.myMessages.map(div(_)).scanToList,
+          WsRpcClient.eventApi.myMessages.map(div(_)).scan[VMod](VMod.empty)(_ ++ _),
           cls := "websocket-event-list",
         ),
       ),
