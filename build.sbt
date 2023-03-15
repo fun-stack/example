@@ -1,7 +1,7 @@
 Global / onChangedBuildSource := IgnoreSourceChanges // not working well with webpack devserver
 
 ThisBuild / version      := "0.1.0-SNAPSHOT"
-ThisBuild / scalaVersion := "2.13.8"
+ThisBuild / scalaVersion := "2.13.10"
 
 Global / excludeLintKeys += webpackDevServerPort // TODO:
 
@@ -10,7 +10,7 @@ val versions = new {
   val colibri  = "0.7.0"
   val funStack = "0.8.0"
   val tapir    = "1.0.6"
-  val pprint   = "0.7.3"
+  val pprint   = "0.8.1"
 }
 
 // Uncomment, if you want to use snapshot dependencies from sonatype or jitpack
@@ -46,7 +46,7 @@ lazy val scalaJsBundlerSettings = Seq(
 
 lazy val scalaJsMacrotaskExecutor = Seq(
   // https://github.com/scala-js/scala-js-macrotask-executor
-  libraryDependencies += "org.scala-js" %%% "scala-js-macrotask-executor" % "1.1.0",
+  libraryDependencies += "org.scala-js" %%% "scala-js-macrotask-executor" % "1.1.1",
 )
 
 lazy val scalaJsSecureRandom = Seq(
