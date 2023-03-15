@@ -10,7 +10,7 @@ val versions = new {
   val colibri  = "0.7.0"
   val funStack = "0.8.0"
   val tapir    = "1.0.6"
-  val pprint   = "0.7.3"
+  val pprint   = "0.8.1"
 }
 
 // Uncomment, if you want to use snapshot dependencies from sonatype or jitpack
