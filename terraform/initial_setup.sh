@@ -26,12 +26,22 @@ terraform {
   }
 }
 
+locals {
+  tags = {
+    Environment = terraform.workspace
+    AppName     = "my-app"      # TODO: change me accordingly
+    ManagedBy   = "Terraform"   # TODO: change me accordingly
+  }
+}
+
 provider "aws" {
   region = "eu-central-1"
+  default_tags { tags = local.tags }
 }
 
 provider "aws" {
   alias  = "us-east-1"
   region = "us-east-1"
+  default_tags { tags = local.tags }
 }
 EOF
