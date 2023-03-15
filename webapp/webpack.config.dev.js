@@ -6,7 +6,6 @@ module.exports = webDev({
   extraWatchDirs: [
     "local", // frontend with local backend
     "src/css",
-    // "../terraform/.terraform/modules/example/serve/" // frontend with deployed backend
   ],
   extraStaticDirs: [
     "src", // src for source maps
