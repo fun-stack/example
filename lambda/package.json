@@ -1,9 +1,9 @@
 {
   "license": "UNLICENSED",
   "dependencies": {
-    "aws-sdk": "2.1233.0"
+    "aws-sdk": "2.1328.0"
   },
   "devDependencies": {
-    "@fun-stack/fun-pack": "0.3.0"
+    "@fun-stack/fun-pack": "0.3.5"
   }
 }
