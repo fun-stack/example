@@ -11,8 +11,7 @@ object LoadCss {
   object Css extends js.Object
 
   def apply(): Unit = {
-    Css
-    ()
+    Css: Unit
   }
 
 }
