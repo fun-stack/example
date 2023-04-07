@@ -39,10 +39,10 @@
     debug "^3.1.0"
     lodash.once "^4.1.1"
 
-"@fun-stack/fun-local-env@^0.3.13":
-  version "0.3.13"
-  resolved "https://registry.yarnpkg.com/@fun-stack/fun-local-env/-/fun-local-env-0.3.13.tgz#b680789b5029511cfd32e6987ffa953ce3a32fa7"
-  integrity sha512-RCzTAChCivfc+WJHJu6W4vmPxzhfYxDPhddv3IhOeB9GdHloPpu2VHA2rWs6nKKLSQI9EprA4OTXr8RaVnWJdg==
+"@fun-stack/fun-local-env@^0.3.14":
+  version "0.3.14"
+  resolved "https://registry.yarnpkg.com/@fun-stack/fun-local-env/-/fun-local-env-0.3.14.tgz#61380c1f6dc8dbfc0c7ce3e9b67806b6090fd135"
+  integrity sha512-w55VsJXiftHzU/3gk34PJoUOs4VaLZnl8haLh+DfrmYhV4oa/KXW0zbJQSCASUM7bSJs1+zCWQtl3tuPz92bcg==
 
 "@hapi/hoek@^9.0.0":
   version "9.3.0"
@@ -345,10 +345,10 @@ cross-spawn@^7.0.0:
     shebang-command "^2.0.0"
     which "^2.0.1"
 
-cypress@^12.8.1:
-  version "12.8.1"
-  resolved "https://registry.yarnpkg.com/cypress/-/cypress-12.8.1.tgz#0c6e67f34554d553138697aaf349b637d80004eb"
-  integrity sha512-lIFbKdaSYAOarNLHNFa2aPZu6YSF+8UY4VRXMxJrFUnk6RvfG0AWsZ7/qle/aIz30TNUD4aOihz2ZgS4vuQVSA==
+cypress@^12.9.0:
+  version "12.9.0"
+  resolved "https://registry.yarnpkg.com/cypress/-/cypress-12.9.0.tgz#e6ab43cf329fd7c821ef7645517649d72ccf0a12"
+  integrity sha512-Ofe09LbHKgSqX89Iy1xen2WvpgbvNxDzsWx3mgU1mfILouELeXYGwIib3ItCwoRrRifoQwcBFmY54Vs0zw7QCg==
   dependencies:
     "@cypress/request" "^2.88.10"
     "@cypress/xvfb" "^1.2.4"
