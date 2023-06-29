@@ -8,7 +8,7 @@ Global / excludeLintKeys += webpackDevServerPort // TODO:
 val versions = new {
   val outwatch = "1.0.0-RC14"
   val colibri  = "0.7.8"
-  val funStack = "0.8.9"
+  val funStack = "0.9.14"
   val tapir    = "1.5.5"
   val pprint   = "0.8.1"
 }
