@@ -1,7 +1,7 @@
 Global / onChangedBuildSource := IgnoreSourceChanges // not working well with webpack devserver
 
 ThisBuild / version      := "0.1.0-SNAPSHOT"
-ThisBuild / scalaVersion := "2.13.11"
+ThisBuild / scalaVersion := "2.13.12"
 
 Global / excludeLintKeys += webpackDevServerPort // TODO:
 
@@ -9,7 +9,7 @@ val versions = new {
   val outwatch = "1.0.0-RC14"
   val colibri  = "0.7.8"
   val funStack = "0.8.9"
-  val tapir    = "1.7.3"
+  val tapir    = "1.7.4"
   val pprint   = "0.8.1"
 }
 
