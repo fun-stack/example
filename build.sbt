@@ -9,7 +9,7 @@ val versions = new {
   val outwatch = "1.0.0-RC17"
   val colibri  = "0.7.8"
   val funStack = "0.8.9"
-  val tapir    = "1.7.5"
+  val tapir    = "1.7.6"
   val pprint   = "0.8.1"
 }
 
