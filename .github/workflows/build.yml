@@ -68,7 +68,7 @@ jobs:
             scalafmtCheck scalafmtSbtCheck \
             {webapp,lambda}/fastOptJS/webpack
 
-      - uses: hashicorp/setup-terraform@v1
+      - uses: hashicorp/setup-terraform@v3
 
       - name: Validate Terraform
         run: |
@@ -120,7 +120,7 @@ jobs:
           npx wait-on http://localhost:$FRONTEND_PORT
 
       - name: Cypress run (UI tests)
-        uses: cypress-io/github-action@v6.5.0
+        uses: cypress-io/github-action@v6.6.0
 
       - name: On E2E test failure, print logs
         if: failure()
