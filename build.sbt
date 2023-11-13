@@ -6,7 +6,7 @@ ThisBuild / scalaVersion := "2.13.12"
 Global / excludeLintKeys += webpackDevServerPort // TODO:
 
 val versions = new {
-  val outwatch = "1.0.0-RC17"
+  val outwatch = "1.0.0-RC18"
   val colibri  = "0.7.8"
   val funStack = "0.8.9"
   val tapir    = "1.9.0"
