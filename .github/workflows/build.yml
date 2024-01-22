@@ -36,7 +36,7 @@ jobs:
         run: echo "::set-output name=dir::$(yarn cache dir)"
 
       - name: Cache yarn
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
@@ -45,7 +45,7 @@ jobs:
             ${{ runner.os }}-yarn-
 
       - name: Cache Scalablytyped transpilations
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: |
             ~/.ivy2/local/org.scalablytyped
