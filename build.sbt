@@ -70,10 +70,9 @@ lazy val webapp = project
   .settings(
     Test / test := {}, // skip tests, since we don't have any in this subproject. Remove this line, once there are tests
     libraryDependencies ++= Seq(
-      "io.github.outwatch"   %%% "outwatch"            % versions.outwatch,
-      "io.github.fun-stack"  %%% "fun-stack-web"       % versions.funStack,
-      "io.github.fun-stack"  %%% "fun-stack-web-tapir" % versions.funStack, // this pulls in scala-java-time, which will drastically increase the javascript bundle size. Remove if not needed.
-      "com.github.cornerman" %%% "colibri-router"      % versions.colibri,
+      "io.github.outwatch"   %%% "outwatch"             % versions.outwatch,
+      "io.github.fun-stack"  %%% "fun-stack-client-web" % versions.funStack,
+      "com.github.cornerman" %%% "colibri-router"       % versions.colibri,
     ),
     Compile / npmDependencies ++= readJsDependencies(baseDirectory.value, "dependencies") ++ Seq(
       "snabbdom"               -> "github:outwatch/snabbdom.git#semver:0.7.5", // for outwatch, workaround for: https://github.com/ScalablyTyped/Converter/issues/293
