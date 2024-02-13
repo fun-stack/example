@@ -2,7 +2,7 @@ package example.webapp
 
 import outwatch._
 import outwatch.dsl._
-import funstack.web.Fun
+import funstack.client.web.Fun
 
 object App {
 
