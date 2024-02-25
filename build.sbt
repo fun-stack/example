@@ -24,7 +24,7 @@ val enableFatalWarnings =
   sys.env.get("ENABLE_FATAL_WARNINGS").flatMap(value => scala.util.Try(value.toBoolean).toOption).getOrElse(false)
 
 lazy val commonSettings = Seq(
-  addCompilerPlugin("org.typelevel" % "kind-projector" % "0.13.2" cross CrossVersion.full),
+  addCompilerPlugin("org.typelevel" % "kind-projector" % "0.13.3" cross CrossVersion.full),
 
   // overwrite scalacOptions "-Xfatal-warnings" from https://github.com/DavidGregory084/sbt-tpolecat
   if (enableFatalWarnings) scalacOptions += "-Xfatal-warnings" else scalacOptions -= "-Xfatal-warnings",
