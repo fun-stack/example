@@ -2,7 +2,7 @@
   "license": "UNLICENSED",
   "devDependencies": {
     "@fun-stack/fun-local-env": "^0.3.17",
-    "cypress": "^13.6.4",
+    "cypress": "^13.6.6",
     "wait-on": "^7.2.0"
   }
 }
