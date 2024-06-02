@@ -34,7 +34,7 @@ lazy val commonSettings = Seq(
 
 lazy val scalaJsSettings = Seq(
   scalaJSLinkerConfig ~= { _.withModuleKind(ModuleKind.CommonJSModule) },
-  libraryDependencies += "org.portable-scala" %%% "portable-scala-reflect" % "1.1.2",
+  libraryDependencies += "org.portable-scala" %%% "portable-scala-reflect" % "1.1.3",
 ) ++ scalaJsBundlerSettings ++ scalaJsMacrotaskExecutor ++ scalaJsSecureRandom
 
 lazy val scalaJsBundlerSettings = Seq(
