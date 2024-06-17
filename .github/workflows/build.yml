@@ -120,7 +120,7 @@ jobs:
           npx wait-on http://localhost:$FRONTEND_PORT
 
       - name: Cypress run (UI tests)
-        uses: cypress-io/github-action@v6.7.0
+        uses: cypress-io/github-action@v6.7.1
 
       - name: On E2E test failure, print logs
         if: failure()
