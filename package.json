@@ -3,6 +3,6 @@
   "devDependencies": {
     "@fun-stack/fun-local-env": "^0.3.17",
     "cypress": "^13.10.0",
-    "wait-on": "^7.2.0"
+    "wait-on": "^8.0.0"
   }
 }
