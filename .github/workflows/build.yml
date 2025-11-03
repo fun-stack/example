@@ -24,7 +24,7 @@ jobs:
           # https://docs.mergify.com/actions/queue/
           ref: ${{ github.event.pull_request.head.sha }}
 
-      - uses: coursier/cache-action@v6
+      - uses: coursier/cache-action@v7
       - uses: olafurpg/setup-scala@v14
         with:
           java-version: openjdk@1.17
