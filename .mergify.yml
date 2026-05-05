@@ -1,6 +1,6 @@
 queue_rules:
   - name: default
-    conditions:
+    merge_conditions:
       # Conditions to get out of the queue (= merged)
       - check-success=build
 
@@ -16,9 +16,9 @@ pull_request_rules:
   - name: Merge dependency-update PRs
     conditions:
       - and:
-        - label=dependencies
-        - base=master
-        - check-success=build
+          - label=dependencies
+          - base=master
+          - check-success=build
     actions:
       queue:
         name: default
